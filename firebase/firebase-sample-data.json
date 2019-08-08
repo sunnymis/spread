@@ -1,0 +1,11 @@
+{
+  "users": {
+  },
+  "restaurants": [
+    {
+      "id": 1,
+      "title": "Joe's Pizza"
+    }
+  ]
+}
+  

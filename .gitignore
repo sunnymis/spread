@@ -1,0 +1,27 @@
+node_modules/**/*
+.vscode/
+.expo/
+npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
+
+# OSX
+#
+.DS_Store
+
+# Android/IntelliJ
+android/
+.idea
+.tmp
+.gradle
+local.properties
+*.iml
+
+# Build
+build/
+
+.env
+.env.development
+src/constants/firebase-secrets.js
