@@ -26,6 +26,11 @@ import ProfileComponent from '../components/User/Profile';
 
 import HomeComponent from '../components/Home';
 
+import { Text } from 'native-base';
+
+const comp = () => (
+  <Text>???</Text>
+)
 const Index = (
   <Stack hideNavBar>
     <Scene hideNavBar>
@@ -99,6 +104,8 @@ const Index = (
 
     <Scene
       back
+      // hideNavBar
+      navBar={comp()}
       clone
       key="restaurant"
       title="RESTAURANTS"

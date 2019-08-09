@@ -2,7 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Image } from 'react-native';
 import {
-  Container, Content, Card, CardItem, Body, H3, List, ListItem, Text,
+  Container,
+  Content,
+  Card,
+  CardItem,
+  Body,
+  H3,
+  List,
+  ListItem,
+  Text,
+  Header,
+  Left,
+  Right,
+  Button,
+  Icon,
+  Title,
 } from 'native-base';
 import { errorMessages } from '../../../constants/messages';
 import Error from '../UI/Error';
@@ -22,7 +36,6 @@ const RestaurantView = ({ error, restaurants, restaurantId, }) => {
   // Restaurant not found
   if (!restaurant) return <Error content={`Error is: ${errorMessages.notFound}` } />;
 
-  console.log('RESTAURANT ', restaurant)
   // Build Ingredients listing
   const ingredients = Object.keys(restaurant.tags).map(item => (
     <ListItem key={item} rightIcon={{ style: { opacity: 0 } }}>
@@ -30,16 +43,25 @@ const RestaurantView = ({ error, restaurants, restaurantId, }) => {
     </ListItem>
   ));
 
-  // Build Method listing
-  // const method = restaurant.method.map(item => (
-  //   <ListItem key={item} rightIcon={{ style: { opacity: 0 } }}>
-  //     <Text>{item}</Text>
-  //   </ListItem>
-  // ));
-
   return (
     <Container>
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Header</Title>
+        </Body>
+        <Right>
+          <Button transparent>
+            <Icon name="menu" />
+          </Button>
+        </Right>
+      </Header>
       <Content padder>
+        
         <Image source={{ uri: restaurant.image }} style={{ height: 300, width: null, flex: 1 }} />
 
         <Spacer size={25} />
