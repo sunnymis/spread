@@ -19,20 +19,23 @@ import {
 
 
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
         
-        <Card style={styles.card}>
-          <CardItem>
-            <Body>
-              <H2>Restaurants</H2>
-            </Body>
-          </CardItem>
-        </Card>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Restaurants')} >
+          <Card style={styles.card}>
+            <CardItem >
+              <Body >
+                <H2 >Restaurants</H2>
+              </Body>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
+        
         
       </ScrollView>
     </View>

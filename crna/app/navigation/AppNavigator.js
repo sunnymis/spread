@@ -1,12 +1,19 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+import HomeScreen from '../screens/HomeScreen';
+import LinksScreen from '../screens/LinksScreen';
+import RestaurantsList from '../screens/Restaurant/List';
+import RestaurantSingle from '../screens/Restaurant/Single';
 
 export default createAppContainer(
-  createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-    Main: MainTabNavigator,
-  })
+  createStackNavigator({
+    Home: HomeScreen,
+    Links: LinksScreen,
+    Restaurants: RestaurantsList,
+    Restaurant: RestaurantSingle,
+  },
+  {
+    initialRouteName: 'Home',
+  }),
 );
