@@ -2,7 +2,8 @@ import React from 'react';
 import { ScrollView, TouchableOpacity, Image } from 'react-native';
 import {
   H1,
-
+  Button,
+  Icon,
 } from 'native-base';
 
 export default function Restaurant(props) {
@@ -19,4 +20,28 @@ export default function Restaurant(props) {
       />
     </ScrollView>
   )
+}
+
+
+const LeftIcon = (navigation) => {
+  return (
+    <Button onPress={() => navigation.goBack()} transparent>
+      <Icon style={{fontSize: 40, color: '#fff' }} name="arrow-back" />
+    </Button>
+  );
+};
+
+const RightIcon = (navigation) => {
+  return (
+    <Button onPress={() => navigation.navigate('EditRestaurant')} transparent>
+      <Icon style={{fontSize: 30, color: '#fff' }} type="MaterialIcons" name="edit" />
+    </Button>
+  );
+};
+
+Restaurant.navigationOptions = ({ navigation }) => {
+  return {
+    headerLeft: LeftIcon(navigation),
+    headerRight: RightIcon(navigation),
+  }
 }

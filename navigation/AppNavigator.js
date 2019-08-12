@@ -5,7 +5,8 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import RestaurantsList from '../screens/Restaurant/List';
 import RestaurantSingle from '../screens/Restaurant/Single';
-import AddNewRestaurant from '../screens/AddNewRestaurant';
+import AddNewRestaurant from '../screens/Restaurant/New';
+import EditRestaurant from '../screens/Restaurant/Edit';
 
 export default createAppContainer(
   createStackNavigator({
@@ -14,6 +15,7 @@ export default createAppContainer(
     Restaurants: RestaurantsList,
     Restaurant: RestaurantSingle,
     AddNewRestaurant,
+    EditRestaurant,
   },
   {
     initialRouteName: 'Home',
