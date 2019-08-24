@@ -4,6 +4,10 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import firebase from 'firebase'
+import '@firebase/firestore';
+import { FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID } from 'react-native-dotenv'
+
 
 import AppNavigator from './navigation/AppNavigator';
 
@@ -51,6 +55,34 @@ function handleLoadingError(error) {
 }
 
 function handleFinishLoading(setLoadingComplete) {
+
+  const config = {
+    apiKey: FIREBASE_API_KEY,
+    authDomain: FIREBASE_AUTH_DOMAIN,
+    projectId: FIREBASE_PROJECT_ID,
+  };
+
+  
+  firebase.initializeApp(config);
+  // const database = firebase.firestore();
+
+  // const restaurantCollection = database.collection('restaurants');
+
+  // restaurantCollection.get().then(function(querySnapshot) {
+  //   querySnapshot.docs.map(document => {
+  //     // console.log(document)
+  //     // console.log(document.getCollections().then(collections => console.log(collections)))
+  //   });
+  // });
+
+  // coll.where("first", "==", "Ada").get().then(snap => snap.forEach(d => console.log(d.data())))
+
+  // coll.add({
+  //   first: "Ada",
+  //   last: "Lovelace",
+  //   born: 1815
+// })
+  // console.log('database', col);
   setLoadingComplete(true);
 }
 
