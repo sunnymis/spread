@@ -17,15 +17,14 @@ import {
   H2,
 } from 'native-base';
 
-
-
 export default function HomeScreen(props) {
+
   return (
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}>
-        
+
         <TouchableOpacity onPress={() => props.navigation.navigate('Restaurants')} >
           <Card style={styles.card}>
             <CardItem >
@@ -35,8 +34,8 @@ export default function HomeScreen(props) {
             </CardItem>
           </Card>
         </TouchableOpacity>
-        
-        
+
+
       </ScrollView>
     </View>
   );

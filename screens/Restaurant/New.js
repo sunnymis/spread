@@ -16,6 +16,7 @@ import {
 } from 'native-base';
 import firebase from 'firebase'
 import '@firebase/firestore';
+import { useRestaurants } from '../../hooks';
 
 
 export default function AddNewRestaurant(props) {
@@ -23,6 +24,7 @@ export default function AddNewRestaurant(props) {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState([])
+  const { restaurants, setRestaurants } = useRestaurants()
 
   const hasTag = (tag) => tags.includes(tag)
   const toggleTag = (tag) => {
@@ -40,14 +42,28 @@ export default function AddNewRestaurant(props) {
 
   const submit = () => {
     const restaurantCollection = database.collection('restaurants');
-    restaurantCollection.add({
+    const newRestaurant = {
       name,
       location,
       description,
-      tags, 
+      tags,
+    }
+    restaurantCollection.add(newRestaurant)
+    .then(() => {
+      setName("");
+      setLocation("");
+      setDescription("");
+      setTags([]);
+      console.log(props.navigation.state.params)
+      setRestaurants([
+        ...restaurants,
+        newRestaurant,
+      ])
+      props.navigation.state.params.onNavigationBack(newRestaurant)
+      props.navigation.goBack()
     });
   };
-  
+
   return (
     <ScrollView>
       <Container>
