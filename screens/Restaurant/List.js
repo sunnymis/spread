@@ -43,12 +43,9 @@ export default function RestaurantList(props) {
 }
 
 const handleOnNavigationBack = (newRestaurant) => {
-  // const { restaurants, setRestaurants } = useRestaurants();
+  // TOOD - figure out how to refresh the list of restaurants 
+  // when you navigate back to list after adding new restaurant
   console.log('handleonnavigaitonback')
-  // setRestaurants([
-    // ...restaurants,
-    // newRestaurant,
-  // ])
 }
 
 const LeftIcon = (navigation) => {
