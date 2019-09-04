@@ -6,6 +6,7 @@ import {
   Button,
   Icon,
   Text,
+  Container,
 } from 'native-base';
 
 export default function Restaurant(props) {
@@ -15,6 +16,7 @@ export default function Restaurant(props) {
     tags,
   } = props.navigation.state.params.details
 
+  console.log(props.navigation.state.params.details)
   return (
     <ScrollView>
       <H1>{name}</H1>
@@ -30,6 +32,10 @@ export default function Restaurant(props) {
   )
 }
 
+const deleteRestaurant = (params) => {
+  console.log('PARAMS');
+}
+
 
 const LeftIcon = (navigation) => {
   return (
@@ -41,9 +47,14 @@ const LeftIcon = (navigation) => {
 
 const RightIcon = (navigation) => {
   return (
-    <Button onPress={() => navigation.navigate('EditRestaurant')} transparent>
-      <Icon style={{fontSize: 30, color: '#fff' }} type="MaterialIcons" name="edit" />
-    </Button>
+    <Container>
+      <Button onPress={() => navigation.navigate('EditRestaurant')} transparent>
+        <Icon style={{fontSize: 30, color: '#fff' }} type="MaterialIcons" name="edit" />
+      </Button>
+      <Button onPress={() => deleteRestaurant(navigation.state.params)} transparent>
+        <Icon style={{fontSize: 30, color: '#fff' }} type="MaterialIcons" name="delete" />
+      </Button>
+    </Container>
   );
 };
 
