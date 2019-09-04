@@ -54,7 +54,7 @@ export default function AddNewRestaurant(props) {
       setLocation("");
       setDescription("");
       setTags([]);
-      console.log(props.navigation.state.params)
+      // console.log(props.navigation.state.params)
       setRestaurants([
         ...restaurants,
         newRestaurant,

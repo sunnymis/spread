@@ -65,7 +65,6 @@ const RightIcon = (navigation) => {
 };
 
 RestaurantList.navigationOptions = (props) => {
-  console.log("PROPS", props);
   const {
     navigation
   } = props;

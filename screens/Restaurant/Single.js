@@ -16,6 +16,7 @@ export default function Restaurant(props) {
   const {
     name,
     location,
+    description,
     tags,
     docId,
   } = props.navigation.state.params.details
@@ -36,8 +37,9 @@ export default function Restaurant(props) {
       <H1>{name}</H1>
       <H2>{location}</H2>
         {
-          tags.map((t,i) => <Text key={i}>{t}</Text>)
+          tags && (tags.map((t,i) => <Text key={i}>{t}</Text>))
         }
+      <H2>{description}</H2>
       <Image
         style={{width: 100, height: 100 }}
         source={{ uri: 'https://images.unsplash.com/photo-1559978137-8c560d91e9e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9' }}
@@ -61,7 +63,7 @@ const LeftIcon = (navigation) => {
 const RightIcon = (navigation) => {
   return (
     <View>
-      <Button onPress={() => navigation.navigate('EditRestaurant')} transparent>
+      <Button onPress={() => navigation.navigate('EditRestaurant', { details: navigation.state.params.details })} transparent>
         <Icon style={{fontSize: 30, color: '#fff' }} type="MaterialIcons" name="edit" />
       </Button>
       <Button onPress={() => deleteRestaurant(navigation.state.params)} transparent>
