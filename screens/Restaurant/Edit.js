@@ -120,7 +120,7 @@ const LeftIcon = (navigation) => {
 
 const RightIcon = (navigation) => {
   return (
-    <Button hasText transparent>
+    <Button onPress={() => navigation.goBack()} hasText transparent>
       <Text>Cancel</Text>
     </Button>
   );
