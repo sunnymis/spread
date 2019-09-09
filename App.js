@@ -4,14 +4,70 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import firebase from 'firebase'
-import '@firebase/firestore';
+import { Provider } from 'react-redux';
+// import store from './redux/store';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { composeWithDevTools } from 'remote-redux-devtools';
 
 
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  const initialState = {
+    restaurant: "vanessa dumpling",
+    people: ["nobody"],
+  }
+
+  const restaurantReducer = (state = initialState, action) => {
+    if (action.type === 'ADD_JOE') {
+      return "joe's"
+    }
+    return state;
+  }
+
+  const peopleReducer = (state = initialState, action) => {
+    switch(action.type) {
+      case "ADD_PERSON":
+        return {
+          ...state,
+          newPerson: "sunny"
+        }
+        break;
+      default:
+        return state;
+    }
+  }
+
+  const reducers = combineReducers({
+    restaurant: restaurantReducer,
+    people: peopleReducer,
+  })
+
+  const restaurantMiddleware = (store) => next => action => {
+    console.log('store in the middlware', store)
+    console.log('next in the middlware', next)
+    console.log('action in the middlware', action)
+
+  }
+
+  
+
+  const middleware = applyMiddleware(restaurantMiddleware)
+
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+  
+  const store = createStore(reducers, initialState,  composeWithDevTools(middleware));
+  
+  console.log('Initial store', store.getState());
+  store.dispatch({type: "ADD_JOE"})
+  console.log('After dispatch', store.getState());
+  store.dispatch({type: "ADD_PERSON"});
+  console.log('After dispatch', store.getState());
+
+
+
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -25,7 +81,9 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+          <Provider store={store}>
+            <AppNavigator />
+          </Provider>
       </View>
     );
   }
@@ -54,26 +112,6 @@ function handleLoadingError(error) {
 }
 
 function handleFinishLoading(setLoadingComplete) {
-
-  // const database = firebase.firestore();
-
-  // const restaurantCollection = database.collection('restaurants');
-
-  // restaurantCollection.get().then(function(querySnapshot) {
-  //   querySnapshot.docs.map(document => {
-  //     // console.log(document)
-  //     // console.log(document.getCollections().then(collections => console.log(collections)))
-  //   });
-  // });
-
-  // coll.where("first", "==", "Ada").get().then(snap => snap.forEach(d => console.log(d.data())))
-
-  // coll.add({
-  //   first: "Ada",
-  //   last: "Lovelace",
-  //   born: 1815
-// })
-  // console.log('database', col);
   setLoadingComplete(true);
 }
 
