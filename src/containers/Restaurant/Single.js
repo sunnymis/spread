@@ -5,7 +5,7 @@ import FormModal from './FormModal';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const {
     name,
