@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRestaurants } from '../../hooks';
 import { firebase } from '../../firebase';
+import FormModal from './FormModal';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
+  const [open, setOpen] = useState(true);
+
   const {
     name,
     location,
@@ -23,6 +26,14 @@ export default function Restaurant(props) {
       })
   }
 
+  function openModal() {
+    setOpen(true)
+  }
+
+  function handleOnClose() {
+    setOpen(false)
+  }
+
   return (
     <div>
       <h1>{name}</h1>
@@ -32,9 +43,13 @@ export default function Restaurant(props) {
       <button onClick={() => deleteRestaurant()}>
         Delete
       </button>
-      <button onClick={() => deleteRestaurant()}>
+      <button onClick={() => openModal()}>
         Edit
       </button>
+      <FormModal
+        open={open}
+        onClose={handleOnClose}
+      />
     </div>
   )
 }
