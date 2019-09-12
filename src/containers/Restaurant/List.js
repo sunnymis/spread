@@ -10,14 +10,16 @@ export default function RestaurantList(props) {
       <h1>Restaurant List</h1>
       {
         restaurants.map(r => (
-          <Link to={{
-            pathname: '/restaurants/one',
-            state: {
-              ...r
-            }
-          }}>
-            {r.name}
-          </Link>
+          <div>            
+            <Link to={{
+              pathname: '/restaurants/one',
+              state: {
+                ...r
+              }
+            }}>
+              {r.name}
+            </Link>
+          </div>
         ))
       }
     </div>

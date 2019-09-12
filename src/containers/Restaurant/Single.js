@@ -32,6 +32,9 @@ export default function Restaurant(props) {
       <button onClick={() => deleteRestaurant()}>
         Delete
       </button>
+      <button onClick={() => deleteRestaurant()}>
+        Edit
+      </button>
     </div>
   )
 }
