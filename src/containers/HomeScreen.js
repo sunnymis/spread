@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import styled from 'styled-components/macro'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -9,42 +10,79 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    padding: theme.spacing(6),
   },
   paper: {
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: '#fff',
+    fontWeight: 'bold',
+    background: 'linear-gradient(45deg, #FF8E53 30%,#FE6B8B  90%)',
+  },
+  paperTwo: {
+    background: 'linear-gradient(45deg, rgb(33, 150, 243) 30%, rgb(33, 203, 243) 90%)'
+  },
+  paperThree: {
+    background: 'linear-gradient(45deg, #30cfd0 0%, #330867 100%)',
+  },
+  paperFour: {
+    background:'linear-gradient(45deg, #43e97b 0%, #38f9d7 100%)',
+  },
+  link: {
+    textDecoration: 'none',
   },
 }));
 
 export default function HomeScreen(props) {
   const classes = useStyles();
 
-
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}
-      container
-      direction="row"
-      flexWrap="wrap"
+      <Grid
+        container
+        spacing={3}
+        direction="row"
+        flexWrap="wrap"
       >
         <Grid
-        flexBasis="calc(50% - 40px)" 
-        justifyContent="center"
-        flexDirection="column"
-        item xs={12} sm={6}>
+          item
+          xs={6}
+          sm={6}
+        >
           <Link to={{
             pathname: '/restaurants/',
-          }}>
-            <Paper className={classes.paper}>Restaurants</Paper>
+          }}
+          className={classes.link}
+          >
+            <Paper elevation={10} elevation={10} className={classes.paper}>Restaurants</Paper>
           </Link>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>TV/Movies</Paper>
+        <Grid 
+          item
+          xs={6}
+          sm={6}
+        >
+          <Paper elevation={10} className={classnames(classes.paper, classes.paperTwo)}>TV/Movies</Paper>
+        </Grid>        
+        <Grid 
+          item
+          xs={6}
+          sm={6}
+        >
+          <Paper elevation={10} className={classnames(classes.paper, classes.paperThree)}>Recipes</Paper>
+        </Grid>        
+        <Grid 
+          item
+          xs={6}
+          sm={6}
+        >
+          <Paper elevation={10}  className={classnames(classes.paper, classes.paperFour)}>Activites</Paper>
         </Grid>        
       </Grid>
     </div>
-
   );
 }
 

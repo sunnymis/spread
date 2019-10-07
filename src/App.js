@@ -26,6 +26,9 @@ function App() {
     title: {
       flexGrow: 1,
     },
+    appBar: {
+      backgroundColor: '#00AEFF',
+    },
   }));
 
   const classes = useStyles();
@@ -34,7 +37,7 @@ function App() {
   return (
     <Router history={createBrowserHistory()}>
       <div>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
               <MenuIcon />
