@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -19,7 +19,6 @@ import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
 
 export default function FormModal(props) {
   const useStyles = makeStyles(theme => ({
@@ -56,19 +55,13 @@ export default function FormModal(props) {
     },
   };
 
-  const {
-    open
-  } = props;
+  const { open } = props;
 
   const handleClose = () => {
     props.onClose();
-  }
-  
-  const tags = [
-    'pizza',
-    'burgers',
-    'cuisine',
-  ]
+  };
+
+  const tags = ['pizza', 'burgers', 'cuisine'];
 
   const StyledRating = withStyles({
     iconFilled: {
@@ -78,15 +71,19 @@ export default function FormModal(props) {
       color: '#ff3d47',
     },
   })(Rating);
-  
+
   function getLabelText(value) {
     return `${value} Heart${value !== 1 ? 's' : ''}`;
   }
-  
+
   const classes = useStyles();
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Edit/New</DialogTitle>
         <DialogContent>
           <TextField
@@ -121,8 +118,18 @@ export default function FormModal(props) {
             <InputLabel htmlFor="select-multiple-chip">Tags</InputLabel>
             <Select
               multiple
-              value={['pizza', 'burger', 'italian','pizza', 'burger', 'italian','pizza', 'burger', 'italian']}
-              onChange={(event) => console.log('event', event.target.value)}
+              value={[
+                'pizza',
+                'burger',
+                'italian',
+                'pizza',
+                'burger',
+                'italian',
+                'pizza',
+                'burger',
+                'italian',
+              ]}
+              onChange={event => console.log('event', event.target.value)}
               input={<Input id="select-multiple-chip" />}
               renderValue={selected => (
                 <div className={classes.chips}>
@@ -146,7 +153,7 @@ export default function FormModal(props) {
             multiline
             rowsMax="4"
             value={null}
-            onChange={(event) => console.log('value', event.target.value)}
+            onChange={event => console.log('value', event.target.value)}
             margin="normal"
             fullWidth
             variant="outlined"
@@ -162,6 +169,5 @@ export default function FormModal(props) {
         </DialogActions>
       </Dialog>
     </div>
-  )
+  );
 }
-

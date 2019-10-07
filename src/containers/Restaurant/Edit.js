@@ -22,24 +22,23 @@ export default function EditRestaurant(props) {
   const [name, setName] = useState(details.name);
   const [location, setLocation] = useState(details.location);
   const [description, setDescription] = useState(details.description);
-  const [tags, setTags] = useState(details.tags || [])
+  const [tags, setTags] = useState(details.tags || []);
   const docId = details.docId;
   const { restaurants, setRestaurants } = useRestaurants();
 
-  const hasTag = (tag) => {
-    if (!tags) { return false; }
-    return tags.includes(tag)
-  }
-  const toggleTag = (tag) => {
-    if (hasTag(tag)) {
-      setTags(tags.filter(t => t != tag))
-    } else {
-      setTags([
-        ...tags,
-        tag
-      ])
+  const hasTag = tag => {
+    if (!tags) {
+      return false;
     }
-  }
+    return tags.includes(tag);
+  };
+  const toggleTag = tag => {
+    if (hasTag(tag)) {
+      setTags(tags.filter(t => t != tag));
+    } else {
+      setTags([...tags, tag]);
+    }
+  };
 
   const submit = () => {
     firebase
@@ -57,9 +56,9 @@ export default function EditRestaurant(props) {
         setLocation(location);
         setDescription(description);
         setTags(tags);
-        setRestaurants([...restaurants])
-        props.navigation.state.params.onNavigationBack(newRestaurant)
-        props.navigation.goBack()
+        setRestaurants([...restaurants]);
+        props.navigation.state.params.onNavigationBack(newRestaurant);
+        props.navigation.goBack();
       });
   };
 
@@ -70,33 +69,30 @@ export default function EditRestaurant(props) {
         <Form>
           <Item floatingLabel>
             <Label>Name</Label>
-            <Input
-              onChangeText={(name) => setName(name)}
-              value={name}
-            />
+            <Input onChangeText={name => setName(name)} value={name} />
           </Item>
           <Item floatingLabel last>
             <Label>Location</Label>
             <Input
-              onChangeText={(location) => setLocation(location)}
+              onChangeText={location => setLocation(location)}
               value={location}
             />
           </Item>
           <Item floatingLabel last>
             <Label>Description</Label>
             <Input
-              onChangeText={(description) => setDescription(description)}
+              onChangeText={description => setDescription(description)}
               value={description}
             />
           </Item>
-          <ListItem onPress={() => toggleTag("pizza")}>
-            <CheckBox checked={hasTag("pizza")} />
+          <ListItem onPress={() => toggleTag('pizza')}>
+            <CheckBox checked={hasTag('pizza')} />
             <Body>
               <Text>Pizza</Text>
             </Body>
           </ListItem>
-          <ListItem onPress={() => toggleTag("burgers")}>
-            <CheckBox checked={hasTag("burgers")} />
+          <ListItem onPress={() => toggleTag('burgers')}>
+            <CheckBox checked={hasTag('burgers')} />
             <Body>
               <Text>Burgers</Text>
             </Body>
@@ -107,18 +103,18 @@ export default function EditRestaurant(props) {
         </Form>
       </Container>
     </ScrollView>
-  )
+  );
 }
 
-const LeftIcon = (navigation) => {
+const LeftIcon = navigation => {
   return (
     <Button onPress={() => navigation.goBack()} transparent>
-      <Icon style={{fontSize: 40, color: '#fff' }} name="arrow-back" />
+      <Icon style={{ fontSize: 40, color: '#fff' }} name="arrow-back" />
     </Button>
   );
 };
 
-const RightIcon = (navigation) => {
+const RightIcon = navigation => {
   return (
     <Button onPress={() => navigation.goBack()} hasText transparent>
       <Text>Cancel</Text>
@@ -126,10 +122,9 @@ const RightIcon = (navigation) => {
   );
 };
 
-
 EditRestaurant.navigationOptions = ({ navigation }) => {
   return {
     headerLeft: LeftIcon(navigation),
     headerRight: RightIcon(navigation),
-  }
-}
+  };
+};

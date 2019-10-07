@@ -7,31 +7,21 @@ import { CATEGORIES } from './constants';
 const StyledHomeScreen = styled('div')({
   flexGrow: 1,
   padding: '48px',
-})
+});
 
 export default function HomeScreen() {
   return (
     <StyledHomeScreen>
-      <Grid
-        container
-        spacing={3}
-        direction="row"
-        flexWrap="wrap"
-      >
-        { CATEGORIES.map(category => (
-          <Grid
-            item
-            xs={6}
-            sm={6}
-          >
+      <Grid container spacing={3} direction="row" flexWrap="wrap">
+        {CATEGORIES.map(category => (
+          <Grid item xs={6} sm={6}>
             <CategoryCard
               title={category.title}
               background={category.background}
             />
           </Grid>
-        ))
-        }
+        ))}
       </Grid>
     </StyledHomeScreen>
   );
-};
+}

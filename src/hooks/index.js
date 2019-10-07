@@ -4,14 +4,13 @@ import { firebase } from '../firebase';
 export const useRestaurants = selectedRestaurant => {
   const [restaurants, setRestaurants] = useState([]);
 
-
   useEffect(() => {
     console.log('rerunning useRestaurnts');
     const restaurantsFromDb = firebase
       .firestore()
       .collection('restaurants')
       .get()
-      .then((snapshot) => {
+      .then(snapshot => {
         const allRestaurants = snapshot.docs.map(r => ({
           ...r.data(),
           docId: r.id,
@@ -23,8 +22,7 @@ export const useRestaurants = selectedRestaurant => {
           setRestaurants(allRestaurants);
         }
       });
-
   }, [restaurants]);
 
   return { restaurants, setRestaurants };
-}
+};

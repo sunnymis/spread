@@ -1,7 +1,7 @@
 import React from 'react';
 import HomeScreen from './containers/HomeScreen';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
 import RestaurantSingle from './containers/Restaurant/Single';
 import { AppBar } from '@material-ui/core';
@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
 
 function App() {
   const useStyles = makeStyles(theme => ({
@@ -31,13 +30,17 @@ function App() {
 
   const classes = useStyles();
 
-
   return (
     <Router history={createBrowserHistory()}>
       <div>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
