@@ -1,6 +1,6 @@
 import React from 'react';
 import HomeScreen from './containers/HomeScreen';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
 import RestaurantSingle from './containers/Restaurant/Single';

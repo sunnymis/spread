@@ -6,7 +6,7 @@ export const useRestaurants = selectedRestaurant => {
 
   useEffect(() => {
     console.log('rerunning useRestaurnts');
-    const restaurantsFromDb = firebase
+    firebase
       .firestore()
       .collection('restaurants')
       .get()

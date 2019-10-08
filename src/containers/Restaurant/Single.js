@@ -54,7 +54,7 @@ export default function Restaurant(props) {
     <Div>
       <h1>{name}</h1>
       <Rating name="simple-controlled" value={props.rating} readOnly />
-      
+
       <p>{location}</p>
       {tags && tags.map(t => <Tag>{t}</Tag>)}
 

@@ -25,7 +25,7 @@ export default function Carousel(props) {
   }
 
   const Image = styled('img')({
-    height: 'auto',
+    height: '250px',
     width: '250px',
     margin: '0 auto',
   });

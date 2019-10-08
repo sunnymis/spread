@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import { useRestaurants } from '../../hooks';
 
 export default function RestaurantList(props) {
-  const { restaurants, setRestaurants } = useRestaurants();
+  const { restaurants } = useRestaurants();
 
   function goToDetailsView(restaurant) {
     props.history.push('/restaurants/one', restaurant);
@@ -36,9 +36,3 @@ export default function RestaurantList(props) {
     </div>
   );
 }
-
-const handleOnNavigationBack = newRestaurant => {
-  // TOOD - figure out how to refresh the list of restaurants
-  // when you navigate back to list after adding new restaurant
-  console.log('handleonnavigaitonback');
-};
