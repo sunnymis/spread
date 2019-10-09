@@ -17,4 +17,28 @@ const CATEGORIES = [
   },
 ];
 
-export { CATEGORIES };
+const CUISINES = [
+  'American',
+  'Bar',
+  'Breakfast',
+  'Burgers',
+  'Chinese',
+  'Coffee',
+  'Dessert',
+  'Diner',
+  'Fast Food',
+  'Ice Cream',
+  'Indian',
+  'Italian',
+  'Japanese',
+  'Korean',
+  'Mediterranean',
+  'Middle Eastern',
+  'Pizza',
+  'Sushi',
+  'Thai',
+  'Wings',
+  'Halal',
+];
+
+export { CATEGORIES, CUISINES };

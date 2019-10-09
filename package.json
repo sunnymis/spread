@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.26",
     "classnames": "^2.2.6",
     "firebase": "6.6.0",
+    "lodash": "^4.17.15",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
