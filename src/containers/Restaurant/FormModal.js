@@ -10,10 +10,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Rating from '@material-ui/lab/Rating';
 import { CUISINES } from '../constants';
 import DropZone from '../../components/DropZone';
+import get from 'lodash/get';
 
 export default function FormModal(props) {
-  const { open, data } = props;
-  const { name, location, rating, description, tags } = data;
+  const { open, data, title } = props;
+  const name = get(data, 'name', '');
+  const location = get(data, 'location', '');
+  const rating = get(data, 'rating', 0);
+  const description = get(data, 'description', '');
+  const tags = get(data, 'tags', []);
+
   const [formData, setFormData] = useState({
     name,
     location,
@@ -33,6 +39,10 @@ export default function FormModal(props) {
 
   const handleOnTagChange = event => {
     setFormData({ ...formData, tags: event });
+  };
+
+  const handleOnRatingChange = newRating => {
+    setFormData({ ...formData, rating: newRating });
   };
 
   const handleOnDrop = files => {
@@ -65,7 +75,7 @@ export default function FormModal(props) {
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Edit/New</DialogTitle>
+      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <TextField
           text="Name"
@@ -79,7 +89,12 @@ export default function FormModal(props) {
         />
         <div>
           <p>Rating</p>
-          <Rating value={formData.rating} />
+          <Rating
+            value={formData.rating}
+            onChange={(event, newValue) => {
+              handleOnRatingChange(newValue);
+            }}
+          />
         </div>
         <Dropdown
           items={CUISINES}

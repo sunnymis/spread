@@ -67,6 +67,7 @@ export default function Restaurant(props) {
       <button onClick={() => deleteRestaurant()}>Delete</button>
       <button onClick={() => openModal()}>Edit</button>
       <FormModal
+        title="Edit Restaurant"
         open={open}
         onClose={handleOnClose}
         data={props.location.state}
