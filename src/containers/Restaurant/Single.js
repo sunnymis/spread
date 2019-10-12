@@ -5,10 +5,12 @@ import { useRestaurants } from '../../hooks';
 import { firebase } from '../../firebase';
 import Carousel from '../../components/Carousel';
 import FormModal from './FormModal';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
-  const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
   const {
     name,
@@ -20,6 +22,8 @@ export default function Restaurant(props) {
   } = props.location.state;
 
   const deleteRestaurant = () => {
+    const { history } = props;
+
     firebase
       .firestore()
       .collection('restaurants')
@@ -27,16 +31,9 @@ export default function Restaurant(props) {
       .delete()
       .then(() => {
         setRestaurants([...restaurants]);
+        history.replace('/restaurants');
       });
   };
-
-  function openModal() {
-    setOpen(true);
-  }
-
-  function handleOnClose() {
-    setOpen(false);
-  }
 
   const Div = styled('div')({
     paddingLeft: '16px',
@@ -64,13 +61,19 @@ export default function Restaurant(props) {
       <h2>Description</h2>
       <p>{description}</p>
 
-      <button onClick={() => deleteRestaurant()}>Delete</button>
-      <button onClick={() => openModal()}>Edit</button>
+      <button onClick={() => setOpenConfirmation(true)}>Delete</button>
+      <button onClick={() => setOpenForm(true)}>Edit</button>
       <FormModal
         title="Edit Restaurant"
-        open={open}
-        onClose={handleOnClose}
+        open={openForm}
+        onClose={() => setOpenForm(false)}
         data={props.location.state}
+      />
+      <ConfirmationModal
+        open={openConfirmation}
+        onClose={() => setOpenConfirmation(false)}
+        onNo={() => setOpenConfirmation(false)}
+        onYes={() => deleteRestaurant()}
       />
     </Div>
   );

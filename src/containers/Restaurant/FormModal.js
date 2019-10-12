@@ -11,6 +11,7 @@ import Rating from '@material-ui/lab/Rating';
 import { CUISINES } from '../constants';
 import DropZone from '../../components/DropZone';
 import get from 'lodash/get';
+import firebase from 'firebase';
 
 export default function FormModal(props) {
   const { open, data, title } = props;
@@ -61,6 +62,14 @@ export default function FormModal(props) {
 
   const handleRemoveImage = image => {
     setImages(imgs => imgs.filter(img => img !== image));
+  };
+
+  const submitForm = () => {
+    const restaurants = firebase.firestore().collection('restaurants');
+
+    restaurants.add(formData).then(() => {
+      handleClose();
+    });
   };
 
   const Image = styled('img')({
@@ -119,7 +128,7 @@ export default function FormModal(props) {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={submitForm} color="primary">
           Save
         </Button>
       </DialogActions>
