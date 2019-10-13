@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Rating from '@material-ui/lab/Rating';
 import { styled } from '@material-ui/styles';
 import { useRestaurants } from '../../hooks';
@@ -11,6 +11,7 @@ export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
   const [openForm, setOpenForm] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [savedImages, setSavedImages] = useState([]);
 
   const {
     name,
@@ -20,6 +21,19 @@ export default function Restaurant(props) {
     docId,
     photos,
   } = props.location.state;
+
+  useEffect(() => {
+    const storage = firebase.storage();
+    const storageRef = storage.ref(`images/user1235/${docId}`);
+
+    storageRef.listAll().then(data => {
+      data.items.forEach(file => {
+        file.getDownloadURL().then(url => {
+          setSavedImages(imgs => [...imgs, url]);
+        });
+      });
+    });
+  }, []);
 
   const deleteRestaurant = () => {
     const { history } = props;
@@ -56,13 +70,15 @@ export default function Restaurant(props) {
       {tags && tags.map(t => <Tag>{t}</Tag>)}
 
       <h2>Photos</h2>
-      {photos && <Carousel photos={photos} />}
+      {savedImages && <Carousel photos={savedImages} />}
 
       <h2>Description</h2>
       <p>{description}</p>
 
       <button onClick={() => setOpenConfirmation(true)}>Delete</button>
-      <button onClick={() => setOpenForm(true)}>Edit</button>
+      <button onClick={() => setOpenForm(true)}>
+        Edit (this technically adds)
+      </button>
       <FormModal
         title="Edit Restaurant"
         open={openForm}
