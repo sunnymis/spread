@@ -13,14 +13,7 @@ export default function Restaurant(props) {
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [savedImages, setSavedImages] = useState([]);
 
-  const {
-    name,
-    location,
-    description,
-    tags,
-    docId,
-    photos,
-  } = props.location.state;
+  const { name, location, description, tags, docId } = props.location.state;
 
   useEffect(() => {
     const storage = firebase.storage();
@@ -69,8 +62,12 @@ export default function Restaurant(props) {
       <p>{location}</p>
       {tags && tags.map(t => <Tag>{t}</Tag>)}
 
-      <h2>Photos</h2>
-      {savedImages && <Carousel photos={savedImages} />}
+      {savedImages.length > 0 && (
+        <React.Fragment>
+          <h2>Photos</h2>
+          <Carousel photos={savedImages} />
+        </React.Fragment>
+      )}
 
       <h2>Description</h2>
       <p>{description}</p>

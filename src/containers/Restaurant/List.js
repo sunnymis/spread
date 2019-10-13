@@ -34,6 +34,14 @@ export default function RestaurantList(props) {
     right: '10px',
   });
 
+  const getImage = restaurant => {
+    if (!restaurant.images || restaurant.images.length === 0) {
+      return null;
+    }
+
+    return restaurant.images[0].data;
+  };
+
   return (
     <div>
       <H1>Restaurants</H1>
@@ -44,7 +52,7 @@ export default function RestaurantList(props) {
               rating={r.rating}
               text={r.name}
               tags={r.tags}
-              image={r.photos && r.photos[0]}
+              image={getImage(r)}
               onClick={event => goToDetailsView(r)}
             />
             <Divider variant="middle" component="li" />

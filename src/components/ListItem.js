@@ -18,26 +18,22 @@ const Image = styled('img')({
 });
 
 export default function ListItem(props) {
+  const { text, rating, tags, image } = props;
+
   return (
     <MUIListItem button selected={false} onClick={props.onClick}>
       <ListItemText
         primary={
           <React.Fragment>
-            <H3>{props.text}</H3>
-            <StyledRating
-              name="simple-controlled"
-              value={props.rating}
-              readOnly
-            />
+            <H3>{text}</H3>
+            <StyledRating name="simple-controlled" value={rating} readOnly />
           </React.Fragment>
         }
         secondary={
-          <React.Fragment>
-            {props.tags && props.tags.map(t => <p>{t}</p>)}
-          </React.Fragment>
+          <React.Fragment>{tags && tags.map(t => <p>{t}</p>)}</React.Fragment>
         }
       />
-      <Image src={props.image} />
+      <Image src={image} />
     </MUIListItem>
   );
 }
