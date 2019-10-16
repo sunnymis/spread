@@ -6,6 +6,13 @@ import { firebase } from '../../firebase';
 import Carousel from '../../components/Carousel';
 import FormModal from './FormModal';
 import ConfirmationModal from '../../components/ConfirmationModal';
+import SpeedDial from '../../components/SpeedDial';
+import EditIcon from '@material-ui/icons/Edit';
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
+import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
+import ShareIcon from '@material-ui/icons/Share';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
@@ -20,6 +27,7 @@ export default function Restaurant(props) {
     const storageRef = storage.ref(`images/user1235/${docId}`);
 
     storageRef.listAll().then(data => {
+      console.log('data', data);
       data.items.forEach(file => {
         file.getDownloadURL().then(url => {
           setSavedImages(imgs => [...imgs, url]);
@@ -54,6 +62,25 @@ export default function Restaurant(props) {
     padding: '8px',
   });
 
+  const SpeedDialContainer = styled('div')({
+    position: 'absolute',
+    right: '24px',
+    bottom: '24px',
+  });
+
+  const actions = [
+    {
+      icon: <EditIcon />,
+      name: 'Edit',
+      onClick: () => setOpenForm(true),
+    },
+    {
+      icon: <DeleteIcon />,
+      name: 'Delete',
+      onClick: () => setOpenConfirmation(true),
+    },
+  ];
+
   return (
     <Div>
       <h1>{name}</h1>
@@ -72,13 +99,13 @@ export default function Restaurant(props) {
       <h2>Description</h2>
       <p>{description}</p>
 
-      <button onClick={() => setOpenConfirmation(true)}>Delete</button>
-      <button onClick={() => setOpenForm(true)}>
-        Edit (this technically adds)
-      </button>
+      <SpeedDialContainer>
+        <SpeedDial actions={actions} />
+      </SpeedDialContainer>
       <FormModal
         title="Edit Restaurant"
         open={openForm}
+        editing
         onClose={() => setOpenForm(false)}
         data={props.location.state}
       />

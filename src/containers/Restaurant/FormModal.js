@@ -14,13 +14,12 @@ import get from 'lodash/get';
 import firebase from 'firebase';
 
 export default function FormModal(props) {
-  const { open, data, title } = props;
+  const { open, data, title, editing } = props;
   const name = get(data, 'name', '');
   const location = get(data, 'location', '');
   const rating = get(data, 'rating', 0);
   const description = get(data, 'description', '');
   const tags = get(data, 'tags', []);
-  // const docId = get(data, 'docId', null);
 
   const [formData, setFormData] = useState({
     name,
@@ -72,7 +71,7 @@ export default function FormModal(props) {
     setImages(imgs => imgs.filter(img => img.data !== image.data));
   };
 
-  const submitForm = () => {
+  const saveNewEntry = () => {
     const restaurants = firebase.firestore().collection('restaurants');
 
     restaurants
@@ -82,37 +81,62 @@ export default function FormModal(props) {
       })
       .then(result => {
         const docId = result.id;
-        console.log('DOCID', docId);
         const storageRef = firebase.storage().ref();
 
         images.forEach(img => {
+          const uniqueFilename = new Date().getUTCMilliseconds();
+
           const folderRef = storageRef.child(
-            `images/user1235/${docId}/${img.name}`
+            `images/user1235/${docId}/${uniqueFilename}`
           );
+
           folderRef.putString(img.data, 'data_url').then(function(snapshot) {
             console.log('Uploaded a data_url string!', snapshot);
-            img.path = snapshot.metadata.fullPath;
           });
         });
 
-        // TODO:
-        // figure out how to store images in firestore with thier
-        // stored URLs so we can easily download them. or maybe
-        // ther eis naother approach. 
-        const newImages = [...images];
-        restaurants
-          .doc(docId)
-          .set({
-            ...formData,
-            images: newImages,
-          })
-          .then(updateRes => {
-            console.log('updateRes', updateRes);
-            console.log(images);
+        handleClose();
+      });
+  };
+
+  const editEntry = () => {
+    const restaurants = firebase.firestore().collection('restaurants');
+    const { data } = props;
+    const docId = data.docId;
+
+    console.log('docId', docId);
+    restaurants
+      .doc(docId)
+      .update({
+        ...formData,
+        images,
+      })
+      .then(updateRes => {
+        const storageRef = firebase.storage().ref();
+
+        images.forEach(img => {
+          const uniqueFilename = new Date().getUTCMilliseconds();
+
+          const folderRef = storageRef.child(
+            `images/user1235/${docId}/${uniqueFilename}`
+          );
+
+          folderRef.putString(img.data, 'data_url').then(function(snapshot) {
+            console.log('Uploaded a data_url string!', snapshot);
           });
+        });
 
         handleClose();
       });
+  };
+
+  const submitForm = () => {
+    if (editing) {
+      console.log('editing', editing);
+      editEntry();
+    } else {
+      saveNewEntry();
+    }
   };
 
   const Image = styled('img')({
