@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '@material-ui/styles';
 import TextField from '../components/Form/TextField';
 import Button from '@material-ui/core/Button';
+import { DialogTitle } from '@material-ui/core';
 
 const StyledLogIn = styled('div')({
   flexGrow: 1,
@@ -37,41 +38,98 @@ const NoAccount = styled('p')({
 const SignUp = styled('span')({
   fontWeight: 'bold',
   color: '#04aeff',
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });
 export default function LogIn() {
+  const [isLoggingIn, setIsLoggingIn] = useState(true);
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
   });
+  const [createAccountForm, setCreateAccountForm] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
 
-  const handleChange = name => event => {
+  const handleLogInChange = name => event => {
     setLoginForm({ ...loginForm, [name]: event.target.value });
+  };
+
+  const handleCreateAccountChange = name => event => {
+    setCreateAccountForm({ ...createAccountForm, [name]: event.target.value });
+  };
+
+  const renderTitle = () => {
+    return isLoggingIn ? 'Login' : 'Create an account';
+  };
+
+  const renderLoginForm = () => (
+    <form>
+      <TextField
+        text="Email"
+        value={loginForm.email}
+        onChange={handleLogInChange('email')}
+      />
+      <TextField
+        text="Password"
+        value={loginForm.password}
+        type="password"
+        onChange={handleLogInChange('password')}
+      />
+      <SubmitButton variant="contained" color="primary" type="submit">
+        LOG IN
+      </SubmitButton>
+    </form>
+  );
+
+  const renderCreateAccountForm = () => (
+    <form>
+      <TextField
+        text="Fulll Name"
+        value={createAccountForm.fullName}
+        onChange={handleCreateAccountChange('fullName')}
+      />
+      <TextField
+        text="Email"
+        value={createAccountForm.email}
+        onChange={handleCreateAccountChange('email')}
+      />
+      <TextField
+        text="Password"
+        value={createAccountForm.password}
+        type="password"
+        onChange={handleCreateAccountChange('password')}
+      />
+      <SubmitButton variant="contained" color="primary" type="submit">
+        SIGN IN
+      </SubmitButton>
+    </form>
+  );
+
+  const renderFooterText = () => {
+    return isLoggingIn ? (
+      <NoAccount>
+        Don't have an account?
+        <SignUp onClick={() => setIsLoggingIn(false)}>{` Sign Up`}</SignUp>
+      </NoAccount>
+    ) : (
+      <NoAccount>
+        Already have an account?
+        <SignUp onClick={() => setIsLoggingIn(true)}>{` Sign In`}</SignUp>
+      </NoAccount>
+    );
   };
 
   return (
     <StyledLogIn>
       <H1>Spread</H1>
-      <H2>Login</H2>
-      <form>
-        <TextField
-          text="Email"
-          value={loginForm.email}
-          onChange={handleChange('email')}
-        />
-        <TextField
-          text="Password"
-          value={loginForm.password}
-          type="password"
-          onChange={handleChange('password')}
-        />
-        <SubmitButton variant="contained" color="primary" type="submit">
-          Log In
-        </SubmitButton>
-      </form>
-      <NoAccount>
-        Don't have an account?
-        <SignUp>{` Sign Up`}</SignUp>
-      </NoAccount>
+      <H2>{renderTitle()}</H2>
+      {isLoggingIn ? renderLoginForm() : renderCreateAccountForm()}
+
+      {renderFooterText()}
     </StyledLogIn>
   );
 }
