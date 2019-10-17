@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HomeScreen from './containers/HomeScreen';
+import LogIn from './containers/LogIn';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
@@ -13,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 function App() {
+  const [loggedIn] = useState(false);
   const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
@@ -46,12 +48,15 @@ function App() {
             <Typography variant="h6" className={classes.title}>
               Spread
             </Typography>
-            <Button color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
 
         <Switch>
-          <Route path="/" exact component={HomeScreen} />
+          {loggedIn ? (
+            <Route path="/" exact component={HomeScreen} />
+          ) : (
+            <Route path="/" exact component={LogIn} />
+          )}
           <Route exact path="/restaurants/" component={RestaurantList} />
           <Route exact path="/restaurants/one" component={RestaurantSingle} />
         </Switch>

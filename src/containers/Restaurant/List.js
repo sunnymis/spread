@@ -30,8 +30,8 @@ export default function RestaurantList(props) {
 
   const StyledFab = styled(Fab)({
     position: 'fixed',
-    bottom: '0px',
-    right: '10px',
+    bottom: '24px',
+    right: '24px',
   });
 
   const getImage = restaurant => {
