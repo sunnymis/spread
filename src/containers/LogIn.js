@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from '@material-ui/styles';
 import TextField from '../components/Form/TextField';
 import Button from '@material-ui/core/Button';
-import { DialogTitle } from '@material-ui/core';
+import firebase from 'firebase';
 
 const StyledLogIn = styled('div')({
   flexGrow: 1,
@@ -42,8 +42,15 @@ const SignUp = styled('span')({
     cursor: 'pointer',
   },
 });
+
+const ErrorMessage = styled('p')({
+  color: '#d32e30',
+  textAlign: 'center',
+});
+
 export default function LogIn() {
   const [isLoggingIn, setIsLoggingIn] = useState(true);
+  const [error, setError] = useState(null);
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: '',
@@ -66,6 +73,34 @@ export default function LogIn() {
     return isLoggingIn ? 'Login' : 'Create an account';
   };
 
+  const handleCreateAccountSubmit = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        createAccountForm.email,
+        createAccountForm.password
+      )
+      .then(success => {
+        console.log('user uuid', success.user.uid);
+      })
+      .catch(error => {
+        setError(error);
+      });
+  };
+
+  const handleLogInSubmit = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(loginForm.email, loginForm.password)
+      .then(success => {
+        console.log('user uuid', success);
+        console.log(firebase.auth().currentUser);
+      })
+      .catch(error => {
+        setError(error);
+      });
+  };
+
   const renderLoginForm = () => (
     <form>
       <TextField
@@ -79,7 +114,12 @@ export default function LogIn() {
         type="password"
         onChange={handleLogInChange('password')}
       />
-      <SubmitButton variant="contained" color="primary" type="submit">
+      {error && <ErrorMessage>{error.message}</ErrorMessage>}
+      <SubmitButton
+        onClick={handleLogInSubmit}
+        variant="contained"
+        color="primary"
+      >
         LOG IN
       </SubmitButton>
     </form>
@@ -87,11 +127,11 @@ export default function LogIn() {
 
   const renderCreateAccountForm = () => (
     <form>
-      <TextField
+      {/* <TextField
         text="Fulll Name"
         value={createAccountForm.fullName}
         onChange={handleCreateAccountChange('fullName')}
-      />
+      /> */}
       <TextField
         text="Email"
         value={createAccountForm.email}
@@ -103,9 +143,14 @@ export default function LogIn() {
         type="password"
         onChange={handleCreateAccountChange('password')}
       />
-      <SubmitButton variant="contained" color="primary" type="submit">
-        SIGN IN
+      <SubmitButton
+        onClick={handleCreateAccountSubmit}
+        variant="contained"
+        color="primary"
+      >
+        SIGN UP
       </SubmitButton>
+      {error && <p>{error.message}</p>}
     </form>
   );
 
