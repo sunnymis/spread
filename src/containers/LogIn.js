@@ -7,6 +7,7 @@ import firebase from 'firebase';
 const StyledLogIn = styled('div')({
   flexGrow: 1,
   padding: '48px',
+  position: 'relative',
 });
 
 const H1 = styled('h1')({
@@ -30,13 +31,16 @@ const SubmitButton = styled(Button)({
 });
 
 const NoAccount = styled('p')({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
   position: 'absolute',
   bottom: '18px',
-  left: '25%',
 });
 
 const SignUp = styled('span')({
   fontWeight: 'bold',
+  paddingLeft: '4px',
   color: '#04aeff',
   '&:hover': {
     cursor: 'pointer',
@@ -48,7 +52,7 @@ const ErrorMessage = styled('p')({
   textAlign: 'center',
 });
 
-export default function LogIn() {
+export default function LogIn(props) {
   const [isLoggingIn, setIsLoggingIn] = useState(true);
   const [error, setError] = useState(null);
   const [loginForm, setLoginForm] = useState({
@@ -95,6 +99,8 @@ export default function LogIn() {
       .then(success => {
         console.log('user uuid', success);
         console.log(firebase.auth().currentUser);
+        localStorage.setItem('spreadUserId', success.user.uid);
+        props.history.push('/');
       })
       .catch(error => {
         setError(error);
@@ -157,7 +163,7 @@ export default function LogIn() {
   const renderFooterText = () => {
     return isLoggingIn ? (
       <NoAccount>
-        Don't have an account?
+        {` Don't have an account? `}
         <SignUp onClick={() => setIsLoggingIn(false)}>{` Sign Up`}</SignUp>
       </NoAccount>
     ) : (

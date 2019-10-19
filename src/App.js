@@ -1,68 +1,48 @@
 import React, { useState } from 'react';
 import HomeScreen from './containers/HomeScreen';
 import LogIn from './containers/LogIn';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
 import RestaurantSingle from './containers/Restaurant/Single';
-import { AppBar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+
 import firebase from 'firebase';
 
 function App() {
   const [loggedIn] = useState(false);
-  const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    appBar: {
-      backgroundColor: '#00AEFF',
-    },
-  }));
-
-  const classes = useStyles();
 
   const userLoggedIn = () => {
-    return firebase.auth.currentUser();
+    console.log('firebase.auth().currentUser', firebase.auth().currentUser);
+    return localStorage.getItem('spreadUserId') !== null;
+  };
+
+  const PrivateRoute = ({ children, component, ...rest }) => {
+    console.log('component', component);
+    console.log('userLoggedIn()', userLoggedIn());
+    return userLoggedIn() ? (
+      <Route component={component} {...rest} />
+    ) : (
+      <Redirect
+        to={{
+          pathname: '/login',
+        }}
+        {...rest}
+      />
+    );
   };
 
   return (
     <Router history={createBrowserHistory()}>
       <div>
-        <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Spread
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
         <Switch>
-          {userLoggedIn ? (
-            <Route path="/" exact component={HomeScreen} />
-          ) : (
-            <Route path="/" exact component={LogIn} />
-          )}
-          <Route exact path="/restaurants/" component={RestaurantList} />
-          <Route exact path="/restaurants/one" component={RestaurantSingle} />
+          <Route path="/login" exact component={LogIn} />
+          <PrivateRoute path="/" exact component={HomeScreen} />
+          <PrivateRoute exact path="/restaurants/" component={RestaurantList} />
+          <PrivateRoute
+            exact
+            path="/restaurants/one"
+            component={RestaurantSingle}
+          />
         </Switch>
       </div>
     </Router>

@@ -72,7 +72,10 @@ export default function FormModal(props) {
   };
 
   const saveNewEntry = () => {
-    const restaurants = firebase.firestore().collection('restaurants');
+    const userId = get(firebase.auth().currentUser, 'uid', null);
+    const restaurants = firebase
+      .firestore()
+      .collection(`restaurants/users/${userId}`);
 
     restaurants
       .add({
@@ -87,7 +90,7 @@ export default function FormModal(props) {
           const uniqueFilename = new Date().getUTCMilliseconds();
 
           const folderRef = storageRef.child(
-            `images/user1235/${docId}/${uniqueFilename}`
+            `images/${userId}/${docId}/${uniqueFilename}`
           );
 
           folderRef.putString(img.data, 'data_url').then(function(snapshot) {
