@@ -85,20 +85,21 @@ export default function LogIn(props) {
         createAccountForm.password
       )
       .then(success => {
-        console.log('user uuid', success.user.uid);
+        localStorage.setItem('spreadUserId', success.user.uid);
+        props.history.push('/');
       })
       .catch(error => {
         setError(error);
       });
   };
 
-  const handleLogInSubmit = () => {
+  const handleLogInSubmit = event => {
+    event.preventDefault();
+
     firebase
       .auth()
       .signInWithEmailAndPassword(loginForm.email, loginForm.password)
       .then(success => {
-        console.log('user uuid', success);
-        console.log(firebase.auth().currentUser);
         localStorage.setItem('spreadUserId', success.user.uid);
         props.history.push('/');
       })
@@ -108,7 +109,7 @@ export default function LogIn(props) {
   };
 
   const renderLoginForm = () => (
-    <form>
+    <form onSubmit={handleLogInSubmit}>
       <TextField
         text="Email"
         value={loginForm.email}
@@ -121,11 +122,7 @@ export default function LogIn(props) {
         onChange={handleLogInChange('password')}
       />
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
-      <SubmitButton
-        onClick={handleLogInSubmit}
-        variant="contained"
-        color="primary"
-      >
+      <SubmitButton variant="contained" color="primary" type="submit">
         LOG IN
       </SubmitButton>
     </form>
