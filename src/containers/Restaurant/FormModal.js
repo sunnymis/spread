@@ -90,7 +90,7 @@ export default function FormModal(props) {
           const uniqueFilename = new Date().getUTCMilliseconds();
 
           const folderRef = storageRef.child(
-            `images/${userId}/${docId}/${uniqueFilename}`
+            `images/users/${userId}/${docId}/${uniqueFilename}`
           );
 
           folderRef.putString(img.data, 'data_url').then(function(snapshot) {
@@ -103,7 +103,10 @@ export default function FormModal(props) {
   };
 
   const editEntry = () => {
-    const restaurants = firebase.firestore().collection('restaurants');
+    const userId = get(firebase.auth().currentUser, 'uid', null);
+    const restaurants = firebase
+      .firestore()
+      .collection(`restaurants/users/${userId}`);
     const { data } = props;
     const docId = data.docId;
 
@@ -121,7 +124,7 @@ export default function FormModal(props) {
           const uniqueFilename = new Date().getUTCMilliseconds();
 
           const folderRef = storageRef.child(
-            `images/user1235/${docId}/${uniqueFilename}`
+            `images/users/${userId}/${docId}/${uniqueFilename}`
           );
 
           folderRef.putString(img.data, 'data_url').then(function(snapshot) {

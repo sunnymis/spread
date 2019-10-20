@@ -13,6 +13,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import PrintIcon from '@material-ui/icons/Print';
 import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
+import get from 'lodash/get';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
@@ -24,7 +25,9 @@ export default function Restaurant(props) {
 
   useEffect(() => {
     const storage = firebase.storage();
-    const storageRef = storage.ref(`images/user1235/${docId}`);
+    const userId = localStorage.getItem('spreadUserId');
+    console.log('userId from single', userId);
+    const storageRef = storage.ref(`images/users/${userId}/${docId}`);
 
     storageRef.listAll().then(data => {
       console.log('data', data);
