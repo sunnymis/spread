@@ -39,10 +39,9 @@ export default function AppBar(props) {
       .auth()
       .signOut()
       .then(function() {
-        console.log('Sign-out successful');
+        localStorage.removeItem('spreadUserId');
         setDrawerOpen(false);
         history.push('/login');
-        console.log(firebase.auth().currentUser);
       })
       .catch(function(error) {
         console.log('error', error);
