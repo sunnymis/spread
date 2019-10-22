@@ -1,51 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import HomeScreen from './containers/HomeScreen';
 import LogIn from './containers/LogIn';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
 import RestaurantSingle from './containers/Restaurant/Single';
-
 import firebase from 'firebase';
 
-function App() {
-  const [loggedIn] = useState(false);
+import { AuthContext } from './containers/Auth';
 
-  const userLoggedIn = () => {
-    console.log('firebase.auth().currentUser', firebase.auth().currentUser);
-    return localStorage.getItem('spreadUserId') !== null;
-  };
+function App(props) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const PrivateRoute = ({ children, component, ...rest }) => {
-    console.log('component', component);
-    console.log('userLoggedIn()', userLoggedIn());
-    return userLoggedIn() ? (
-      <Route component={component} {...rest} />
-    ) : (
-      <Redirect
-        to={{
-          pathname: '/login',
-        }}
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setCurrentUser(user);
+        setLoading(false);
+      } else {
+        setCurrentUser(null);
+        setLoading(false);
+      }
+    });
+  }, [currentUser]);
+
+  const PrivateRoute = ({ component: Component, user, ...rest }) => {
+    console.log('context', user);
+    return (
+      <Route
         {...rest}
+        render={props =>
+          user ? (
+            <Component {...props} {...rest} />
+          ) : (
+            <Redirect to={{ pathname: '/login' }} />
+          )
+        }
       />
     );
   };
 
-  return (
-    <Router history={createBrowserHistory()}>
-      <div>
-        <Switch>
-          <Route path="/login" exact component={LogIn} />
-          <PrivateRoute path="/" exact component={HomeScreen} />
-          <PrivateRoute exact path="/restaurants/" component={RestaurantList} />
-          <PrivateRoute
-            exact
-            path="/restaurants/one"
-            component={RestaurantSingle}
-          />
-        </Switch>
-      </div>
-    </Router>
+  console.log('currentUser  ', currentUser);
+  return loading ? (
+    <h1>LOADING</h1>
+  ) : (
+    <AuthContext.Provider value={{ currentUser }}>
+      <AuthContext.Consumer>
+        {({ currentUser: cu }) => (
+          <Router history={createBrowserHistory()}>
+            <Switch>
+              <PrivateRoute user={cu} path="/" exact component={HomeScreen} />
+              <PrivateRoute
+                exact
+                path="/restaurants/"
+                component={RestaurantList}
+              />
+              <PrivateRoute
+                exact
+                path="/restaurants/one"
+                component={RestaurantSingle}
+              />
+              <Route path="/login" exact component={LogIn} />
+            </Switch>
+          </Router>
+        )}
+      </AuthContext.Consumer>
+    </AuthContext.Provider>
   );
 }
 
