@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { styled } from '@material-ui/styles';
 import TextField from '../components/Form/TextField';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
+import { AuthContext } from './Auth';
 
 const StyledLogIn = styled('div')({
   flexGrow: 1,
