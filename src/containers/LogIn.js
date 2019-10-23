@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import { styled } from '@material-ui/styles';
 import TextField from '../components/Form/TextField';
 import Button from '@material-ui/core/Button';
-import firebase from 'firebase';
-import { AuthContext } from './Auth';
+import { login, createAccount } from '../auth';
 
 const StyledLogIn = styled('div')({
   flexGrow: 1,
@@ -79,12 +78,7 @@ export default function LogIn(props) {
   };
 
   const handleCreateAccountSubmit = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        createAccountForm.email,
-        createAccountForm.password
-      )
+    createAccount(createAccountForm.email, createAccountForm.password)
       .then(success => {
         localStorage.setItem('spreadUserId', success.user.uid);
         props.history.push('/');
@@ -97,9 +91,7 @@ export default function LogIn(props) {
   const handleLogInSubmit = event => {
     event.preventDefault();
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(loginForm.email, loginForm.password)
+    login(loginForm.email, loginForm.password)
       .then(success => {
         localStorage.setItem('spreadUserId', success.user.uid);
         props.history.push('/');
