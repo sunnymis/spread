@@ -28,6 +28,7 @@ export default function Carousel(props) {
     height: '250px',
     width: '250px',
     margin: '0 auto',
+    objectFit: 'cover',
   });
 
   const ImageContainer = styled('div')({
@@ -52,7 +53,11 @@ export default function Carousel(props) {
         {photos.map((photo, index) => (
           <ImageContainer key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
-              <Image src={photo} alt={'placeholder'} />
+              <Image
+                src={photo}
+                onClick={() => props.onImageClick(photo)}
+                alt={'placeholder'}
+              />
             ) : null}
           </ImageContainer>
         ))}

@@ -54,15 +54,17 @@ function App(props) {
               <PrivateRoute user={cu} path="/" exact component={HomeScreen} />
               <PrivateRoute
                 exact
+                user={cu}
                 path="/restaurants/"
                 component={RestaurantList}
               />
               <PrivateRoute
                 exact
+                user={cu}
                 path="/restaurants/one"
                 component={RestaurantSingle}
               />
-              <Route path="/login" exact component={Login} />
+              <Route path="/login" user={cu} exact component={Login} />
             </Switch>
           </Router>
         )}

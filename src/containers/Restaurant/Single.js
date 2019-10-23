@@ -8,20 +8,24 @@ import FormModal from './FormModal';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import SpeedDial from '../../components/SpeedDial';
 import EditIcon from '@material-ui/icons/Edit';
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
-import SaveIcon from '@material-ui/icons/Save';
-import PrintIcon from '@material-ui/icons/Print';
-import ShareIcon from '@material-ui/icons/Share';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+
 import DeleteIcon from '@material-ui/icons/Delete';
-import get from 'lodash/get';
 
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
   const [openForm, setOpenForm] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [savedImages, setSavedImages] = useState([]);
-
-  const { name, location, description, tags, docId } = props.location.state;
+  const [selectedImage, setSelectedImage] = useState(null);
+  const {
+    name,
+    location,
+    description,
+    tags,
+    docId,
+    rating,
+  } = props.location.state;
 
   useEffect(() => {
     const storage = firebase.storage();
@@ -54,7 +58,12 @@ export default function Restaurant(props) {
   };
 
   const Div = styled('div')({
-    paddingLeft: '16px',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+  });
+
+  const H1 = styled('h1')({
+    marginBottom: '8px',
   });
 
   const Tag = styled('span')({
@@ -63,12 +72,58 @@ export default function Restaurant(props) {
     color: '#fff',
     borderRadius: '10%',
     padding: '8px',
+    marginRight: '8px',
+    display: 'inline-block',
+    minWidth: '36px',
+    textAlign: 'center',
   });
 
   const SpeedDialContainer = styled('div')({
     position: 'absolute',
     right: '24px',
     bottom: '24px',
+  });
+
+  const LocationContainer = styled('div')({
+    display: 'flex',
+    marginBottom: '6px',
+  });
+
+  const StyledLocationIcon = styled(LocationOnOutlinedIcon)({
+    position: 'relative',
+    top: '5px',
+  });
+
+  const Location = styled('p')({
+    fontSize: '18px',
+    marginTop: '8px',
+    marginLeft: '8px',
+  });
+
+  const FullscreenImageContainer = styled('div')({
+    width: '90%',
+    height: '90%',
+    zIndex: '10',
+    position: 'absolute',
+    top: '0px',
+  });
+
+  const Image = styled('img')({
+    maxWidth: '90vw',
+    maxHeight: '450px',
+    width: 'auto',
+    height: 'auto',
+    position: 'relative',
+    top: '25%',
+  });
+
+  const Overlay = styled('div')({
+    position: 'absolute',
+    top: '0',
+    height: '100%',
+    width: '100%',
+    left: '0',
+    backgroundColor: 'rgba(0,0,0, 0.8)',
   });
 
   const actions = [
@@ -84,18 +139,25 @@ export default function Restaurant(props) {
     },
   ];
 
+  const handleOnImageClick = image => {
+    setSelectedImage(image);
+  };
+
   return (
     <Div>
-      <h1>{name}</h1>
-      <Rating name="simple-controlled" value={props.rating} readOnly />
+      <H1>{name}</H1>
+      <Rating name="simple-controlled" value={rating} readOnly />
 
-      <p>{location}</p>
+      <LocationContainer>
+        <StyledLocationIcon />
+        <Location>{location}</Location>
+      </LocationContainer>
       {tags && tags.map(t => <Tag>{t}</Tag>)}
 
       {savedImages.length > 0 && (
         <React.Fragment>
           <h2>Photos</h2>
-          <Carousel photos={savedImages} />
+          <Carousel onImageClick={handleOnImageClick} photos={savedImages} />
         </React.Fragment>
       )}
 
@@ -118,6 +180,16 @@ export default function Restaurant(props) {
         onNo={() => setOpenConfirmation(false)}
         onYes={() => deleteRestaurant()}
       />
+      {selectedImage && (
+        <React.Fragment>
+          <Overlay />
+          <FullscreenImageContainer
+            onClick={() => selectedImage && setSelectedImage(null)}
+          >
+            <Image src={selectedImage} />
+          </FullscreenImageContainer>
+        </React.Fragment>
+      )}
     </Div>
   );
 }
