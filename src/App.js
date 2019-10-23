@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import HomeScreen from './containers/HomeScreen';
-import LogIn from './containers/LogIn';
+// import LogIn from './containers/LogIn';
+import Login from './containers/Login/index';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
@@ -61,7 +62,7 @@ function App(props) {
                 path="/restaurants/one"
                 component={RestaurantSingle}
               />
-              <Route path="/login" exact component={LogIn} />
+              <Route path="/login" exact component={Login} />
             </Switch>
           </Router>
         )}
