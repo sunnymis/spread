@@ -1,18 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import HomeScreen from './containers/HomeScreen';
-// import LogIn from './containers/LogIn';
 import Login from './containers/Login/index';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import RestaurantList from './containers/Restaurant/List';
 import RestaurantSingle from './containers/Restaurant/Single';
 import firebase from 'firebase';
+import { useLoading } from './hooks/queries/useUI';
 
 import { AuthContext } from './containers/Auth';
 
 function App(props) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const reduxLoading = useLoading();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
@@ -27,7 +28,6 @@ function App(props) {
   }, [currentUser]);
 
   const PrivateRoute = ({ component: Component, user, ...rest }) => {
-    console.log('context', user);
     return (
       <Route
         {...rest}
@@ -42,8 +42,9 @@ function App(props) {
     );
   };
 
-  console.log('currentUser  ', currentUser);
-  return loading ? (
+  return reduxLoading ? (
+    <h1>REDUX LOADING</h1>
+  ) : loading ? (
     <h1>LOADING</h1>
   ) : (
     <AuthContext.Provider value={{ currentUser }}>

@@ -54,7 +54,6 @@ export default function FormModal(props) {
     let reader = new FileReader();
 
     reader.onload = function(e) {
-      console.log(file);
       setImages(imgs => [
         ...imgs,
         {
@@ -110,7 +109,6 @@ export default function FormModal(props) {
     const { data } = props;
     const docId = data.docId;
 
-    console.log('docId', docId);
     restaurants
       .doc(docId)
       .update({
@@ -138,7 +136,6 @@ export default function FormModal(props) {
 
   const submitForm = () => {
     if (editing) {
-      console.log('editing', editing);
       editEntry();
     } else {
       saveNewEntry();

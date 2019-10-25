@@ -30,11 +30,9 @@ export default function Restaurant(props) {
   useEffect(() => {
     const storage = firebase.storage();
     const userId = localStorage.getItem('spreadUserId');
-    console.log('userId from single', userId);
     const storageRef = storage.ref(`images/users/${userId}/${docId}`);
 
     storageRef.listAll().then(data => {
-      console.log('data', data);
       data.items.forEach(file => {
         file.getDownloadURL().then(url => {
           setSavedImages(imgs => [...imgs, url]);
