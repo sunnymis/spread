@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Rating from '@material-ui/lab/Rating';
 import { styled } from '@material-ui/styles';
 import { useRestaurants } from '../../hooks';
@@ -12,11 +13,12 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import { useRestaurantsActions } from '../../hooks/commands/useRestaurantsActions';
+
 export default function Restaurant(props) {
   const { restaurants, setRestaurants } = useRestaurants();
   const [openForm, setOpenForm] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
-  const [savedImages, setSavedImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const {
     name,
@@ -27,18 +29,11 @@ export default function Restaurant(props) {
     rating,
   } = props.location.state;
 
-  useEffect(() => {
-    const storage = firebase.storage();
-    const userId = localStorage.getItem('spreadUserId');
-    const storageRef = storage.ref(`images/users/${userId}/${docId}`);
+  const { fetchRestaurantImages } = useRestaurantsActions();
+  const savedImages = useSelector(state => state.selectedRestaurantImages);
 
-    storageRef.listAll().then(data => {
-      data.items.forEach(file => {
-        file.getDownloadURL().then(url => {
-          setSavedImages(imgs => [...imgs, url]);
-        });
-      });
-    });
+  useEffect(() => {
+    fetchRestaurantImages(docId);
   }, []);
 
   const deleteRestaurant = () => {

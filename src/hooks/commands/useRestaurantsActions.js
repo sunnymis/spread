@@ -1,7 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleLoader } from '../../store/actions/ui';
-import { setRestaurants } from '../../store/actions/restaurants';
-import { apiRequest, GET_RESTAURANTS } from '../../store/actions/api';
+import {
+  setRestaurants,
+  setRestaurantImages,
+} from '../../store/actions/restaurants';
+import {
+  apiRequest,
+  GET_RESTAURANTS,
+  GET_RESTAURANT_IMAGES,
+} from '../../store/actions/api';
 
 export const useRestaurantsActions = () => {
   const dispatch = useDispatch();
@@ -24,6 +31,18 @@ export const useRestaurantsActions = () => {
     );
   };
 
+  const fetchRestaurantImages = docId => {
+    dispatch(
+      apiRequest({
+        request: GET_RESTAURANT_IMAGES,
+        onSuccess: fetchRestaurantImagesSuccess,
+        meta: {
+          docId,
+        },
+      })
+    );
+  };
+
   const fetchRestaurantsSuccess = restaurants => {
     dispatch(
       setRestaurants({
@@ -32,7 +51,16 @@ export const useRestaurantsActions = () => {
     );
   };
 
+  const fetchRestaurantImagesSuccess = images => {
+    dispatch(
+      setRestaurantImages({
+        payload: images,
+      })
+    );
+  };
+
   return {
     fetchRestaurants,
+    fetchRestaurantImages,
   };
 };
