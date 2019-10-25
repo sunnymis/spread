@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { styled } from '@material-ui/styles';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -6,11 +7,16 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import ListItem from '../../components/ListItem';
 import FormModal from './FormModal';
-import { useRestaurants } from '../../hooks';
+import { useRestaurantsActions } from '../../hooks/commands/useRestaurantsActions';
 
 export default function RestaurantList(props) {
-  const { restaurants } = useRestaurants();
   const [open, setOpen] = useState(false);
+  const { fetchRestaurants } = useRestaurantsActions();
+  const restaurants = useSelector(state => state.restaurants);
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, []);
 
   function goToDetailsView(restaurant) {
     props.history.push('/restaurants/one', restaurant);
