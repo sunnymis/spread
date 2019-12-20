@@ -8,6 +8,7 @@ import {
   apiRequest,
   GET_RESTAURANTS,
   GET_RESTAURANT_IMAGES,
+  DELETE_RESTAURANT,
 } from '../../store/actions/api';
 
 export const useRestaurantsActions = () => {
@@ -43,6 +44,18 @@ export const useRestaurantsActions = () => {
     );
   };
 
+  const deleteRestaurant = docId => {
+    dispatch(
+      apiRequest({
+        request: DELETE_RESTAURANT,
+        onSuccess: deleteRestaurantSuccess,
+        meta: {
+          docId,
+        },
+      })
+    );
+  };
+
   const fetchRestaurantsSuccess = restaurants => {
     dispatch(
       setRestaurants({
@@ -59,8 +72,18 @@ export const useRestaurantsActions = () => {
     );
   };
 
+  const deleteRestaurantSuccess = () => {
+    dispatch(
+      apiRequest({
+        request: GET_RESTAURANTS,
+        onSuccess: fetchRestaurantsSuccess,
+      })
+    );
+  };
+
   return {
     fetchRestaurants,
     fetchRestaurantImages,
+    deleteRestaurant,
   };
 };

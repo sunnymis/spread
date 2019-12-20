@@ -16,7 +16,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useRestaurantsActions } from '../../hooks/commands/useRestaurantsActions';
 
 export default function Restaurant(props) {
-  const { restaurants, setRestaurants } = useRestaurants();
   const [openForm, setOpenForm] = useState(false);
   const [openConfirmation, setOpenConfirmation] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -29,26 +28,17 @@ export default function Restaurant(props) {
     rating,
   } = props.location.state;
 
-  const { fetchRestaurantImages } = useRestaurantsActions();
+  const { fetchRestaurantImages, deleteRestaurant } = useRestaurantsActions();
   const savedImages = useSelector(state => state.selectedRestaurantImages);
 
   useEffect(() => {
     fetchRestaurantImages(docId);
   }, []);
 
-  const deleteRestaurant = () => {
-    const { history } = props;
+  // const deleteRestaurant = () => {
+  //   const { history } = props;
 
-    firebase
-      .firestore()
-      .collection('restaurants')
-      .doc(docId)
-      .delete()
-      .then(() => {
-        setRestaurants([...restaurants]);
-        history.replace('/restaurants');
-      });
-  };
+  // };
 
   const Div = styled('div')({
     paddingLeft: '24px',
@@ -128,7 +118,10 @@ export default function Restaurant(props) {
     {
       icon: <DeleteIcon />,
       name: 'Delete',
-      onClick: () => setOpenConfirmation(true),
+      onClick: () => {
+        console.log('??');
+        setOpenConfirmation(true);
+      },
     },
   ];
 
@@ -168,10 +161,10 @@ export default function Restaurant(props) {
         data={props.location.state}
       />
       <ConfirmationModal
-        open={openConfirmation}
+        open={true}
         onClose={() => setOpenConfirmation(false)}
         onNo={() => setOpenConfirmation(false)}
-        onYes={() => deleteRestaurant()}
+        onYes={() => deleteRestaurant(docId)}
       />
       {selectedImage && (
         <React.Fragment>
