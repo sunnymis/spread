@@ -5,13 +5,3 @@ export interface Card {
 export interface Store {
   cards: Card[];
 }
-
-export interface Restaurant {
-  id: string,
-  name: string;
-  location: string;
-  rating: number;
-  tags: string[];
-  description: string;
-  images: string[];
-}

@@ -1,10 +1,11 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Action, SetRestaurant, DeleteRestaurant } from "./actions";
-import { AppState } from "./store";
-import { Restaurant } from "./types";
+import { Action, SetRestaurant, DeleteRestaurant, FetchRestaurants } from "../../actions";
+import { AppState } from "../../store";
+import { Restaurant } from "../Restaurants";
+import Restaurants from "../Restaurants";
 
 interface Props {
   restaurants: Restaurant[];
@@ -13,22 +14,11 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ restaurants, onAddClick, onDeleteClick }) => {
+  useEffect(() => {}, []);
+
   return (
     <div className="App">
-      {restaurants.map(r => (
-        <div>
-          <p>{r.name}</p>
-          <p>{r.description}</p>
-          <p>{r.rating}</p>
-          <p>{r.location}</p>
-          <p>{r.name}</p>
-          <pre>{JSON.stringify(r.tags)}</pre>
-          <pre>{JSON.stringify(r.images)}</pre>
-        </div>
-      ))}
-
-      <button onClick={onAddClick}>Add Restaurant</button>
-      <button onClick={onDeleteClick}>Delete Restaurant</button>
+      <Restaurants restaurants={restaurants} onAddClick={onAddClick} onDeleteClick={onDeleteClick} />
     </div>
   );
 };
@@ -49,7 +39,8 @@ export const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
   };
 
   return {
-    onAddClick: () => dispatch(SetRestaurant(newRestaurant)),
+    foadRestaurants: () => dispatch(FetchRestaurants("id-of-firebase")),
+    onAddClick: () => dispatch(SetRestaurant(newRestaurant, { hi: "world" })),
     onDeleteClick: () => dispatch(DeleteRestaurant("0"))
   };
 };

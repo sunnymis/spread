@@ -1,11 +1,11 @@
 import { createStore, combineReducers } from "redux";
 import { Action, AppActions } from "../actions";
-import { Restaurant } from '../types';
+import { Restaurant } from "../containers/Restaurants";
 
 const initialState: State = {
   restaurants: [
     {
-      id: '0',
+      id: "0",
       name: "My Restaurant",
       location: "Chelsea",
       rating: 4,
@@ -20,27 +20,27 @@ export interface State {
   restaurants: Restaurant[];
 }
 
-export const appReducer = (state:State = initialState, action:Action): State => { 
+export const appReducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
     case AppActions.SET_RESTAURANT:
       return {
         ...state,
         restaurants: [...state.restaurants, action.payload]
-      }
+      };
     case AppActions.DELETE_RESTAURANT:
       return {
         ...state,
         restaurants: state.restaurants.filter(r => r.id !== action.payload)
-      }
+      };
     default:
       return state;
   }
 };
 
 export const reducers = combineReducers({
-  app: appReducer,
+  app: appReducer
 });
 
-export type AppState = ReturnType<typeof reducers> 
+export type AppState = ReturnType<typeof reducers>;
 
 export const store = createStore(reducers);
