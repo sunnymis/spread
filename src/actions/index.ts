@@ -1,4 +1,7 @@
+import { ThunkDispatch } from "redux-thunk";
 import { Restaurant } from "../containers/Restaurants";
+import { State } from "../store";
+import firebase from "../firebase";
 
 export enum AppActions {
   FETCH_RESTAURANTS = "APP/FETCH_RESTAURANTS",
@@ -42,8 +45,33 @@ export const ReceivedRestaurants = makeAction<AppActions.RECEIVED_RESTAURANTS, R
 export const SetRestaurant = makeAction<AppActions.SET_RESTAURANT, Restaurant>(AppActions.SET_RESTAURANT);
 export const DeleteRestaurant = makeAction<AppActions.DELETE_RESTAURANT, string>(AppActions.DELETE_RESTAURANT);
 
+export const fetchAllRestaurants = (id: string) => {
+  return (dispatch: ThunkDispatch<State, undefined, Action>) => {
+    console.log("here i am", dispatch);
+    dispatch(FetchRestaurants(id));
+
+    firebase
+      .firestore()
+      .collection(`restaurants/users/${id}`)
+      .get()
+      .then(snapshot => {
+        const allRestaurants = snapshot.docs.map(r => {
+          const data = r.data() as Restaurant;
+
+          return {
+            ...data,
+            docId: r.id
+          };
+        });
+
+        dispatch(ReceivedRestaurants(allRestaurants));
+      });
+  };
+};
+
 const actions = {
   FetchRestaurants,
+  ReceivedRestaurants,
   SetRestaurant,
   DeleteRestaurant
 };

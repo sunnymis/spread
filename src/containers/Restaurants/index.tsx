@@ -8,6 +8,7 @@ export interface Restaurant {
   tags: string[];
   description: string;
   images: string[];
+  docId: string;
 }
 
 interface Props {
@@ -16,15 +17,11 @@ interface Props {
   onDeleteClick(): void;
 }
 
-export default function Restaurants({
-  restaurants,
-  onAddClick,
-  onDeleteClick
-}: Props) {
+export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: Props) {
   return (
     <div>
       {restaurants.map(r => (
-        <div>
+        <div key={r.docId}>
           <p>{r.name}</p>
           <p>{r.description}</p>
           <p>{r.rating}</p>
@@ -40,3 +37,6 @@ export default function Restaurants({
     </div>
   );
 }
+
+// TODO in future if data is hard ot update when editing a restaurant
+// check how to structure nested entities in this article
