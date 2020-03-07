@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { Action, AppActions } from "../actions";
-import { Restaurant } from "../containers/Restaurants";
 
 const initialState: State = {
   restaurants: {

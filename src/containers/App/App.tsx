@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { SetRestaurant, DeleteRestaurant, FetchRestaurants, fetchAllRestaurants } from "../../actions";
+import { SetRestaurant, DeleteRestaurant, FetchRestaurants } from "../../actions";
 import { AppState } from "../../store";
-import { Restaurant } from "../Restaurants";
 import Restaurants from "../Restaurants";
+import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 
 interface Props {
   fetchAll(docId: string): void;
@@ -50,7 +50,7 @@ export const mapDispatchToProps = (dispatch: any) => {
   };
 
   return {
-    fetchAll: (id: string) => dispatch(fetchAllRestaurants(id)),
+    fetchAll: (id: string) => dispatch(getRestaurantsByUserId(id)),
     loadRestaurants: () => dispatch(FetchRestaurants("id-of-firebase")),
     onAddClick: () => dispatch(SetRestaurant(newRestaurant)),
     onDeleteClick: () => dispatch(DeleteRestaurant("0"))

@@ -1,16 +1,5 @@
 import React from "react";
 
-export interface Restaurant {
-  id: string;
-  name: string;
-  location: string;
-  rating: number;
-  tags: string[];
-  description: string;
-  images: string[];
-  docId: string;
-}
-
 interface Props {
   restaurants: Restaurant[];
   onAddClick(): void;
