@@ -1,11 +1,8 @@
 {
-  "name": "cra-spread",
+  "name": "spread",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.4.1",
-    "@material-ui/icons": "^4.4.1",
-    "@material-ui/lab": "^4.0.0-alpha.26",
     "classnames": "^2.2.6",
     "firebase": "6.6.0",
     "lodash": "^4.17.15",
@@ -15,10 +12,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "react-swipeable-views": "^0.13.3",
-    "react-swipeable-views-utils": "^0.13.3",
-    "redux": "^4.0.4",
-    "styled-components": "^4.3.2"
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,7 +35,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.6"
-  }
+  "devDependencies": {}
 }
