@@ -1,6 +1,3 @@
-// const firebase = require("firebase");
-// require("firebase/firestore");
-
 import firebase from "firebase";
 
 const config = {
@@ -11,7 +8,5 @@ const config = {
 };
 
 firebase.initializeApp(config);
-
-// export { config as firebase };
 
 export default firebase;

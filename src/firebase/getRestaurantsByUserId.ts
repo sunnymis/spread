@@ -1,10 +1,10 @@
 import { ThunkDispatch } from "redux-thunk";
-import { State } from "../store";
+import { AppState } from "../store";
 import firebase from "../firebase";
 import { FetchRestaurants, ReceivedRestaurants, Action } from "../actions";
 
 export default function(id: string) {
-  return (dispatch: ThunkDispatch<State, undefined, Action>) => {
+  return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
     dispatch(FetchRestaurants(id));
 
     firebase

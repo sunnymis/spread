@@ -28,4 +28,4 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
 }
 
 // TODO in future if data is hard ot update when editing a restaurant
-// check how to structure nested entities in this article
+// check how to structure nested entities in this article https://redux.js.org/advanced/async-actions/

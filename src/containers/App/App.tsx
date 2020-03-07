@@ -37,22 +37,22 @@ export const mapStateToProps = (state: AppState) => ({
 });
 
 export const mapDispatchToProps = (dispatch: any) => {
-  // todo figure out how to type this dispatch
-  const newRestaurant: Restaurant = {
-    id: "1",
-    name: "New Restaurant",
-    location: "Brooklyn",
-    rating: 5,
-    tags: ["chinese"],
-    description: "coolio place",
-    images: ["link-to-img3", "link-to-second-img4"],
-    docId: "something"
-  };
-
   return {
     fetchAll: (id: string) => dispatch(getRestaurantsByUserId(id)),
     loadRestaurants: () => dispatch(FetchRestaurants("id-of-firebase")),
-    onAddClick: () => dispatch(SetRestaurant(newRestaurant)),
+    onAddClick: () =>
+      dispatch(
+        SetRestaurant({
+          id: "1",
+          name: "New Restaurant",
+          location: "Brooklyn",
+          rating: 5,
+          tags: ["chinese"],
+          description: "coolio place",
+          images: ["link-to-img3", "link-to-second-img4"],
+          docId: "something"
+        })
+      ),
     onDeleteClick: () => dispatch(DeleteRestaurant("0"))
   };
 };
