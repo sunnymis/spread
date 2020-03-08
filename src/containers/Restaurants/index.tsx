@@ -3,7 +3,7 @@ import React from "react";
 interface Props {
   restaurants: Restaurant[];
   onAddClick(restaurant: Restaurant): void;
-  onDeleteClick(): void;
+  onDeleteClick(id: string): void;
 }
 
 export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: Props) {
@@ -21,6 +21,7 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
 
   return (
     <div>
+      <h1>{`Count: ${restaurants.length}`}</h1>
       {restaurants.map(r => (
         <div key={r.docId}>
           <p>{r.name}</p>
@@ -30,6 +31,7 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
           <p>{r.name}</p>
           <pre>{JSON.stringify(r.tags)}</pre>
           <pre>{JSON.stringify(r.images)}</pre>
+          <button onClick={() => onDeleteClick(r.docId)}>Delete Restaurant</button>
           <br />
           <hr />
           <br />
@@ -37,7 +39,6 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
       ))}
 
       <button onClick={() => onAddClick(newRestaurant)}>Add Restaurant</button>
-      <button onClick={onDeleteClick}>Delete Restaurant</button>
     </div>
   );
 }

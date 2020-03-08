@@ -50,7 +50,7 @@ export const appReducer = (state: State = initialState, action: Action): State =
         ...state,
         restaurants: {
           ...state.restaurants,
-          items: state.restaurants.items.filter(r => r.id !== action.payload)
+          items: state.restaurants.items.filter(r => r.docId !== action.payload)
         }
       };
     default:

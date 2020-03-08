@@ -2,18 +2,18 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { DeleteRestaurant } from "../../actions";
 import { AppState } from "../../store";
 import Restaurants from "../Restaurants";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
+import deleteRestaurant from "../../firebase/deleteRestaurant";
 
 interface Props {
   fetchAll(docId: string): void;
   restaurants: Restaurant[];
   restaurantsLoading: boolean;
   onAddClick(restaurant: Restaurant): void;
-  onDeleteClick(): void;
+  onDeleteClick(id: string): void;
 }
 
 const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAddClick, onDeleteClick }) => {
@@ -24,6 +24,10 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
 
   const handleOnAddClick = (restaurant: Restaurant) => {
     onAddClick(restaurant);
+  }
+
+  const handleOnDeleteClick = (id: string) => {
+    onDeleteClick(id);
   }
 
   return (
@@ -46,7 +50,7 @@ export const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchAll: (id: string) => dispatch(getRestaurantsByUserId(id)),
     onAddClick: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
-    onDeleteClick: () => dispatch(DeleteRestaurant("0"))
+    onDeleteClick: (id: string) => dispatch(deleteRestaurant(id))
   };
 };
 
