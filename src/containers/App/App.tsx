@@ -25,8 +25,8 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
       {restaurantsLoading ? (
         <div>Loading Restaurants...</div>
       ) : (
-        <Restaurants restaurants={restaurants} onAddClick={onAddClick} onDeleteClick={onDeleteClick} />
-      )}
+          <Restaurants restaurants={restaurants} onAddClick={onAddClick} onDeleteClick={onDeleteClick} />
+        )}
     </div>
   );
 };

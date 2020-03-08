@@ -3,7 +3,7 @@ import { AppState } from "../store";
 import firebase from "../firebase";
 import { FetchRestaurants, ReceivedRestaurants, Action } from "../actions";
 
-export default function(id: string) {
+export default function (id: string) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
     dispatch(FetchRestaurants(id));
 
