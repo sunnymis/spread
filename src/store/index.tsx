@@ -5,6 +5,7 @@ import reducers from "./reducers";
 export interface State {
   restaurants: {
     isFetching: boolean;
+    isAdding: boolean;
     items: Restaurant[];
   };
 }

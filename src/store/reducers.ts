@@ -5,6 +5,7 @@ import { Action, AppActions } from "../actions";
 const initialState: State = {
   restaurants: {
     isFetching: false,
+    isAdding: false,
     items: []
   }
 };
@@ -26,6 +27,14 @@ export const appReducer = (state: State = initialState, action: Action): State =
           ...state.restaurants,
           isFetching: false,
           items: [...action.payload]
+        }
+      };
+    case AppActions.ADD_RESTAURANT:
+      return {
+        ...state,
+        restaurants: {
+          ...state.restaurants,
+          isAdding: true,
         }
       };
     case AppActions.SET_RESTAURANT:

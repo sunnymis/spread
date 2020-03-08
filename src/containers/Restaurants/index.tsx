@@ -2,11 +2,23 @@ import React from "react";
 
 interface Props {
   restaurants: Restaurant[];
-  onAddClick(): void;
+  onAddClick(restaurant: Restaurant): void;
   onDeleteClick(): void;
 }
 
 export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: Props) {
+  const newRestaurant = {
+    id: "1",
+    name: "hot New Restaurant",
+    location: "UES",
+    rating: 5,
+    tags: ["taco"],
+    description: "coolio place",
+    images: ["link-to-img3", "link-to-second-img4"],
+    docId: "something"
+  };
+
+
   return (
     <div>
       {restaurants.map(r => (
@@ -18,10 +30,13 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
           <p>{r.name}</p>
           <pre>{JSON.stringify(r.tags)}</pre>
           <pre>{JSON.stringify(r.images)}</pre>
+          <br />
+          <hr />
+          <br />
         </div>
       ))}
 
-      <button onClick={onAddClick}>Add Restaurant</button>
+      <button onClick={() => onAddClick(newRestaurant)}>Add Restaurant</button>
       <button onClick={onDeleteClick}>Delete Restaurant</button>
     </div>
   );

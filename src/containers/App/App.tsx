@@ -2,16 +2,17 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { SetRestaurant, DeleteRestaurant, FetchRestaurants } from "../../actions";
+import { DeleteRestaurant } from "../../actions";
 import { AppState } from "../../store";
 import Restaurants from "../Restaurants";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
+import addRestaurant from "../../firebase/addRestaurant";
 
 interface Props {
   fetchAll(docId: string): void;
   restaurants: Restaurant[];
   restaurantsLoading: boolean;
-  onAddClick(): void;
+  onAddClick(restaurant: Restaurant): void;
   onDeleteClick(): void;
 }
 
@@ -20,12 +21,17 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
     fetchAll("n23qMAUSzDR5GcPgQmlarnK0Ok43");
   }, []);
 
+
+  const handleOnAddClick = (restaurant: Restaurant) => {
+    onAddClick(restaurant);
+  }
+
   return (
     <div className="App">
       {restaurantsLoading ? (
         <div>Loading Restaurants...</div>
       ) : (
-          <Restaurants restaurants={restaurants} onAddClick={onAddClick} onDeleteClick={onDeleteClick} />
+          <Restaurants restaurants={restaurants} onAddClick={handleOnAddClick} onDeleteClick={onDeleteClick} />
         )}
     </div>
   );
@@ -39,20 +45,7 @@ export const mapStateToProps = (state: AppState) => ({
 export const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchAll: (id: string) => dispatch(getRestaurantsByUserId(id)),
-    loadRestaurants: () => dispatch(FetchRestaurants("id-of-firebase")),
-    onAddClick: () =>
-      dispatch(
-        SetRestaurant({
-          id: "1",
-          name: "New Restaurant",
-          location: "Brooklyn",
-          rating: 5,
-          tags: ["chinese"],
-          description: "coolio place",
-          images: ["link-to-img3", "link-to-second-img4"],
-          docId: "something"
-        })
-      ),
+    onAddClick: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
     onDeleteClick: () => dispatch(DeleteRestaurant("0"))
   };
 };
