@@ -9,7 +9,7 @@ interface Props {
 export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: Props) {
   const newRestaurant = {
     id: "1",
-    name: "hot New Restaurant",
+    name: "super hot New Restaurant",
     location: "UES",
     rating: 5,
     tags: ["taco"],

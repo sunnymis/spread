@@ -38,7 +38,7 @@ export const FetchRestaurants = makeAction<AppActions.FETCH_RESTAURANTS, string>
 export const ReceivedRestaurants = makeAction<AppActions.RECEIVED_RESTAURANTS, Restaurant[]>(
   AppActions.RECEIVED_RESTAURANTS,
 );
-export const AddRestaurant = makeAction<AppActions.ADD_RESTAURANT, string>(AppActions.ADD_RESTAURANT)
+export const AddRestaurant = makeAction<AppActions.ADD_RESTAURANT, Restaurant>(AppActions.ADD_RESTAURANT)
 export const SetRestaurant = makeAction<AppActions.SET_RESTAURANT, Restaurant>(
   AppActions.SET_RESTAURANT,
 );

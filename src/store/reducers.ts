@@ -34,6 +34,7 @@ export const appReducer = (state: State = initialState, action: Action): State =
         ...state,
         restaurants: {
           ...state.restaurants,
+          items: [...state.restaurants.items, { ...action.payload }],
           isAdding: true,
         }
       };
