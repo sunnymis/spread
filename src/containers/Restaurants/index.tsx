@@ -3,21 +3,10 @@ import React from "react";
 interface Props {
   restaurants: Restaurant[];
   onDeleteClick(id: string): void;
+  onEditClick(restaurant: Restaurant): void;
 }
 
-export default function Restaurants({ restaurants, onDeleteClick }: Props) {
-  const newRestaurant = {
-    id: "1",
-    name: "super hot New Restaurant",
-    location: "UES",
-    rating: 5,
-    tags: ["taco"],
-    description: "coolio place",
-    images: ["link-to-img3", "link-to-second-img4"],
-    docId: "something"
-  };
-
-
+export default function Restaurants({ restaurants, onEditClick, onDeleteClick }: Props) {
   return (
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
@@ -31,6 +20,7 @@ export default function Restaurants({ restaurants, onDeleteClick }: Props) {
           <pre>{JSON.stringify(r.tags)}</pre>
           <pre>{JSON.stringify(r.images)}</pre>
           <button onClick={() => onDeleteClick(r.docId || '')}>Delete Restaurant</button>
+          <button onClick={() => onEditClick(r)}>Edit Restaurant</button>
           <br />
           <hr />
           <br />

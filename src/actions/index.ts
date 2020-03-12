@@ -2,7 +2,8 @@ export enum AppActions {
   FETCH_RESTAURANTS = 'APP/FETCH_RESTAURANTS',
   RECEIVED_RESTAURANTS = 'APP/RECEIVED_RESTAURANTS',
   SET_RESTAURANT = 'APP/SET_RESTAURANT',
-  DELETE_RESTAURANT = 'APP/DELETE_RESTAURANT'
+  DELETE_RESTAURANT = 'APP/DELETE_RESTAURANT',
+  EDIT_RESTAURANT = 'APP/EDIT_RESTAURANT',
 }
 
 type ActionFn = (...args: any[]) => any;
@@ -43,12 +44,16 @@ export const SetRestaurant = makeAction<AppActions.SET_RESTAURANT, Restaurant>(
 export const DeleteRestaurant = makeAction<AppActions.DELETE_RESTAURANT, string>(
   AppActions.DELETE_RESTAURANT,
 );
+export const EditRestaurant = makeAction<AppActions.EDIT_RESTAURANT, Restaurant>(
+  AppActions.EDIT_RESTAURANT,
+);
 
 const actions = {
   FetchRestaurants,
   ReceivedRestaurants,
   SetRestaurant,
   DeleteRestaurant,
+  EditRestaurant,
 };
 
 export type Action = ActionUnions<typeof actions>;

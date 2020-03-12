@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
@@ -8,6 +8,7 @@ import Restaurants from "../Restaurants";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
 import deleteRestaurant from "../../firebase/deleteRestaurant";
+import updateRestaurant from "../../firebase/updateRestaurant";
 
 interface Props {
   fetchAll(docId: string): void;
@@ -15,6 +16,7 @@ interface Props {
   restaurantsLoading: boolean;
   onAddClick(restaurant: Restaurant): void;
   onDeleteClick(id: string): void;
+  onEditClick(restaurant: Restaurant): void;
 }
 
 interface FormValues {
@@ -24,31 +26,42 @@ interface FormValues {
   description: string;
 }
 
-const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAddClick, onDeleteClick }) => {
-  useEffect(() => {
-    fetchAll("n23qMAUSzDR5GcPgQmlarnK0Ok43");
-  }, []);
-
-  const handleOnDeleteClick = (id: string) => {
-    onDeleteClick(id);
-  }
-
+const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAddClick, onDeleteClick, onEditClick }) => {
   const initialValues: FormValues = {
     name: 'my_restaurant',
     location: 'upper east side',
     rating: 5,
     description: 'great. v good.'
+  }
+  const [formValues, setFormValues] = useState(initialValues);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingDocId, setEditingDocId] = useState('');
 
+  useEffect(() => {
+    fetchAll("n23qMAUSzDR5GcPgQmlarnK0Ok43");
+  }, []);
+
+  const handleOnEditClick = (restaurant: Restaurant) => {
+    setIsEditing(true);
+    setEditingDocId(restaurant.docId || '')
+    setFormValues(restaurant)
   }
 
   return (
     <div className="App">
       <Formik
-        initialValues={initialValues}
+        enableReinitialize
+        initialValues={formValues}
         onSubmit={(values, actions) => {
-          console.log('values', values);
-          console.log('actions', actions);
-          onAddClick({ ...values });
+          if (isEditing) {
+            const newRestaurant = {
+              ...values,
+              docId: editingDocId
+            };
+            onEditClick(newRestaurant)
+          } else {
+            onAddClick({ ...values });
+          }
         }}
       >
         {
@@ -59,7 +72,16 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
               <Field type="text" name="rating" />
               <Field type="text" name="description" />
               <ErrorMessage name="name" component="div" />
-              <button type="submit" disabled={isSubmitting}>Submit</button>
+              {
+                isEditing ? (
+                  <button type="submit">Submit Edit </button>
+                ) : (
+                    <button type="submit" disabled={isSubmitting}>Submit New </button>
+                  )
+              }
+              {isEditing && (
+                <button type="button" onClick={() => setIsEditing(false)}>Stop Edit</button>
+              )}
             </Form>
           )
         }
@@ -67,7 +89,7 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
       {restaurantsLoading ? (
         <div>Loading Restaurants...</div>
       ) : (
-          <Restaurants restaurants={restaurants} onDeleteClick={onDeleteClick} />
+          <Restaurants restaurants={restaurants} onEditClick={handleOnEditClick} onDeleteClick={onDeleteClick} />
         )}
     </div>
   );
@@ -82,7 +104,8 @@ export const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchAll: (id: string) => dispatch(getRestaurantsByUserId(id)),
     onAddClick: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
-    onDeleteClick: (id: string) => dispatch(deleteRestaurant(id))
+    onDeleteClick: (id: string) => dispatch(deleteRestaurant(id)),
+    onEditClick: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
   };
 };
 

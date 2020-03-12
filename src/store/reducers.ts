@@ -44,6 +44,17 @@ export const appReducer = (state: State = initialState, action: Action): State =
           items: state.restaurants.items.filter(r => r.docId !== action.payload)
         }
       };
+    case AppActions.EDIT_RESTAURANT:
+      // todo see if there is a better way to do this. 
+      const restaurantsWithoutOriginal = state.restaurants.items.filter(r => r.docId !== action.payload.docId);
+
+      return {
+        ...state,
+        restaurants: {
+          ...state.restaurants,
+          items: [...restaurantsWithoutOriginal, action.payload]
+        }
+      };
     default:
       return state;
   }
