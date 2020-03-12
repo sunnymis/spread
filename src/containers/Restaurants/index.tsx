@@ -2,11 +2,10 @@ import React from "react";
 
 interface Props {
   restaurants: Restaurant[];
-  onAddClick(restaurant: Restaurant): void;
   onDeleteClick(id: string): void;
 }
 
-export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: Props) {
+export default function Restaurants({ restaurants, onDeleteClick }: Props) {
   const newRestaurant = {
     id: "1",
     name: "super hot New Restaurant",
@@ -31,14 +30,12 @@ export default function Restaurants({ restaurants, onAddClick, onDeleteClick }: 
           <p>{r.name}</p>
           <pre>{JSON.stringify(r.tags)}</pre>
           <pre>{JSON.stringify(r.images)}</pre>
-          <button onClick={() => onDeleteClick(r.docId)}>Delete Restaurant</button>
+          <button onClick={() => onDeleteClick(r.docId || '')}>Delete Restaurant</button>
           <br />
           <hr />
           <br />
         </div>
       ))}
-
-      <button onClick={() => onAddClick(newRestaurant)}>Add Restaurant</button>
     </div>
   );
 }
