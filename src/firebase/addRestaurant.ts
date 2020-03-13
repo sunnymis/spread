@@ -6,11 +6,9 @@ import { receivedRestaurants, Action } from "../actions";
 export default function (restaurant: Restaurant) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
 
-    const restaurants = firebase
+    firebase
       .firestore()
-      .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`);
-
-    restaurants
+      .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`)
       .add({
         ...restaurant
       })
