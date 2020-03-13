@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 import { AppState } from "../../store";
 import Restaurants from "../Restaurants";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
 import deleteRestaurant from "../../firebase/deleteRestaurant";
 import updateRestaurant from "../../firebase/updateRestaurant";
+import RestaurantForm from '../Restaurants/Form';
+
+import { FormValues } from '../Restaurants/Form';
 
 interface Props {
   fetchAll(docId: string): void;
@@ -19,12 +22,7 @@ interface Props {
   onEditClick(restaurant: Restaurant): void;
 }
 
-interface FormValues {
-  name: string;
-  location: string;
-  rating: number;
-  description: string;
-}
+
 
 const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAddClick, onDeleteClick, onEditClick }) => {
   const initialValues: FormValues = {
@@ -49,43 +47,14 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
 
   return (
     <div className="App">
-      <Formik
-        enableReinitialize
-        initialValues={formValues}
-        onSubmit={(values, actions) => {
-          if (isEditing) {
-            const newRestaurant = {
-              ...values,
-              docId: editingDocId
-            };
-            onEditClick(newRestaurant)
-          } else {
-            onAddClick({ ...values });
-          }
-        }}
-      >
-        {
-          ({ isSubmitting }) => (
-            <Form>
-              <Field type="text" name="name" />
-              <Field type="text" name="location" />
-              <Field type="text" name="rating" />
-              <Field type="text" name="description" />
-              <ErrorMessage name="name" component="div" />
-              {
-                isEditing ? (
-                  <button type="submit">Submit Edit </button>
-                ) : (
-                    <button type="submit" disabled={isSubmitting}>Submit New </button>
-                  )
-              }
-              {isEditing && (
-                <button type="button" onClick={() => setIsEditing(false)}>Stop Edit</button>
-              )}
-            </Form>
-          )
-        }
-      </Formik>
+      <RestaurantForm
+        isEditing={isEditing}
+        editingDocId={editingDocId}
+        formValues={formValues}
+        onAddClick={onAddClick}
+        onEditClick={onEditClick}
+        onSetIsEditing={() => setIsEditing(false)}
+      />
       {restaurantsLoading ? (
         <div>Loading Restaurants...</div>
       ) : (
