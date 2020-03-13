@@ -1,7 +1,6 @@
 export enum AppActions {
   FETCH_RESTAURANTS = 'APP/FETCH_RESTAURANTS',
   RECEIVED_RESTAURANTS = 'APP/RECEIVED_RESTAURANTS',
-  SET_RESTAURANT = 'APP/SET_RESTAURANT',
   DELETE_RESTAURANT = 'APP/DELETE_RESTAURANT',
   EDIT_RESTAURANT = 'APP/EDIT_RESTAURANT',
 }
@@ -32,28 +31,24 @@ export const makeAction = <A extends AppActions, P>(type: A) => (payload: P, met
   meta,
 });
 
-export const FetchRestaurants = makeAction<AppActions.FETCH_RESTAURANTS, string>(
+export const fetchRestaurants = makeAction<AppActions.FETCH_RESTAURANTS, string>(
   AppActions.FETCH_RESTAURANTS,
 );
-export const ReceivedRestaurants = makeAction<AppActions.RECEIVED_RESTAURANTS, Restaurant[]>(
+export const receivedRestaurants = makeAction<AppActions.RECEIVED_RESTAURANTS, Restaurant[]>(
   AppActions.RECEIVED_RESTAURANTS,
 );
-export const SetRestaurant = makeAction<AppActions.SET_RESTAURANT, Restaurant>(
-  AppActions.SET_RESTAURANT,
-);
-export const DeleteRestaurant = makeAction<AppActions.DELETE_RESTAURANT, string>(
+export const deleteRestaurant = makeAction<AppActions.DELETE_RESTAURANT, string>(
   AppActions.DELETE_RESTAURANT,
 );
-export const EditRestaurant = makeAction<AppActions.EDIT_RESTAURANT, Restaurant>(
+export const editRestaurant = makeAction<AppActions.EDIT_RESTAURANT, Restaurant>(
   AppActions.EDIT_RESTAURANT,
 );
 
 const actions = {
-  FetchRestaurants,
-  ReceivedRestaurants,
-  SetRestaurant,
-  DeleteRestaurant,
-  EditRestaurant,
+  fetchRestaurants,
+  receivedRestaurants,
+  deleteRestaurant,
+  editRestaurant,
 };
 
 export type Action = ActionUnions<typeof actions>;

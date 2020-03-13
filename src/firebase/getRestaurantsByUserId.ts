@@ -1,11 +1,11 @@
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../store";
 import firebase from "../firebase";
-import { FetchRestaurants, ReceivedRestaurants, Action } from "../actions";
+import { fetchRestaurants, receivedRestaurants, Action } from "../actions";
 
 export default function (id: string) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
-    dispatch(FetchRestaurants(id));
+    dispatch(fetchRestaurants(id));
 
     firebase
       .firestore()
@@ -21,7 +21,7 @@ export default function (id: string) {
           };
         });
 
-        dispatch(ReceivedRestaurants(allRestaurants));
+        dispatch(receivedRestaurants(allRestaurants));
       });
   };
 }

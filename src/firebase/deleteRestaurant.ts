@@ -1,7 +1,7 @@
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../store";
 import firebase from "../firebase";
-import { DeleteRestaurant, Action } from "../actions";
+import { deleteRestaurant, Action } from "../actions";
 
 export default function (docId: string) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
@@ -12,7 +12,7 @@ export default function (docId: string) {
       .delete()
       .then(() => {
         console.log('deleted', docId);
-        dispatch(DeleteRestaurant(docId));
+        dispatch(deleteRestaurant(docId));
       });
   };
 }

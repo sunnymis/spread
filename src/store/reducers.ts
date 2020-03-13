@@ -28,14 +28,6 @@ export const appReducer = (state: State = initialState, action: Action): State =
           isFetching: false
         }
       };
-    case AppActions.SET_RESTAURANT:
-      return {
-        ...state,
-        restaurants: {
-          ...state.restaurants,
-          items: [...state.restaurants.items, action.payload]
-        }
-      };
     case AppActions.DELETE_RESTAURANT:
       return {
         ...state,

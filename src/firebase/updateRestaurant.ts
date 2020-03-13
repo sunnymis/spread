@@ -1,7 +1,7 @@
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../store";
 import firebase from "../firebase";
-import { EditRestaurant, Action } from "../actions";
+import { editRestaurant, Action } from "../actions";
 
 export default function (restaurant: Restaurant) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
@@ -17,7 +17,7 @@ export default function (restaurant: Restaurant) {
         // directly from the result object instead of the docId hack.
         // The docId hack here is because adding a restaurant to state 
         // without a docId won't let you delete it. 
-        dispatch(EditRestaurant(restaurant));
+        dispatch(editRestaurant(restaurant));
       });
   };
 }
