@@ -1,13 +1,16 @@
-import { combineReducers } from "redux";
-import { RestaurantState } from "../store";
-import { Action, AppActions } from "../actions";
+import { Action, AppActions } from "../../../actions";
+
+export interface RestaurantState {
+  isFetching: boolean;
+  items: Restaurant[];
+}
 
 const initialState: RestaurantState = {
   isFetching: false,
   items: []
 };
 
-export const restaurantReducer = (state: RestaurantState = initialState, action: Action): RestaurantState => {
+const restaurantReducer = (state: RestaurantState = initialState, action: Action): RestaurantState => {
   switch (action.type) {
     case AppActions.FETCH_RESTAURANTS:
       return {
@@ -38,6 +41,4 @@ export const restaurantReducer = (state: RestaurantState = initialState, action:
   }
 };
 
-export default combineReducers({
-  restaurants: restaurantReducer
-});
+export default restaurantReducer;

@@ -1,11 +1,9 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunkMiddleware from "redux-thunk";
 import reducers from "./reducers";
+import { RestaurantState } from './reducers/restaurant';
 
-export interface RestaurantState {
-  isFetching: boolean;
-  items: Restaurant[];
-}
+
 export interface State {
   restaurants: RestaurantState
 }
