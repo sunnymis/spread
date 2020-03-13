@@ -96,8 +96,8 @@ const App: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAdd
 };
 
 export const mapStateToProps = (state: AppState) => ({
-  restaurantsLoading: state.app.restaurants.isFetching,
-  restaurants: state.app.restaurants.items
+  restaurantsLoading: state.restaurants.isFetching,
+  restaurants: state.restaurants.items
 });
 
 export const mapDispatchToProps = (dispatch: any) => {

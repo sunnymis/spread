@@ -1,51 +1,37 @@
 import { combineReducers } from "redux";
-import { State } from "../store";
+import { RestaurantState } from "../store";
 import { Action, AppActions } from "../actions";
 
-const initialState: State = {
-  restaurants: {
-    isFetching: false,
-    items: []
-  }
+const initialState: RestaurantState = {
+  isFetching: false,
+  items: []
 };
 
-export const appReducer = (state: State = initialState, action: Action): State => {
+export const restaurantReducer = (state: RestaurantState = initialState, action: Action): RestaurantState => {
   switch (action.type) {
     case AppActions.FETCH_RESTAURANTS:
       return {
         ...state,
-        restaurants: {
-          ...state.restaurants,
-          isFetching: true
-        }
+        isFetching: true
       };
     case AppActions.RECEIVED_RESTAURANTS:
       return {
         ...state,
-        restaurants: {
-          ...state.restaurants,
-          items: [...state.restaurants.items, ...action.payload],
-          isFetching: false
-        }
+        items: [...state.items, ...action.payload],
+        isFetching: false
       };
     case AppActions.DELETE_RESTAURANT:
       return {
         ...state,
-        restaurants: {
-          ...state.restaurants,
-          items: state.restaurants.items.filter(r => r.docId !== action.payload)
-        }
+        items: state.items.filter(r => r.docId !== action.payload)
       };
     case AppActions.EDIT_RESTAURANT:
       // todo see if there is a better way to do this. 
-      const restaurantsWithoutOriginal = state.restaurants.items.filter(r => r.docId !== action.payload.docId);
+      const restaurantsWithoutOriginal = state.items.filter(r => r.docId !== action.payload.docId);
 
       return {
         ...state,
-        restaurants: {
-          ...state.restaurants,
-          items: [...restaurantsWithoutOriginal, action.payload]
-        }
+        items: [...restaurantsWithoutOriginal, action.payload]
       };
     default:
       return state;
@@ -53,5 +39,5 @@ export const appReducer = (state: State = initialState, action: Action): State =
 };
 
 export default combineReducers({
-  app: appReducer
+  restaurants: restaurantReducer
 });
