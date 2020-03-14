@@ -35,7 +35,7 @@ const Restaurants: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoadin
 
   useEffect(() => {
     fetchAll("n23qMAUSzDR5GcPgQmlarnK0Ok43");
-  }, []);
+  }, []); // eslint-disable react-hooks/exhaustive-deps
 
   const handleOnEditClick = (restaurant: Restaurant) => {
     setIsEditing(true);
