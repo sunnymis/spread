@@ -71,24 +71,29 @@ const Restaurants: React.FC<Props> = (props) => {
     return <h1>Loading Restaurants...</h1>
   }
 
-  if (showForm) {
-    // todo cancel button should clear form values 
-    return (
-      <div>
-        <Form
-          editingRestaurant={editingRestaurant}
-          formValues={formValues}
-          onSubmit={handleOnSubmit}
-        />
-        <button onClick={reset}>CANCEL</button>
-      </div>
-    )
-  }
-
   return (
     <div className="App">
-      <List restaurants={restaurants} onEditClick={handleOnEditClick} onDeleteClick={deleteRestaurant} />
-      <button onClick={() => setShowForm(true)}>ADD NEW</button>
+      {
+        showForm ? (
+          <div>
+            <Form
+              editingRestaurant={editingRestaurant}
+              formValues={formValues}
+              onSubmit={handleOnSubmit}
+            />
+            <button onClick={reset}>CANCEL</button>
+          </div>
+        ) : (
+            <div>
+              <List
+                restaurants={restaurants}
+                onEditClick={handleOnEditClick}
+                onDeleteClick={deleteRestaurant}
+              />
+              <button onClick={() => setShowForm(true)}>ADD NEW</button>
+            </div>
+          )
+      }
     </div>
   );
 };
