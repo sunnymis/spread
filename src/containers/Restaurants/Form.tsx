@@ -1,5 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
+import Input from '../../components/Input';
+import styles from './restaurants.module.scss';
 
 export interface FormValues {
   name: string;
@@ -35,24 +37,26 @@ const RestaurantForm = (props: Props) => {
   }
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={formValues}
-      onSubmit={handleOnSubmit}
-    >
-      {
-        () => (
-          <Form>
-            <Field type="text" name="name" />
-            <Field type="text" name="location" />
-            <Field type="text" name="rating" />
-            <Field type="text" name="description" />
-            <ErrorMessage name="name" component="div" />
-            <button type="submit">{buttonText}</button>
-          </Form>
-        )
-      }
-    </Formik>
+    <div className={styles.formContainer}>
+      <Formik
+        enableReinitialize
+        initialValues={formValues}
+        onSubmit={handleOnSubmit}
+      >
+        {
+          () => (
+            <Form>
+              <Input label="Name" type="text" name="name" />
+              <Input label="Location" type="text" name="location" />
+              <Input label="Rating" type="text" name="rating" />
+              <Input label="Description" placeholder="hello" type="text" name="description" />
+              <ErrorMessage name="name" component="div" />
+              <button type="submit">{buttonText}</button>
+            </Form>
+          )
+        }
+      </Formik>
+    </div>
   )
 }
 
