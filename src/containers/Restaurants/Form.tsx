@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, ErrorMessage } from 'formik';
 import Input from '../../components/Input';
+import TextArea from '../../components/Input/TextArea';
 import Button from '../../components/Button';
 import styles from './restaurants.module.scss';
 
@@ -50,7 +51,7 @@ const RestaurantForm = (props: Props) => {
               <Input label="Name" type="text" name="name" />
               <Input label="Location" type="text" name="location" />
               <Input label="Rating" type="text" name="rating" />
-              <Input label="Description" placeholder="hello" type="text" name="description" />
+              <TextArea label="Description" name="description" />
               <ErrorMessage name="name" component="div" />
               <Button type="submit" text={buttonText} />
             </Form>
