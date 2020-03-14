@@ -10,7 +10,7 @@ import updateRestaurant from "../../firebase/updateRestaurant";
 import Form from './Form';
 import List from './List';
 
-import { FormValues } from '../Restaurants/Form';
+import { FormValues } from './Form';
 
 interface Props {
   fetchAll(docId: string): void;
@@ -20,7 +20,6 @@ interface Props {
   onDeleteClick(id: string): void;
   onEditClick(restaurant: Restaurant): void;
 }
-
 
 const Restaurants: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoading, onAddClick, onDeleteClick, onEditClick }) => {
   const initialValues: FormValues = {
@@ -32,6 +31,7 @@ const Restaurants: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoadin
   const [formValues, setFormValues] = useState(initialValues);
   const [isEditing, setIsEditing] = useState(false);
   const [editingDocId, setEditingDocId] = useState('');
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchAll("n23qMAUSzDR5GcPgQmlarnK0Ok43");
@@ -43,21 +43,35 @@ const Restaurants: React.FC<Props> = ({ fetchAll, restaurants, restaurantsLoadin
     setFormValues(restaurant)
   }
 
+  const handleOnAddClick = (restaurant: Restaurant) => {
+    onAddClick(restaurant);
+    setShowForm(false);
+  }
+
+  if (restaurantsLoading) {
+    return <h1>Loading Restaurants...</h1>
+  }
+
+  if (showForm) {
+    return (
+      <div>
+        <Form
+          isEditing={isEditing}
+          editingDocId={editingDocId}
+          formValues={formValues}
+          onAddClick={handleOnAddClick}
+          onEditClick={onEditClick}
+          onSetIsEditing={() => setIsEditing(false)}
+        />
+        <button onClick={() => setShowForm(false)}>CANCEL</button>
+      </div>
+    )
+  }
+
   return (
     <div className="App">
-      <Form
-        isEditing={isEditing}
-        editingDocId={editingDocId}
-        formValues={formValues}
-        onAddClick={onAddClick}
-        onEditClick={onEditClick}
-        onSetIsEditing={() => setIsEditing(false)}
-      />
-      {restaurantsLoading ? (
-        <div>Loading Restaurants...</div>
-      ) : (
-          <List restaurants={restaurants} onEditClick={handleOnEditClick} onDeleteClick={onDeleteClick} />
-        )}
+      <List restaurants={restaurants} onEditClick={handleOnEditClick} onDeleteClick={onDeleteClick} />
+      <button onClick={() => setShowForm(true)}>ADD NEW</button>
     </div>
   );
 };
