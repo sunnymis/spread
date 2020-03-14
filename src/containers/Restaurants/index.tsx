@@ -82,7 +82,7 @@ const Restaurants: React.FC<Props> = (props) => {
               formValues={formValues}
               onSubmit={handleOnSubmit}
             />
-            <Button secondary text="Cancel" onClick={reset} />
+            <Button secondary={true} text="Cancel" onClick={reset} />
           </div>
         ) : (
             <div>
