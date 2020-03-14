@@ -35,11 +35,10 @@ const Restaurants: React.FC<Props> = (props) => {
     name: '',
     location: '',
     rating: 0,
-    description: ''
+    description: '',
   }
   const [formValues, setFormValues] = useState(initialValues);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingDocId, setEditingDocId] = useState('');
+  const [editingRestaurant, setEditingRestaurant] = useState<string | undefined>(undefined);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -47,14 +46,25 @@ const Restaurants: React.FC<Props> = (props) => {
   }, []); // eslint-disable react-hooks/exhaustive-deps
 
   const handleOnEditClick = (restaurant: Restaurant) => {
-    setIsEditing(true);
-    setEditingDocId(restaurant.docId || '')
+    setEditingRestaurant(restaurant.docId)
     setFormValues(restaurant)
+    setShowForm(true)
   }
 
-  const handleOnAddClick = (restaurant: Restaurant) => {
-    addRestaurant(restaurant);
+  const reset = () => {
     setShowForm(false);
+    setEditingRestaurant(undefined);
+    setFormValues(initialValues)
+  }
+
+  const handleOnSubmit = (restaurant: Restaurant) => {
+    if (editingRestaurant) {
+      updateRestaurant(restaurant)
+    } else {
+      addRestaurant(restaurant);
+    }
+
+    reset();
   }
 
   if (isLoading) {
@@ -62,17 +72,15 @@ const Restaurants: React.FC<Props> = (props) => {
   }
 
   if (showForm) {
+    // todo cancel button should clear form values 
     return (
       <div>
         <Form
-          isEditing={isEditing}
-          editingDocId={editingDocId}
+          editingRestaurant={editingRestaurant}
           formValues={formValues}
-          onAddClick={handleOnAddClick}
-          onEditClick={updateRestaurant}
-          onSetIsEditing={() => setIsEditing(false)}
+          onSubmit={handleOnSubmit}
         />
-        <button onClick={() => setShowForm(false)}>CANCEL</button>
+        <button onClick={reset}>CANCEL</button>
       </div>
     )
   }

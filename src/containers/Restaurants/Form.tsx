@@ -9,58 +9,46 @@ export interface FormValues {
 }
 
 interface Props {
-  isEditing: boolean;
   formValues: FormValues;
-  editingDocId: string;
-  onAddClick(restaurant: Restaurant): void;
-  onEditClick(restaurant: Restaurant): void;
-  onSetIsEditing(): void;
+  editingRestaurant?: string;
+  onSubmit(restaurant: Restaurant): void;
 }
 
 const RestaurantForm = (props: Props) => {
   const {
-    isEditing,
     formValues,
-    editingDocId,
-    onEditClick,
-    onAddClick,
-    onSetIsEditing,
+    editingRestaurant,
+    onSubmit,
   } = props;
+
+  let buttonText = editingRestaurant ? 'Submit Edit' : 'Submit New';
+
+  const handleOnSubmit = (values: FormValues) => {
+    if (editingRestaurant) {
+      return onSubmit({
+        ...values,
+        docId: editingRestaurant
+      })
+    }
+
+    onSubmit({ ...values })
+  }
 
   return (
     <Formik
       enableReinitialize
       initialValues={formValues}
-      onSubmit={(values, actions) => {
-        if (isEditing) {
-          const newRestaurant = {
-            ...values,
-            docId: editingDocId
-          };
-          onEditClick(newRestaurant)
-        } else {
-          onAddClick({ ...values });
-        }
-      }}
+      onSubmit={handleOnSubmit}
     >
       {
-        ({ isSubmitting }) => (
+        () => (
           <Form>
             <Field type="text" name="name" />
             <Field type="text" name="location" />
             <Field type="text" name="rating" />
             <Field type="text" name="description" />
             <ErrorMessage name="name" component="div" />
-            {
-              isEditing ? (
-                <button type="submit">Submit Edit </button>
-              ) : (
-                  <button type="submit" disabled={isSubmitting}>Submit New </button>
-                )
-            }
-            {isEditing && (
-              <button type="button" onClick={onSetIsEditing}>Stop Edit</button>
-            )}
+            <button type="submit">{buttonText}</button>
           </Form>
         )
       }

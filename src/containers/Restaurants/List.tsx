@@ -6,12 +6,12 @@ interface Props {
   onEditClick(restaurant: Restaurant): void;
 }
 
-export default function RestaurantsList({ restaurants, onEditClick, onDeleteClick }: Props) {
+export default function List({ restaurants, onEditClick, onDeleteClick }: Props) {
   return (
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
       {restaurants.map(r => (
-        <div key={r.docId}>
+        <div key={r.name}>
           <p>{r.name}</p>
           <p>{r.description}</p>
           <p>{r.rating}</p>
