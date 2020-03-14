@@ -9,6 +9,7 @@ import deleteRestaurant from "../../firebase/deleteRestaurant";
 import updateRestaurant from "../../firebase/updateRestaurant";
 import Form from './Form';
 import List from './List';
+import Button from '../../components/Button';
 
 import { FormValues } from './Form';
 
@@ -81,7 +82,7 @@ const Restaurants: React.FC<Props> = (props) => {
               formValues={formValues}
               onSubmit={handleOnSubmit}
             />
-            <button onClick={reset}>CANCEL</button>
+            <Button secondary text="Cancel" onClick={reset} />
           </div>
         ) : (
             <div>

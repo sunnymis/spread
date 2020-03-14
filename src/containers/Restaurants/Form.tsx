@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, ErrorMessage } from 'formik';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import styles from './restaurants.module.scss';
 
 export interface FormValues {
@@ -51,7 +52,7 @@ const RestaurantForm = (props: Props) => {
               <Input label="Rating" type="text" name="rating" />
               <Input label="Description" placeholder="hello" type="text" name="description" />
               <ErrorMessage name="name" component="div" />
-              <button type="submit">{buttonText}</button>
+              <Button type="submit" text={buttonText} />
             </Form>
           )
         }
