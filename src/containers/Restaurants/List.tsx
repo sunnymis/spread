@@ -1,4 +1,5 @@
 import React from "react";
+import styles from './restaurants.module.scss';
 
 interface Props {
   restaurants: Restaurant[];
@@ -7,23 +8,23 @@ interface Props {
 }
 
 export default function List({ restaurants, onEditClick, onDeleteClick }: Props) {
+  const url = "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80"
   return (
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
       {restaurants.map(r => (
-        <div key={r.name}>
-          <p>{r.name}</p>
-          <p>{r.description}</p>
-          <p>{r.rating}</p>
-          <p>{r.location}</p>
-          <p>{r.name}</p>
-          <pre>{JSON.stringify(r.tags)}</pre>
-          <pre>{JSON.stringify(r.images)}</pre>
-          <button onClick={() => onDeleteClick(r.docId || '')}>Delete Restaurant</button>
-          <button onClick={() => onEditClick(r)}>Edit Restaurant</button>
-          <br />
-          <hr />
-          <br />
+        <div className={styles.row} key={r.name}>
+          <div className={styles.content}>
+            <p className={styles.name}>{r.name}</p>
+            <p className={styles.rating}>{r.rating}</p>
+            <div>
+              <p className={styles.tag} >Pizza</p>
+              <p className={styles.tag} >Burger </p>
+              <p className={styles.tag} >Burger </p>
+              <p className={styles.tag} >Burger </p>
+            </div>
+          </div>
+          <img className={styles.image} src={url} />
         </div>
       ))}
     </div>
@@ -32,3 +33,7 @@ export default function List({ restaurants, onEditClick, onDeleteClick }: Props)
 
 // TODO in future if data is hard ot update when editing a restaurant
 // check how to structure nested entities in this article https://redux.js.org/advanced/async-actions/
+/*
+<button onClick={() => onDeleteClick(r.docId || '')}>Delete Restaurant</button>
+<button onClick={() => onEditClick(r)}>Edit Restaurant</button>
+*/

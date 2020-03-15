@@ -9,7 +9,7 @@ import deleteRestaurant from "../../firebase/deleteRestaurant";
 import updateRestaurant from "../../firebase/updateRestaurant";
 import Form from './Form';
 import List from './List';
-
+import styles from './restaurants.module.scss';
 import { FormValues } from './Form';
 
 interface Props {
@@ -72,7 +72,7 @@ const Restaurants: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="App">
+    <div className={styles.app}>
       {
         showForm ? (
           <div>

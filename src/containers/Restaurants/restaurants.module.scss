@@ -5,3 +5,40 @@
 .cancel {
   margin-right: 24px;
 }
+
+.row {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  margin: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content {
+  text-align: left;
+  flex-grow: 1;
+
+  .name {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .tag {
+    padding: 10px;
+    border: 1px solid #2d98da;
+    display: inline-block;
+    border-radius: 12px;
+    background-color: #45aaf2;
+    color: white;
+    margin-bottom: 0;
+    margin-right: 8px;
+  }
+}
+
+.image {
+  align-self: center;
+  width: auto;
+  max-height: 120px;
+}

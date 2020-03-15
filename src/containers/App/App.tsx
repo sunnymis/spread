@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,7 +9,7 @@ import Restaurants from "../Restaurants";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div>
       <Router>
         <Switch>
           <Route path="/restaurants">
