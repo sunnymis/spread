@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './restaurants.module.scss';
+import Badge from '../../components/Badge';
 
 interface Props {
   restaurants: Restaurant[];
@@ -18,10 +19,11 @@ export default function List({ restaurants, onEditClick, onDeleteClick }: Props)
             <p className={styles.name}>{r.name}</p>
             <p className={styles.rating}>{r.rating}</p>
             <div>
-              <p className={styles.tag} >Pizza</p>
-              <p className={styles.tag} >Burger </p>
-              <p className={styles.tag} >Burger </p>
-              <p className={styles.tag} >Burger </p>
+              <Badge text="Pizza" />
+              <Badge text="Burgers" />
+              <Badge text="Chinese" />
+              <Badge text="Thai" />
+              <Badge text="Mexican" />
             </div>
           </div>
           <img className={styles.image} src={url} />
