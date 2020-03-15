@@ -1,6 +1,7 @@
 import React from "react";
 import styles from './restaurants.module.scss';
 import Badge from '../../components/Badge';
+import Rating from '../../components/Rating';
 
 interface Props {
   restaurants: Restaurant[];
@@ -17,7 +18,7 @@ export default function List({ restaurants, onEditClick, onDeleteClick }: Props)
         <div className={styles.row} key={r.name}>
           <div className={styles.content}>
             <p className={styles.name}>{r.name}</p>
-            <p className={styles.rating}>{r.rating}</p>
+            <Rating rating={r.rating} />
             <div>
               <Badge text="Pizza" />
               <Badge text="Burgers" />
