@@ -52,7 +52,7 @@ const RestaurantForm = (props: Props) => {
             <Form>
               <Input label="Name" type="text" name="name" />
               <Input label="Location" type="text" name="location" />
-              <Input label="Rating" type="text" name="rating" />
+              <Input label="Rating" type="number" name="rating" />
               <TextArea label="Description" name="description" />
               <ErrorMessage name="name" component="div" />
               <div>
