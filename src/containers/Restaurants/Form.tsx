@@ -16,6 +16,7 @@ interface Props {
   formValues: FormValues;
   editingRestaurant?: string;
   onSubmit(restaurant: Restaurant): void;
+  onCancel(): void;
 }
 
 const RestaurantForm = (props: Props) => {
@@ -23,6 +24,7 @@ const RestaurantForm = (props: Props) => {
     formValues,
     editingRestaurant,
     onSubmit,
+    onCancel,
   } = props;
 
   let buttonText = editingRestaurant ? 'Submit Edit' : 'Submit New';
@@ -53,7 +55,10 @@ const RestaurantForm = (props: Props) => {
               <Input label="Rating" type="text" name="rating" />
               <TextArea label="Description" name="description" />
               <ErrorMessage name="name" component="div" />
-              <Button type="submit" text={buttonText} />
+              <div>
+                <Button styles={styles.cancel} secondary={true} text="Cancel" onClick={onCancel} />
+                <Button type="submit" text={buttonText} />
+              </div>
             </Form>
           )
         }

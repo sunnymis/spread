@@ -7,6 +7,7 @@ interface ButtonProps {
   text: string;
   secondary?: boolean;
   disabled?: boolean;
+  styles?: string;
 }
 
 function Button(props: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
@@ -14,6 +15,7 @@ function Button(props: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElemen
     styles.button,
     props.disabled && styles.disabled,
     props.secondary && styles.secondary,
+    props.styles,
   )
 
   const buttonProps = omit(props, ['secondary']);
