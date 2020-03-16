@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-
 import { AppState } from "../../store";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
@@ -95,8 +94,6 @@ const Restaurants: React.FC<Props> = (props) => {
             <div>
               <List
                 restaurants={restaurants}
-                onEditClick={handleOnEditClick}
-                onDeleteClick={deleteRestaurant}
               />
               <button onClick={() => setShowForm(true)}>ADD NEW</button>
             </div>

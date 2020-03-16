@@ -6,14 +6,18 @@ import {
 } from "react-router-dom";
 
 import Restaurants from "../Restaurants";
+import RestaurantDetails from "../Restaurants/Details";
 
 const App: React.FC = () => {
   return (
     <div>
       <Router>
         <Switch>
-          <Route path="/restaurants">
+          <Route exact path="/restaurants">
             <Restaurants />
+          </Route>
+          <Route path="/restaurants/:id">
+            <RestaurantDetails />
           </Route>
         </Switch>
       </Router>
@@ -22,3 +26,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+// todo create a no match 404 page
