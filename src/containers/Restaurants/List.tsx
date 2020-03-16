@@ -15,10 +15,13 @@ export default function List({ restaurants }: Props) {
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
       {restaurants.map(r => (
-        <Link to={{
-          pathname: `/restaurants/${r.docId}`,
-          state: r,
-        }}>
+        <Link
+          className={styles.link}
+          to={{
+            pathname: `/restaurants/${r.docId}`,
+            state: r,
+          }}
+        >
           <div className={styles.row} key={r.name}>
             <div className={styles.content}>
               <p className={styles.name}>{r.name}</p>

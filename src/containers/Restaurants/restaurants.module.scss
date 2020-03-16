@@ -6,6 +6,10 @@
   margin-right: 24px;
 }
 
+.link {
+  text-decoration: none;
+};
+
 .row {
   background-color: #fff;
   border-radius: 20px;
@@ -23,6 +27,7 @@
   .name {
     font-weight: bold;
     font-size: 18px;
+    color: #000;
   }
 }
 
