@@ -36,6 +36,7 @@ const Restaurants: React.FC<Props> = (props) => {
     location: '',
     rating: 0,
     description: '',
+    tags: '',
   }
   const [formValues, setFormValues] = useState(initialValues);
   const [editingRestaurant, setEditingRestaurant] = useState<string | undefined>(undefined);
@@ -61,7 +62,14 @@ const Restaurants: React.FC<Props> = (props) => {
     if (editingRestaurant) {
       updateRestaurant(restaurant)
     } else {
-      addRestaurant(restaurant);
+      if (typeof restaurant.tags !== 'string') { return; }
+
+      let tags = restaurant.tags.split(' ');
+
+      addRestaurant({
+        ...restaurant,
+        tags,
+      });
     }
 
     reset();

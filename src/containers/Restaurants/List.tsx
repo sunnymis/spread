@@ -20,11 +20,9 @@ export default function List({ restaurants, onEditClick, onDeleteClick }: Props)
             <p className={styles.name}>{r.name}</p>
             <Rating rating={r.rating} />
             <div>
-              <Badge text="Pizza" />
-              <Badge text="Burgers" />
-              <Badge text="Chinese" />
-              <Badge text="Thai" />
-              <Badge text="Mexican" />
+              {
+                (r.tags && typeof r.tags !== 'string') && r.tags.map(tag => <Badge text={tag} />)
+              }
             </div>
           </div>
           <img className={styles.image} src={url} />

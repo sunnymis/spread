@@ -10,6 +10,7 @@ export interface FormValues {
   location: string;
   rating: number;
   description: string;
+  tags: string | string[];
 }
 
 interface Props {
@@ -53,6 +54,7 @@ const RestaurantForm = (props: Props) => {
               <Input label="Name" type="text" name="name" />
               <Input label="Location" type="text" name="location" />
               <Input label="Rating" type="number" name="rating" />
+              <Input label="Tags" type="text" name="tags" />
               <TextArea label="Description" name="description" />
               <ErrorMessage name="name" component="div" />
               <div>
