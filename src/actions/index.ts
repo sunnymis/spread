@@ -1,6 +1,7 @@
 export enum AppActions {
   FETCH_RESTAURANTS = 'APP/FETCH_RESTAURANTS',
   RECEIVED_RESTAURANTS = 'APP/RECEIVED_RESTAURANTS',
+  RECEIVED_RESTAURANT = 'APP/RECEIVED_RESTAURANT',
   DELETE_RESTAURANT = 'APP/DELETE_RESTAURANT',
   EDIT_RESTAURANT = 'APP/EDIT_RESTAURANT',
 }
@@ -37,6 +38,9 @@ export const fetchRestaurants = makeAction<AppActions.FETCH_RESTAURANTS, string>
 export const receivedRestaurants = makeAction<AppActions.RECEIVED_RESTAURANTS, Restaurant[]>(
   AppActions.RECEIVED_RESTAURANTS,
 );
+export const receivedRestaurant = makeAction<AppActions.RECEIVED_RESTAURANT, Restaurant[]>(
+  AppActions.RECEIVED_RESTAURANT,
+);
 export const deleteRestaurant = makeAction<AppActions.DELETE_RESTAURANT, string>(
   AppActions.DELETE_RESTAURANT,
 );
@@ -47,6 +51,7 @@ export const editRestaurant = makeAction<AppActions.EDIT_RESTAURANT, Restaurant>
 const actions = {
   fetchRestaurants,
   receivedRestaurants,
+  receivedRestaurant,
   deleteRestaurant,
   editRestaurant,
 };

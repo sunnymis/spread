@@ -20,6 +20,12 @@ const restaurantReducer = (state: RestaurantState = initialState, action: Action
     case AppActions.RECEIVED_RESTAURANTS:
       return {
         ...state,
+        items: [...action.payload],
+        isFetching: false
+      };
+    case AppActions.RECEIVED_RESTAURANT:
+      return {
+        ...state,
         items: [...state.items, ...action.payload],
         isFetching: false
       };
@@ -42,12 +48,3 @@ const restaurantReducer = (state: RestaurantState = initialState, action: Action
 };
 
 export default restaurantReducer;
-
-//todo bug fix - go to list, see count, click a restaurant, go back, count has doubled
-// This is because every time we go to the list page we pull all the restaurants
-// when that happens we call RECEIVED_RESTAURANTS action which appends all restaurants
-// currently in state plus the newly received restaurants. we want to only spread the
-// action.payload on line 23. 
-// However, addRestaurant action also used the RECEIVED_RESTAURANTS reducer to update
-// state with the newly added restaurant so we can't just spread ...action.payload
-// we need to create a new reducer type 
