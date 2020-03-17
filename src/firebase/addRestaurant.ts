@@ -1,16 +1,19 @@
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../store";
 import firebase from "../firebase";
+import omit from 'lodash/omit';
 import { receivedRestaurant, Action } from "../actions";
 
 export default function (restaurant: Restaurant) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
 
+    const restaurantsToUpload = omit(restaurant, 'images');
+    console.log('adding restaurant', restaurant);
     firebase
       .firestore()
       .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`)
       .add({
-        ...restaurant
+        ...restaurantsToUpload
       })
       .then(result => {
         // TODO figure out if you can just return a restaurant object
@@ -24,5 +27,14 @@ export default function (restaurant: Restaurant) {
         };
         dispatch(receivedRestaurant([newRestaurant]));
       });
+
+
+    restaurant.images?.forEach((img) => {
+      firebase
+        .storage()
+        .ref()
+        .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${img.name}`)
+        .put(img)
+    });
   };
 }

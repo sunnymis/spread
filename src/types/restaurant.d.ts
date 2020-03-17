@@ -11,6 +11,6 @@ interface Restaurant {
   // We modify the tags to be an array. So now tags is both
   // a string (in the form) an array of strings (for the restaurant) to go to firebase
   tags: string | string[];
-  images?: string[];
+  images?: File[];
   docId?: string;
 }
