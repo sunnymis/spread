@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 import Restaurants from "../Restaurants";
+import Home from "../Home";
 import RestaurantDetails from "../Restaurants/Details";
 
 const App: React.FC = () => {
@@ -13,6 +14,9 @@ const App: React.FC = () => {
     <div>
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route exact path="/restaurants">
             <Restaurants />
           </Route>
