@@ -50,3 +50,31 @@
   padding-bottom: 0;
   margin-bottom: 0;
 }
+
+.addButton {
+  display: block;
+  padding: 36px;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 36px;
+  height: 36px;
+  background-color: #45aaf2;
+  border-color: #45aaf2;
+  border-radius: 50%;
+  font-size: 16px;
+  
+  &:hover {
+    cursor: pointer;
+  }
+  
+  i {
+    color: #fff;
+    position: relative;
+    right: 23px;
+    bottom: 23px;
+    font-size: 48px !important; /* todo figure out why adding md-48 class name wasnt working */
+  }
+}
+
+

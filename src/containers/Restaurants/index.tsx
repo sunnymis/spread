@@ -95,7 +95,9 @@ const Restaurants: React.FC<Props> = (props) => {
               <List
                 restaurants={restaurants}
               />
-              <button onClick={() => setShowForm(true)}>ADD NEW</button>
+              <button className={styles.addButton} onClick={() => setShowForm(true)}>
+                <i className="material-icons md-48">add</i>
+              </button>
             </div>
           )
       }
