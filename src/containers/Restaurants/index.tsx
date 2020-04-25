@@ -26,7 +26,6 @@ const Restaurants: React.FC<Props> = (props) => {
     isLoading,
     getRestaurantsByUserId,
     addRestaurant,
-    deleteRestaurant,
     updateRestaurant,
   } = props;
 
@@ -43,13 +42,7 @@ const Restaurants: React.FC<Props> = (props) => {
 
   useEffect(() => {
     getRestaurantsByUserId("n23qMAUSzDR5GcPgQmlarnK0Ok43");
-  }, []); // eslint-disable react-hooks/exhaustive-deps
-
-  const handleOnEditClick = (restaurant: Restaurant) => {
-    setEditingRestaurant(restaurant.docId)
-    setFormValues(restaurant)
-    setShowForm(true)
-  }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const reset = () => {
     setShowForm(false);

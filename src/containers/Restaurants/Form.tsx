@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Formik, Form, ErrorMessage } from 'formik';
 import Input from '../../components/Input';
 import TextArea from '../../components/Input/TextArea';
@@ -40,8 +40,6 @@ const RestaurantForm = (props: Props) => {
   let buttonText = editingRestaurant ? 'Submit Edit' : 'Submit New';
 
   const handleOnSubmit = (values: FormValues) => {
-    const imgs = images.map(i => i.data);
-
     if (editingRestaurant) {
       return onSubmit({
         ...values,
@@ -101,7 +99,7 @@ const RestaurantForm = (props: Props) => {
               />
               {
                 images.map(img => (
-                  <img className={styles.uploadedImageThumbnail} src={img.data} />
+                  <img alt="" className={styles.uploadedImageThumbnail} src={img.data} />
                 ))
               }
             </Form>

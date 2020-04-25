@@ -32,7 +32,7 @@ export default function List({ restaurants }: Props) {
                 }
               </div>
             </div>
-            <img className={styles.image} src={url} />
+            <img alt="" className={styles.image} src={url} />
           </div>
         </Link>
       ))}
