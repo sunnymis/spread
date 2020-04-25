@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { AppState } from "../../store";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
-import deleteRestaurant from "../../firebase/deleteRestaurant";
 import updateRestaurant from "../../firebase/updateRestaurant";
 import Form from './Form';
 import List from './List';
@@ -16,7 +15,6 @@ interface Props {
   isLoading: boolean;
   getRestaurantsByUserId(docId: string): void;
   addRestaurant(restaurant: Restaurant): void;
-  deleteRestaurant(id: string): void;
   updateRestaurant(restaurant: Restaurant): void;
 }
 
@@ -107,7 +105,6 @@ export const mapDispatchToProps = (dispatch: any) => {
   return {
     getRestaurantsByUserId: (id: string) => dispatch(getRestaurantsByUserId(id)),
     addRestaurant: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
-    deleteRestaurant: (id: string) => dispatch(deleteRestaurant(id)),
     updateRestaurant: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
   };
 };
