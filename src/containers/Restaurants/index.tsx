@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { AppState } from "../../store";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
-import updateRestaurant from "../../firebase/updateRestaurant";
 import Form from './Form';
 import List from './List';
 import styles from './restaurants.module.scss';
@@ -15,7 +14,6 @@ interface Props {
   isLoading: boolean;
   getRestaurantsByUserId(docId: string): void;
   addRestaurant(restaurant: Restaurant): void;
-  updateRestaurant(restaurant: Restaurant): void;
 }
 
 const Restaurants: React.FC<Props> = (props) => {
@@ -24,7 +22,6 @@ const Restaurants: React.FC<Props> = (props) => {
     isLoading,
     getRestaurantsByUserId,
     addRestaurant,
-    updateRestaurant,
   } = props;
 
   const initialValues: FormValues = {
@@ -35,7 +32,6 @@ const Restaurants: React.FC<Props> = (props) => {
     tags: '',
   }
   const [formValues, setFormValues] = useState(initialValues);
-  const [editingRestaurant, setEditingRestaurant] = useState<string | undefined>(undefined);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -44,23 +40,18 @@ const Restaurants: React.FC<Props> = (props) => {
 
   const reset = () => {
     setShowForm(false);
-    setEditingRestaurant(undefined);
     setFormValues(initialValues)
   }
 
   const handleOnSubmit = (restaurant: Restaurant) => {
-    if (editingRestaurant) {
-      updateRestaurant(restaurant)
-    } else {
-      if (typeof restaurant.tags !== 'string') { return; }
+    if (typeof restaurant.tags !== 'string') { return; }
 
-      let tags = restaurant.tags.split(' ');
+    let tags = restaurant.tags.split(' ');
 
-      addRestaurant({
-        ...restaurant,
-        tags,
-      });
-    }
+    addRestaurant({
+      ...restaurant,
+      tags,
+    });
 
     reset();
   }
@@ -75,7 +66,6 @@ const Restaurants: React.FC<Props> = (props) => {
         showForm ? (
           <div>
             <Form
-              editingRestaurant={editingRestaurant}
               formValues={formValues}
               onSubmit={handleOnSubmit}
               onCancel={reset}
@@ -105,7 +95,6 @@ export const mapDispatchToProps = (dispatch: any) => {
   return {
     getRestaurantsByUserId: (id: string) => dispatch(getRestaurantsByUserId(id)),
     addRestaurant: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
-    updateRestaurant: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
   };
 };
 

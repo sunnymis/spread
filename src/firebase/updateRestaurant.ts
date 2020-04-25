@@ -13,6 +13,7 @@ export default function (restaurant: Restaurant) {
         ...restaurant,
       })
       .then(result => {
+        console.log('result?', result);
         // TODO figure out if you can just return a restaurant object
         // directly from the result object instead of the docId hack.
         // The docId hack here is because adding a restaurant to state 

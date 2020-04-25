@@ -16,7 +16,7 @@ export interface FormValues {
 
 interface Props {
   formValues: FormValues;
-  editingRestaurant?: string;
+  editingRestaurant?: boolean;
   onSubmit(restaurant: Restaurant): void;
   onCancel(): void;
 }
@@ -40,13 +40,13 @@ const RestaurantForm = (props: Props) => {
   let buttonText = editingRestaurant ? 'Submit Edit' : 'Submit New';
 
   const handleOnSubmit = (values: FormValues) => {
-    if (editingRestaurant) {
-      return onSubmit({
-        ...values,
-        docId: editingRestaurant,
-        images: imagesToUpload,
-      })
-    }
+    // if (editingRestaurant) {
+    //   return onSubmit({
+    //     ...values,
+    //     docId: editingRestaurant,
+    //     images: imagesToUpload,
+    //   })
+    // }
 
     onSubmit({ ...values, images: imagesToUpload, })
   }
