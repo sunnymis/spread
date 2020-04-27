@@ -12,6 +12,7 @@ export interface FormValues {
   rating: number;
   description: string;
   tags: string | string[];
+  images?: File[];
 }
 
 interface Props {
@@ -48,6 +49,7 @@ const RestaurantForm = (props: Props) => {
     //   })
     // }
 
+    console.log('imagesToUpload', imagesToUpload)
     onSubmit({ ...values, images: imagesToUpload, })
   }
 

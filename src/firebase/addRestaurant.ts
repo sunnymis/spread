@@ -29,7 +29,7 @@ export default function (restaurant: Restaurant) {
       });
 
 
-    restaurant.images?.forEach((img) => {
+    restaurant.images?.forEach((img: any) => {
       firebase
         .storage()
         .ref()
