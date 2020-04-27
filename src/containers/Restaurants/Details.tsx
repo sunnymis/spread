@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { useLocation, useHistory } from 'react-router-dom';
+import isEmpty from 'lodash/isEmpty';
 import { AppState } from '../../store';
 import deleteRestaurant from '../../firebase/deleteRestaurant';
 import updateRestaurant from "../../firebase/updateRestaurant";
@@ -47,14 +48,24 @@ function Details(props: Props) {
 
 
   useEffect(() => {
-    const ref = 'images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/SGrIUUok91phe8MGsDc4';
+    const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
 
     firebase.storage().ref().child(ref).listAll().then(function (result: any) {
-      const path = result.items[0].location.path;
-      firebase.storage().ref().child(path).getDownloadURL().then(url => {
-        console.log('url', url);
-        setImages(imgUrls => [...imgUrls, url]);
-      });
+      if (!isEmpty(result.items)) {
+        result.items.map((item: any) => {
+          let path = item.location.path;
+
+          firebase
+            .storage()
+            .ref()
+            .child(path)
+            .getDownloadURL()
+            .then(url => {
+              setImages(imgUrls => [...imgUrls, url]);
+            });
+        });
+        // const path = result.items[0].location.path;
+      }
     });
   }, []);
 
