@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { AppState } from "../../store";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
 import addRestaurant from "../../firebase/addRestaurant";
-import Form from './Form';
-import List from './List';
-import styles from './restaurants.module.scss';
-import { FormValues } from './Form';
+import Form from "./Form";
+import List from "./List";
+import styles from "./restaurants.module.scss";
+import { FormValues } from "./Form";
 
 interface Props {
   restaurants: Restaurant[];
@@ -25,12 +25,12 @@ const Restaurants: React.FC<Props> = (props) => {
   } = props;
 
   const initialValues: FormValues = {
-    name: '',
-    location: '',
+    name: "",
+    location: "",
     rating: 0,
-    description: '',
-    tags: '',
-  }
+    description: "",
+    tags: "",
+  };
   const [formValues, setFormValues] = useState(initialValues);
   const [showForm, setShowForm] = useState(false);
 
@@ -40,13 +40,15 @@ const Restaurants: React.FC<Props> = (props) => {
 
   const reset = () => {
     setShowForm(false);
-    setFormValues(initialValues)
-  }
+    setFormValues(initialValues);
+  };
 
   const handleOnSubmit = (restaurant: Restaurant) => {
-    if (typeof restaurant.tags !== 'string') { return; }
+    if (typeof restaurant.tags !== "string") {
+      return;
+    }
 
-    let tags = restaurant.tags.split(' ');
+    let tags = restaurant.tags.split(" ");
 
     addRestaurant({
       ...restaurant,
@@ -54,48 +56,51 @@ const Restaurants: React.FC<Props> = (props) => {
     });
 
     reset();
-  }
+  };
 
   if (isLoading) {
-    return <h1>Loading Restaurants...</h1>
+    return <h1>Loading Restaurants...</h1>;
   }
 
   return (
     <div className={styles.app}>
-      {
-        showForm ? (
-          <div>
-            <Form
-              formValues={formValues}
-              onSubmit={handleOnSubmit}
-              onCancel={reset}
-            />
-          </div>
-        ) : (
-            <div>
-              <List
-                restaurants={restaurants}
-              />
-              <button className={styles.addButton} onClick={() => setShowForm(true)}>
-                <i className="material-icons md-48">add</i>
-              </button>
-            </div>
-          )
-      }
+      {showForm ? (
+        <div>
+          <Form
+            formValues={formValues}
+            onSubmit={handleOnSubmit}
+            onCancel={reset}
+          />
+        </div>
+      ) : (
+        <div>
+          <List restaurants={restaurants} />
+          <button
+            className={styles.addButton}
+            onClick={() => setShowForm(true)}
+          >
+            <i className="material-icons md-48">add</i>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
 export const mapStateToProps = (state: AppState) => ({
   isLoading: state.restaurants.isFetching,
-  restaurants: state.restaurants.items
+  restaurants: state.restaurants.items,
 });
 
 export const mapDispatchToProps = (dispatch: any) => {
   return {
-    getRestaurantsByUserId: (id: string) => dispatch(getRestaurantsByUserId(id)),
-    addRestaurant: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
+    getRestaurantsByUserId: (id: string) =>
+      dispatch(getRestaurantsByUserId(id)),
+    addRestaurant: (restaurant: Restaurant) =>
+      dispatch(addRestaurant(restaurant)),
   };
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Restaurants);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  Restaurants
+);

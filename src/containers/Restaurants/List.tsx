@@ -1,7 +1,7 @@
 import React from "react";
-import styles from './restaurants.module.scss';
-import Badge from '../../components/Badge';
-import Rating from '../../components/Rating';
+import styles from "./restaurants.module.scss";
+import Badge from "../../components/Badge";
+import Rating from "../../components/Rating";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -9,12 +9,13 @@ interface Props {
 }
 
 export default function List({ restaurants }: Props) {
-  const url = "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80"
+  const url =
+    "https://images.unsplash.com/photo-1509440159596-0249088772ff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=752&q=80";
 
   return (
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
-      {restaurants.map(r => (
+      {restaurants.map((r) => (
         <Link
           className={styles.link}
           to={{
@@ -27,9 +28,9 @@ export default function List({ restaurants }: Props) {
               <p className={styles.name}>{r.name}</p>
               <Rating rating={r.rating} />
               <div>
-                {
-                  (r.tags && typeof r.tags !== 'string') && r.tags.map(tag => <Badge text={tag} />)
-                }
+                {r.tags &&
+                  typeof r.tags !== "string" &&
+                  r.tags.map((tag) => <Badge text={tag} />)}
               </div>
             </div>
             <img alt="" className={styles.image} src={url} />
