@@ -55,7 +55,7 @@ function Details(props: Props) {
         result.items.map((item: any) => {
           let path = item.location.path;
 
-          firebase
+          return firebase
             .storage()
             .ref()
             .child(path)
@@ -67,7 +67,7 @@ function Details(props: Props) {
         // const path = result.items[0].location.path;
       }
     });
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleOnDelete = () => {
     const shouldDelete = window.confirm('Are you sure you want to delete this?');

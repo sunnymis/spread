@@ -2,7 +2,7 @@ import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../store";
 import firebase from "../firebase";
 import omit from 'lodash/omit';
-import { receivedRestaurant, Action } from "../actions";
+import { receivedRestaurant, Action } from "../store/actions";
 
 export default function (restaurant: Restaurant) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {

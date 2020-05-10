@@ -1,4 +1,4 @@
-import { Action, AppActions } from "../../../actions";
+import { Action, AppActions } from "../../actions";
 
 export interface RestaurantState {
   isFetching: boolean;
