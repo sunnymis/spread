@@ -30,5 +30,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// todo create a no match 404 page
