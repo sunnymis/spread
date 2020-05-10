@@ -1,20 +1,13 @@
-import React from 'react'
-import styles from './badge.module.scss';
+import React from "react";
+import styles from "./badge.module.scss";
 
 interface Props {
   text: string;
 }
 function Badge(props: Props) {
-  const {
-    text,
-  } = props;
+  const { text } = props;
 
-  return (
-    <p className={styles.badge} >
-      {text}
-    </p>
-  )
+  return <p className={styles.badge}>{text}</p>;
 }
 
-export default Badge
-
+export default Badge;

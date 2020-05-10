@@ -7,40 +7,45 @@ export interface RestaurantState {
 
 const initialState: RestaurantState = {
   isFetching: false,
-  items: []
+  items: [],
 };
 
-const restaurantReducer = (state: RestaurantState = initialState, action: Action): RestaurantState => {
+const restaurantReducer = (
+  state: RestaurantState = initialState,
+  action: Action
+): RestaurantState => {
   switch (action.type) {
     case AppActions.FETCH_RESTAURANTS:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case AppActions.RECEIVED_RESTAURANTS:
       return {
         ...state,
         items: [...action.payload],
-        isFetching: false
+        isFetching: false,
       };
     case AppActions.RECEIVED_RESTAURANT:
       return {
         ...state,
         items: [...state.items, ...action.payload],
-        isFetching: false
+        isFetching: false,
       };
     case AppActions.DELETE_RESTAURANT:
       return {
         ...state,
-        items: state.items.filter(r => r.docId !== action.payload)
+        items: state.items.filter((r) => r.docId !== action.payload),
       };
     case AppActions.EDIT_RESTAURANT:
-      // todo see if there is a better way to do this. 
-      const restaurantsWithoutOriginal = state.items.filter(r => r.docId !== action.payload.docId);
+      // todo see if there is a better way to do this.
+      const restaurantsWithoutOriginal = state.items.filter(
+        (r) => r.docId !== action.payload.docId
+      );
 
       return {
         ...state,
-        items: [...restaurantsWithoutOriginal, action.payload]
+        items: [...restaurantsWithoutOriginal, action.payload],
       };
     default:
       return state;

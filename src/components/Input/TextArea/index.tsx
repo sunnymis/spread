@@ -1,6 +1,6 @@
-import React from 'react'
-import { Field, FieldConfig } from 'formik'
-import styles from '../input.module.scss';
+import React from "react";
+import { Field, FieldConfig } from "formik";
+import styles from "../input.module.scss";
 
 interface TextAreaProps {
   placeholder?: string;
@@ -18,8 +18,7 @@ function TextArea(props: TextAreaProps & FieldConfig) {
         {...props}
       />
     </div>
-  )
+  );
 }
 
-export default TextArea
-
+export default TextArea;

@@ -1,5 +1,5 @@
 .formContainer {
-  padding: 36px;  
+  padding: 36px;
 }
 
 .cancel {
@@ -8,7 +8,7 @@
 
 .link {
   text-decoration: none;
-};
+}
 
 .row {
   background-color: #fff;
@@ -39,9 +39,8 @@
 
 .uploadedImageThumbnail {
   height: 100px;
-  width: auto
+  width: auto;
 }
-
 
 .details {
   background-color: #fff;
@@ -63,11 +62,11 @@
   border-color: #45aaf2;
   border-radius: 50%;
   font-size: 16px;
-  
+
   &:hover {
     cursor: pointer;
   }
-  
+
   i {
     color: #fff;
     position: relative;
@@ -81,4 +80,3 @@
   height: 300px;
   width: 300px;
 }
-
