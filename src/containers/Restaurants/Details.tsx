@@ -33,7 +33,7 @@ function Details(props: Props) {
 
   const { deleteRestaurant, updateRestaurant } = props;
 
-  const { name, description, location, tags, rating, docId } = data;
+  const { name, description, location, tags, rating, docId, thumbnailImage } = data;
 
   useEffect(() => {
     const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
@@ -63,9 +63,7 @@ function Details(props: Props) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleOnDelete = () => {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this?"
-    );
+    const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
     if (shouldDelete) {
       deleteRestaurant(docId as string);
@@ -85,6 +83,7 @@ function Details(props: Props) {
       ...values,
       docId: docId,
       tags: newTags,
+      thumbnailImage,
       // TODO add images to upload here as well
     };
 
@@ -126,9 +125,7 @@ function Details(props: Props) {
         <i className="material-icons">place</i>
         {location}
       </h3>
-      {tags &&
-        typeof tags !== "string" &&
-        tags.map((tag) => <Badge text={tag} />)}
+      {tags && typeof tags !== "string" && tags.map((tag) => <Badge text={tag} />)}
       <h3>Description</h3>
       <p>{description}</p>
       {images.map((img) => (
@@ -145,8 +142,7 @@ export const mapStateToProps = (state: AppState) => {};
 export const mapDispatchToProps = (dispatch: any) => {
   return {
     deleteRestaurant: (id: string) => dispatch(deleteRestaurant(id)),
-    updateRestaurant: (restaurant: Restaurant) =>
-      dispatch(updateRestaurant(restaurant)),
+    updateRestaurant: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
   };
 };
 

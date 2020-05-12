@@ -13,6 +13,7 @@ export interface FormValues {
   description: string;
   tags: string | string[];
   images?: File[];
+  thumbnailImage?: string;
 }
 
 interface Props {
@@ -72,11 +73,7 @@ const RestaurantForm = (props: Props) => {
 
   return (
     <div className={styles.formContainer}>
-      <Formik
-        enableReinitialize
-        initialValues={formValues}
-        onSubmit={handleOnSubmit}
-      >
+      <Formik enableReinitialize initialValues={formValues} onSubmit={handleOnSubmit}>
         {() => (
           <Form>
             <Input label="Name" type="text" name="name" />
@@ -86,21 +83,12 @@ const RestaurantForm = (props: Props) => {
             <TextArea label="Description" name="description" />
             <ErrorMessage name="name" component="div" />
             <div>
-              <Button
-                styles={styles.cancel}
-                secondary={true}
-                text="Cancel"
-                onClick={onCancel}
-              />
+              <Button styles={styles.cancel} secondary={true} text="Cancel" onClick={onCancel} />
               <Button type="submit" text={buttonText} />
             </div>
             <FileUpload onDrop={handleOnDrop} />
             {images.map((img) => (
-              <img
-                alt=""
-                className={styles.uploadedImageThumbnail}
-                src={img.data}
-              />
+              <img alt="" className={styles.uploadedImageThumbnail} src={img.data} />
             ))}
           </Form>
         )}
