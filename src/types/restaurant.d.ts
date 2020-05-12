@@ -17,4 +17,5 @@ interface Restaurant {
   tags: string | string[];
   images?: File[] | Image[];
   docId?: string;
+  thumbnailImage?: string;
 }
