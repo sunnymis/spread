@@ -1,121 +1,122 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-import Form, { FormValues } from "./Form";
+import React from "react"; // { useState, useEffect } from "react";
+// import { useLocation, useHistory } from "react-router-dom";
+// import isEmpty from "lodash/isEmpty";
+// import Form, { FormValues } from "./Form";
 import styles from "./restaurants.module.scss";
-import Rating from "../../components/Rating";
-import Badge from "../../components/Badge";
+// import Rating from "../../components/Rating";
+// import Badge from "../../components/Badge";
 
 import firebase from "../../firebase";
 
-interface Props {
-  deleteRestaurant(id: string): void;
-  updateRestaurant(restaurant: Restaurant): void;
-}
+// interface Props {
+//   deleteRestaurant(id: string): void;
+//   updateRestaurant(restaurant: Restaurant): void;
+// }
 
 // todo move this this is used twice
-interface Image {
-  name: string;
-  data: string;
-}
+// interface Image {
+//   name: string;
+//   data: string;
+// }
 
-function Details(props: Props) {
-  let browserLocation = useLocation();
-  let history = useHistory();
-  const [showForm, setShowForm] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
-  let data = browserLocation.state as Restaurant;
+function Details() {
+  //props: Props) {
+  // let browserLocation = useLocation();
+  // let history = useHistory();
+  // const [showForm, setShowForm] = useState(false);
+  // const [images, setImages] = useState<string[]>([]);
+  // let data = browserLocation.state as Restaurant;
 
-  const { deleteRestaurant, updateRestaurant } = props;
+  // const { deleteRestaurant, updateRestaurant } = props;
 
-  const { name, description, location, tags, rating, docId, thumbnailImage } = data;
+  // const { name, description, location, tags, rating, docId, thumbnailImage } = data;
 
-  useEffect(() => {
-    const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
+  // useEffect(() => {
+  //   const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
 
-    firebase
-      .storage()
-      .ref()
-      .child(ref)
-      .listAll()
-      .then(function (result: any) {
-        if (!isEmpty(result.items)) {
-          result.items.map((item: any) => {
-            let path = item.location.path;
+  //   firebase
+  //     .storage()
+  //     .ref()
+  //     .child(ref)
+  //     .listAll()
+  //     .then(function (result: any) {
+  //       if (!isEmpty(result.items)) {
+  //         result.items.map((item: any) => {
+  //           let path = item.location.path;
 
-            return firebase
-              .storage()
-              .ref()
-              .child(path)
-              .getDownloadURL()
-              .then((url) => {
-                setImages((imgUrls) => [...imgUrls, url]);
-              });
-          });
-          // const path = result.items[0].location.path;
-        }
-      });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  //           return firebase
+  //             .storage()
+  //             .ref()
+  //             .child(path)
+  //             .getDownloadURL()
+  //             .then((url) => {
+  //               setImages((imgUrls) => [...imgUrls, url]);
+  //             });
+  //         });
+  //         // const path = result.items[0].location.path;
+  //       }
+  //     });
+  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleOnDelete = () => {
-    const shouldDelete = window.confirm("Are you sure you want to delete this?");
+  // const handleOnDelete = () => {
+  //   const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
-    if (shouldDelete) {
-      deleteRestaurant(docId as string);
-      history.replace("/restaurants");
-    }
-  };
+  //   if (shouldDelete) {
+  //     deleteRestaurant(docId as string);
+  //     history.replace("/restaurants");
+  //   }
+  // };
 
-  const handleOnEdit = (values: FormValues) => {
-    console.log("values", values);
+  // const handleOnEdit = (values: FormValues) => {
+  //   console.log("values", values);
 
-    let newTags = values.tags;
-    if (typeof values.tags === "string") {
-      newTags = values.tags.split(" ");
-    } // todo figure out how to not cast. the current type is string | string[]
+  //   let newTags = values.tags;
+  //   if (typeof values.tags === "string") {
+  //     newTags = values.tags.split(" ");
+  //   } // todo figure out how to not cast. the current type is string | string[]
 
-    const restaurant = {
-      ...values,
-      docId: docId,
-      tags: newTags,
-      thumbnailImage,
-      // TODO add images to upload here as well
-    };
+  //   const restaurant = {
+  //     ...values,
+  //     docId: docId,
+  //     tags: newTags,
+  //     thumbnailImage,
+  //     // TODO add images to upload here as well
+  //   };
 
-    updateRestaurant(restaurant);
-    setShowForm(false);
-    // todo history replace is a hack to reload the page to get
-    // the latest data (values). probably best to create an action
-    // to getRestaurantByDocId and retrieve the updated restaurant on render
-    history.replace(`/restaurants/${docId}`, { ...restaurant });
-  };
+  //   updateRestaurant(restaurant);
+  //   setShowForm(false);
+  //   // todo history replace is a hack to reload the page to get
+  //   // the latest data (values). probably best to create an action
+  //   // to getRestaurantByDocId and retrieve the updated restaurant on render
+  //   history.replace(`/restaurants/${docId}`, { ...restaurant });
+  // };
 
-  const reset = () => {
-    setShowForm(false);
-  };
+  // const reset = () => {
+  //   setShowForm(false);
+  // };
 
-  const formValues = {
-    name,
-    location,
-    rating,
-    description,
-    tags,
-  };
+  // const formValues = {
+  //   name,
+  //   location,
+  //   rating,
+  //   description,
+  //   tags,
+  // };
 
-  if (showForm) {
-    return (
-      <Form
-        editingRestaurant={true}
-        formValues={formValues}
-        onSubmit={handleOnEdit}
-        onCancel={reset}
-      />
-    );
-  }
+  // if (showForm) {
+  //   return (
+  //     <Form
+  //       editingRestaurant={true}
+  //       formValues={formValues}
+  //       onSubmit={handleOnEdit}
+  //       onCancel={reset}
+  //     />
+  //   );
+  // }
   return (
     <div className={styles.details}>
-      <h1>{name}</h1>
-      <Rating rating={rating} />
+      <h1>hey</h1>
+      {/* <Rating rating={rating} />
       <h3>
         <i className="material-icons">place</i>
         {location}
@@ -127,7 +128,7 @@ function Details(props: Props) {
         <img className={styles.uploadedImage} src={img} alt="" />
       ))}
       <button onClick={handleOnDelete}>Delete</button>
-      <button onClick={() => setShowForm(true)}>Edit</button>
+      <button onClick={() => setShowForm(true)}>Edit</button> */}
     </div>
   );
 }

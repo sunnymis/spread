@@ -11,7 +11,7 @@ export interface FormValues {
   location: string;
   rating: number;
   description: string;
-  tags: string | string[];
+  tags: string;
   images?: File[];
   thumbnailImage?: string;
 }
@@ -46,7 +46,7 @@ const RestaurantForm = (props: Props) => {
     // }
 
     console.log("imagesToUpload", imagesToUpload);
-    onSubmit({ ...values, images: imagesToUpload });
+    onSubmit({ ...values, images: imagesToUpload, tags: values.tags.split(" ") });
   };
 
   const handleOnDrop = (files: File[]) => {

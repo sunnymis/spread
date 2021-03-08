@@ -1,6 +1,6 @@
 import React from "react";
 import getRestaurantsByUserId from "../../firebase/getRestaurantsByUserId";
-// import addRestaurant from "../../firebase/addRestaurant";
+import addRestaurant from "../../firebase/addRestaurant";
 import Form from "./Form";
 import List from "./List";
 import styles from "./restaurants.module.scss";
@@ -23,14 +23,6 @@ class Restaurants extends React.Component<{}, State> {
     const restaurants = await getRestaurantsByUserId("n23qMAUSzDR5GcPgQmlarnK0Ok43");
     this.setState({ restaurants });
   }
-
-  initialValues: FormValues = {
-    name: "",
-    location: "",
-    rating: 0,
-    description: "",
-    tags: "",
-  };
   // const [formValues, setFormValues] = useState(initialValues);
   // const [showForm, setShowForm] = useState(false);
   // const [restaurants, setRestaurants] = useState([]);
@@ -41,31 +33,34 @@ class Restaurants extends React.Component<{}, State> {
   // };
 
   handleOnSubmit = (restaurant: Restaurant) => {
-    console.log("Submitted");
-    // if (typeof restaurant.tags !== "string") {
-    //   return;
-    // }
+    console.log("Submitted", restaurant);
 
-    // let tags = restaurant.tags.split(" ");
-
-    // addRestaurant({
-    //   ...restaurant,
-    //   tags,
-    // });
+    addRestaurant({
+      ...restaurant,
+    });
 
     // reset();
   };
 
   render() {
     if (this.state.showAddNewForm) {
+      const initialValues: FormValues = {
+        name: "",
+        location: "",
+        rating: 0,
+        description: "",
+        tags: "",
+      };
+
       return (
         <Form
-          formValues={this.initialValues}
+          formValues={initialValues}
           onSubmit={this.handleOnSubmit}
           onCancel={() => console.log("reset form")}
         />
       );
     }
+
     return (
       <div className={styles.app}>
         <div>
