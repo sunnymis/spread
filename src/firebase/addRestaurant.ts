@@ -10,7 +10,7 @@ export default function (restaurant: Restaurant) {
   return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
     const restaurantsToUpload = omit(restaurant, "images");
     console.log("adding restaurant", restaurant);
-    let thumbnailImage;
+    let thumbnailImage = "";
 
     if (!isEmpty(restaurant.images) && !isUndefined(restaurant.images)) {
       let name = restaurant.images[0].name;
@@ -33,6 +33,7 @@ export default function (restaurant: Restaurant) {
         let newRestaurant = {
           ...restaurant,
           docId: result.id,
+          thumbnailImage,
         };
         dispatch(receivedRestaurant([newRestaurant]));
       });

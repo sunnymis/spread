@@ -17,12 +17,7 @@ interface Props {
 }
 
 const Restaurants: React.FC<Props> = (props) => {
-  const {
-    restaurants,
-    isLoading,
-    getRestaurantsByUserId,
-    addRestaurant,
-  } = props;
+  const { restaurants, isLoading, getRestaurantsByUserId, addRestaurant } = props;
 
   const initialValues: FormValues = {
     name: "",
@@ -66,19 +61,12 @@ const Restaurants: React.FC<Props> = (props) => {
     <div className={styles.app}>
       {showForm ? (
         <div>
-          <Form
-            formValues={formValues}
-            onSubmit={handleOnSubmit}
-            onCancel={reset}
-          />
+          <Form formValues={formValues} onSubmit={handleOnSubmit} onCancel={reset} />
         </div>
       ) : (
         <div>
           <List restaurants={restaurants} />
-          <button
-            className={styles.addButton}
-            onClick={() => setShowForm(true)}
-          >
+          <button className={styles.addButton} onClick={() => setShowForm(true)}>
             <i className="material-icons md-48">add</i>
           </button>
         </div>
@@ -94,13 +82,9 @@ export const mapStateToProps = (state: AppState) => ({
 
 export const mapDispatchToProps = (dispatch: any) => {
   return {
-    getRestaurantsByUserId: (id: string) =>
-      dispatch(getRestaurantsByUserId(id)),
-    addRestaurant: (restaurant: Restaurant) =>
-      dispatch(addRestaurant(restaurant)),
+    getRestaurantsByUserId: (id: string) => dispatch(getRestaurantsByUserId(id)),
+    addRestaurant: (restaurant: Restaurant) => dispatch(addRestaurant(restaurant)),
   };
 };
 
-export default compose(connect(mapStateToProps, mapDispatchToProps))(
-  Restaurants
-);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(Restaurants);
