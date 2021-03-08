@@ -36,10 +36,3 @@ export default function List({ restaurants }: Props) {
     </div>
   );
 }
-
-// TODO in future if data is hard ot update when editing a restaurant
-// check how to structure nested entities in this article https://redux.js.org/advanced/async-actions/
-/*
-<button onClick={() => onDeleteClick(r.docId || '')}>Delete Restaurant</button>
-<button onClick={() => onEditClick(r)}>Edit Restaurant</button>
-*/

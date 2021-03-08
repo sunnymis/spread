@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import isEmpty from "lodash/isEmpty";
-import { AppState } from "../../store";
-import deleteRestaurant from "../../firebase/deleteRestaurant";
-import updateRestaurant from "../../firebase/updateRestaurant";
 import Form, { FormValues } from "./Form";
 import styles from "./restaurants.module.scss";
 import Rating from "../../components/Rating";
@@ -137,13 +132,4 @@ function Details(props: Props) {
   );
 }
 
-export const mapStateToProps = (state: AppState) => {};
-
-export const mapDispatchToProps = (dispatch: any) => {
-  return {
-    deleteRestaurant: (id: string) => dispatch(deleteRestaurant(id)),
-    updateRestaurant: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
-  };
-};
-
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Details);
+export default Details;
