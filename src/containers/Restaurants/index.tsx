@@ -19,37 +19,31 @@ class Restaurants extends React.Component<{}, State> {
       showAddNewForm: false,
     };
   }
-  async componentDidMount() {
+
+  componentDidMount() {
+    this.fetchRestaurants();
+  }
+
+  async fetchRestaurants() {
     const restaurants = await getRestaurantsByUserId("n23qMAUSzDR5GcPgQmlarnK0Ok43");
     this.setState({ restaurants });
   }
-  // const [formValues, setFormValues] = useState(initialValues);
-  // const [showForm, setShowForm] = useState(false);
-  // const [restaurants, setRestaurants] = useState([]);
 
-  // const reset = () => {
-  //   setShowForm(false);
-  //   setFormValues(initialValues);
-  // };
+  handleOnSubmit = async (restaurant: Restaurant) => {
+    await addRestaurant({ ...restaurant });
 
-  handleOnSubmit = (restaurant: Restaurant) => {
-    console.log("Submitted", restaurant);
-
-    addRestaurant({
-      ...restaurant,
-    });
-
-    // reset();
+    this.setState({ showAddNewForm: false });
+    this.fetchRestaurants();
   };
 
   render() {
     if (this.state.showAddNewForm) {
       const initialValues: FormValues = {
         name: "",
-        location: "",
-        rating: 0,
-        description: "",
-        tags: "",
+        location: "location",
+        rating: 3,
+        description: "some description",
+        tags: "some tags",
       };
 
       return (

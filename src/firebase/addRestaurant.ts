@@ -3,7 +3,11 @@ import omit from "lodash/omit";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 
-export default function (restaurant: Restaurant) {
+export default async function (restaurant: Restaurant) {
+  await addToFirebase(restaurant);
+}
+
+const addToFirebase = async (restaurant: Restaurant) => {
   const restaurantsToUpload = omit(restaurant, "images");
   console.log("adding restaurant", restaurant);
   let thumbnailImage = "";
@@ -39,4 +43,4 @@ export default function (restaurant: Restaurant) {
       .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${img.name}`)
       .put(img);
   });
-}
+};
