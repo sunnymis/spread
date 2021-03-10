@@ -91,7 +91,7 @@ export default function Details() {
         <i className="material-icons">place</i>
         {location}
       </h3>
-      {tags && typeof tags !== "string" && tags.map((tag) => <Badge text={tag} />)}
+      {tags && typeof tags !== "string" && tags.map((tag, idx) => <Badge key={idx} text={tag} />)}
       <h3>Description</h3>
       <p>{description}</p>
       {images.map((img) => (
