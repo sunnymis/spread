@@ -9,6 +9,8 @@ import getImagesByDocId from "../../firebase/getImagesByDocId";
 import deleteRestaurant from "../../firebase/deleteRestaurant";
 import { FormValues, RestaurantDTO } from "../../types/restaurant";
 import transformRestaurantToFormValues from "../../util/transformRestaurantToFormValues";
+import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
+import updateRestaurant from "../../firebase/updateRestaurant";
 
 export default function Details() {
   const [showEditForm, setShowEditForm] = useState(false);
@@ -45,6 +47,7 @@ export default function Details() {
 
   const handleOnEdit = (values: FormValues) => {
     console.log("values", values);
+    const restaurant = transformFormValuesToRestaurant(values);
 
     // let newTags = values.tags;
     // if (typeof values.tags === "string") {
@@ -59,12 +62,12 @@ export default function Details() {
     //   // TODO add images to upload here as well
     // };
 
-    // updateRestaurant(restaurant);
-    // setShowForm(false);
-    // // todo history replace is a hack to reload the page to get
-    // // the latest data (values). probably best to create an action
-    // // to getRestaurantByDocId and retrieve the updated restaurant on render
-    // history.replace(`/restaurants/${docId}`, { ...restaurant });
+    updateRestaurant(restaurant, documentId);
+    setShowEditForm(false);
+    // todo history replace is a hack to reload the page to get
+    // the latest data (values). probably best to create an action
+    // to getRestaurantByDocId and retrieve the updated restaurant on render
+    history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
   };
 
   const reset = () => {
