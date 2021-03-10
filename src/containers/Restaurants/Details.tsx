@@ -7,7 +7,7 @@ import Badge from "../../components/Badge";
 
 import getImagesByDocId from "../../firebase/getImagesByDocId";
 import deleteRestaurant from "../../firebase/deleteRestaurant";
-import { FormValues, Restaurant, RestaurantDTO } from "../../types/restaurant";
+import { FormValues, RestaurantDTO } from "../../types/restaurant";
 import transformRestaurantToFormValues from "../../util/transformRestaurantToFormValues";
 
 export default function Details() {
@@ -18,7 +18,7 @@ export default function Details() {
   const currentRestaurantDTO = browserLocation.state as RestaurantDTO;
   console.log("CURRENTRDTO", currentRestaurantDTO.restaurant);
   const {
-    restaurant: { name, description, location, tags, rating, thumbnailImage },
+    restaurant: { name, description, location, tags, rating },
     documentId,
   } = currentRestaurantDTO;
 
@@ -26,7 +26,7 @@ export default function Details() {
 
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchImages = async () => {
     const imgs = await getImagesByDocId(documentId);

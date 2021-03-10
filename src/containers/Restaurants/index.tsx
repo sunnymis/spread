@@ -4,7 +4,7 @@ import addRestaurant from "../../firebase/addRestaurant";
 import Form from "./Form";
 import List from "./List";
 import styles from "./restaurants.module.scss";
-import { FormValues, Restaurant, RestaurantDTO } from "../../types/restaurant";
+import { FormValues, RestaurantDTO } from "../../types/restaurant";
 import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
 
 interface State {
