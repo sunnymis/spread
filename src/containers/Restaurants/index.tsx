@@ -4,7 +4,8 @@ import addRestaurant from "../../firebase/addRestaurant";
 import Form from "./Form";
 import List from "./List";
 import styles from "./restaurants.module.scss";
-import { FormValues } from "./Form";
+import { FormValues, Restaurant } from "../../types/restaurant";
+import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
 
 interface State {
   restaurants: Restaurant[];
@@ -21,6 +22,7 @@ class Restaurants extends React.Component<{}, State> {
   }
 
   componentDidMount() {
+    console.log("Fetching!!");
     this.fetchRestaurants();
   }
 
@@ -29,7 +31,9 @@ class Restaurants extends React.Component<{}, State> {
     this.setState({ restaurants });
   }
 
-  handleOnSubmit = async (restaurant: Restaurant) => {
+  handleOnSubmit = async (formValues: FormValues) => {
+    const restaurant = transformFormValuesToRestaurant(formValues);
+
     await addRestaurant({ ...restaurant });
 
     this.setState({ showAddNewForm: false });

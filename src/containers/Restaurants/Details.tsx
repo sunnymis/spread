@@ -1,33 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-// import Form, { FormValues } from "./Form";
+import { useLocation, useHistory } from "react-router-dom";
+import Form from "./Form";
 import styles from "./restaurants.module.scss";
 import Rating from "../../components/Rating";
 import Badge from "../../components/Badge";
 
 import getImagesByDocId from "../../firebase/getImagesByDocId";
-import firebase from "../../firebase";
-
-// interface Props {
-//   deleteRestaurant(id: string): void;
-//   updateRestaurant(restaurant: Restaurant): void;
-// }
-
-// todo move this this is used twice
-// interface Image {
-//   name: string;
-//   data: string;
-// }
+import deleteRestaurant from "../../firebase/deleteRestaurant";
+import { FormValues, Restaurant } from "../../types/restaurant";
+import transformRestaurantToFormValues from "../../util/transformRestaurantToFormValues";
 
 export default function Details() {
-  let browserLocation = useLocation();
-  let data = browserLocation.state as Restaurant;
-  const { name, description, location, tags, rating, docId, thumbnailImage } = data;
-
-  // let history = useHistory();
-  // const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [images, setImages] = useState<string[]>([]);
+
+  const browserLocation = useLocation();
+  const currentRestaurant = browserLocation.state as Restaurant;
+  const { name, description, location, tags, rating, docId, thumbnailImage } = currentRestaurant;
+  let history = useHistory();
 
   useEffect(() => {
     fetchImages();
@@ -44,61 +34,56 @@ export default function Details() {
 
     setImages(imgs);
   };
-  // const handleOnDelete = () => {
-  //   const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
-  //   if (shouldDelete) {
-  //     deleteRestaurant(docId as string);
-  //     history.replace("/restaurants");
-  //   }
-  // };
+  const handleOnDelete = () => {
+    const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
-  // const handleOnEdit = (values: FormValues) => {
-  //   console.log("values", values);
+    if (shouldDelete) {
+      deleteRestaurant(docId as string);
+      history.replace("/restaurants");
+    }
+  };
 
-  //   let newTags = values.tags;
-  //   if (typeof values.tags === "string") {
-  //     newTags = values.tags.split(" ");
-  //   } // todo figure out how to not cast. the current type is string | string[]
+  const handleOnEdit = (values: FormValues) => {
+    console.log("values", values);
 
-  //   const restaurant = {
-  //     ...values,
-  //     docId: docId,
-  //     tags: newTags,
-  //     thumbnailImage,
-  //     // TODO add images to upload here as well
-  //   };
+    // let newTags = values.tags;
+    // if (typeof values.tags === "string") {
+    //   newTags = values.tags.split(" ");
+    // } // todo figure out how to not cast. the current type is string | string[]
 
-  //   updateRestaurant(restaurant);
-  //   setShowForm(false);
-  //   // todo history replace is a hack to reload the page to get
-  //   // the latest data (values). probably best to create an action
-  //   // to getRestaurantByDocId and retrieve the updated restaurant on render
-  //   history.replace(`/restaurants/${docId}`, { ...restaurant });
-  // };
+    // const restaurant = {
+    //   ...values,
+    //   docId: docId,
+    //   tags: newTags,
+    //   thumbnailImage,
+    //   // TODO add images to upload here as well
+    // };
 
-  // const reset = () => {
-  //   setShowForm(false);
-  // };
+    // updateRestaurant(restaurant);
+    // setShowForm(false);
+    // // todo history replace is a hack to reload the page to get
+    // // the latest data (values). probably best to create an action
+    // // to getRestaurantByDocId and retrieve the updated restaurant on render
+    // history.replace(`/restaurants/${docId}`, { ...restaurant });
+  };
 
-  // const formValues = {
-  //   name,
-  //   location,
-  //   rating,
-  //   description,
-  //   tags,
-  // };
+  const reset = () => {
+    setShowEditForm(false);
+  };
 
-  // if (showForm) {
-  //   return (
-  //     <Form
-  //       editingRestaurant={true}
-  //       formValues={formValues}
-  //       onSubmit={handleOnEdit}
-  //       onCancel={reset}
-  //     />
-  //   );
-  // }
+  if (showEditForm) {
+    const formValues = transformRestaurantToFormValues(currentRestaurant);
+
+    return (
+      <Form
+        editingRestaurant={true}
+        formValues={formValues}
+        onSubmit={handleOnEdit}
+        onCancel={reset}
+      />
+    );
+  }
   return (
     <div className={styles.details}>
       <h1>{name}</h1>
@@ -113,8 +98,8 @@ export default function Details() {
       {images.map((img) => (
         <img className={styles.uploadedImage} src={img} alt="" />
       ))}
-      <button onClick={() => {}}>Delete</button>
-      <button onClick={() => true}>Edit</button>
+      <button onClick={handleOnDelete}>Delete</button>
+      <button onClick={() => setShowEditForm(true)}>Edit</button>
     </div>
   );
 }
