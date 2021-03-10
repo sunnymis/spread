@@ -6,7 +6,6 @@ export default async function (id: string): Promise<any> {
   const snaps = snapshot.docs.map((r) => {
     const data = r.data() as Restaurant;
 
-    console.log("Data", data);
     return {
       ...data,
       docId: r.id,

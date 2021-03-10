@@ -1,11 +1,12 @@
-import React from "react"; // { useState, useEffect } from "react";
-// import { useLocation, useHistory } from "react-router-dom";
-// import isEmpty from "lodash/isEmpty";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import isEmpty from "lodash/isEmpty";
 // import Form, { FormValues } from "./Form";
 import styles from "./restaurants.module.scss";
-// import Rating from "../../components/Rating";
-// import Badge from "../../components/Badge";
+import Rating from "../../components/Rating";
+import Badge from "../../components/Badge";
 
+import getImagesByDocId from "../../firebase/getImagesByDocId";
 import firebase from "../../firebase";
 
 // interface Props {
@@ -19,45 +20,30 @@ import firebase from "../../firebase";
 //   data: string;
 // }
 
-function Details() {
-  //props: Props) {
-  // let browserLocation = useLocation();
+export default function Details() {
+  let browserLocation = useLocation();
+  let data = browserLocation.state as Restaurant;
+  const { name, description, location, tags, rating, docId, thumbnailImage } = data;
+
   // let history = useHistory();
   // const [showForm, setShowForm] = useState(false);
-  // const [images, setImages] = useState<string[]>([]);
-  // let data = browserLocation.state as Restaurant;
+  const [images, setImages] = useState<string[]>([]);
 
-  // const { deleteRestaurant, updateRestaurant } = props;
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
-  // const { name, description, location, tags, rating, docId, thumbnailImage } = data;
+  const fetchImages = async () => {
+    if (!docId) {
+      // This check is needed because docId is optional on Restaurant and
+      // we have to ensure getImagesByDocID doesn't get passed in undefined
+      return;
+    }
 
-  // useEffect(() => {
-  //   const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
+    const imgs = await getImagesByDocId(docId);
 
-  //   firebase
-  //     .storage()
-  //     .ref()
-  //     .child(ref)
-  //     .listAll()
-  //     .then(function (result: any) {
-  //       if (!isEmpty(result.items)) {
-  //         result.items.map((item: any) => {
-  //           let path = item.location.path;
-
-  //           return firebase
-  //             .storage()
-  //             .ref()
-  //             .child(path)
-  //             .getDownloadURL()
-  //             .then((url) => {
-  //               setImages((imgUrls) => [...imgUrls, url]);
-  //             });
-  //         });
-  //         // const path = result.items[0].location.path;
-  //       }
-  //     });
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+    setImages(imgs);
+  };
   // const handleOnDelete = () => {
   //   const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
@@ -115,8 +101,8 @@ function Details() {
   // }
   return (
     <div className={styles.details}>
-      <h1>hey</h1>
-      {/* <Rating rating={rating} />
+      <h1>{name}</h1>
+      <Rating rating={rating} />
       <h3>
         <i className="material-icons">place</i>
         {location}
@@ -127,10 +113,8 @@ function Details() {
       {images.map((img) => (
         <img className={styles.uploadedImage} src={img} alt="" />
       ))}
-      <button onClick={handleOnDelete}>Delete</button>
-      <button onClick={() => setShowForm(true)}>Edit</button> */}
+      <button onClick={() => {}}>Delete</button>
+      <button onClick={() => true}>Edit</button>
     </div>
   );
 }
-
-export default Details;
