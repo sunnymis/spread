@@ -2,6 +2,7 @@ import firebase from "../firebase";
 import omit from "lodash/omit";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
+import { Restaurant } from "../types/restaurant";
 
 export default async function (restaurant: Restaurant) {
   await addToFirebase(restaurant);

@@ -4,11 +4,11 @@ import addRestaurant from "../../firebase/addRestaurant";
 import Form from "./Form";
 import List from "./List";
 import styles from "./restaurants.module.scss";
-import { FormValues, Restaurant } from "../../types/restaurant";
+import { FormValues, Restaurant, RestaurantDTO } from "../../types/restaurant";
 import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
 
 interface State {
-  restaurants: Restaurant[];
+  restaurants: RestaurantDTO[];
   showAddNewForm: boolean;
 }
 class Restaurants extends React.Component<{}, State> {

@@ -1,8 +1,11 @@
-import { omit } from "lodash";
 import { FormValues, Restaurant } from "../types/restaurant";
 
 export default function (restaurant: Restaurant): FormValues {
-  const restaurantWithoutFields = omit(restaurant, ["id", "docId"]);
+  const restaurantWithoutFields = {
+    ...restaurant,
+    id: undefined,
+    docId: undefined,
+  };
 
   return {
     ...restaurantWithoutFields,

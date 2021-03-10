@@ -1,12 +1,13 @@
 import firebase from "../firebase";
+import { Restaurant } from "../types/restaurant";
 
-export default function (restaurant: Restaurant) {
+export default function (restaurant: Restaurant, documentId: string) {
   let restaurantWithoutImages = { ...restaurant, images: [] };
 
   firebase
     .firestore()
     .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`)
-    .doc(restaurant.docId)
+    .doc(documentId)
     .update({
       ...restaurantWithoutImages,
     })
@@ -21,7 +22,7 @@ export default function (restaurant: Restaurant) {
     firebase
       .storage()
       .ref()
-      .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${restaurant.docId}/${img.name}`)
+      .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${documentId}/${img.name}`)
       .put(img);
   });
 }

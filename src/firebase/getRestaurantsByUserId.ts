@@ -1,16 +1,13 @@
 import firebase from "../firebase";
+import { Restaurant, RestaurantDTO } from "../types/restaurant";
 
-export default async function (id: string): Promise<any> {
-  const snapshot = await firebase.firestore().collection(`restaurants/users/${id}`).get();
+export default async function (userId: string): Promise<RestaurantDTO[]> {
+  const restaruants = await firebase.firestore().collection(`restaurants/users/${userId}`).get();
 
-  const snaps = snapshot.docs.map((r) => {
-    const data = r.data() as Restaurant;
-
+  return restaruants.docs.map((restaurantDocument) => {
     return {
-      ...data,
-      docId: r.id,
+      restaurant: restaurantDocument.data() as Restaurant,
+      documentId: restaurantDocument.id,
     };
   });
-
-  return snaps;
 }

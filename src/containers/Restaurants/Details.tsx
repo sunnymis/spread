@@ -7,16 +7,21 @@ import Badge from "../../components/Badge";
 
 import getImagesByDocId from "../../firebase/getImagesByDocId";
 import deleteRestaurant from "../../firebase/deleteRestaurant";
-import { FormValues, Restaurant } from "../../types/restaurant";
+import { FormValues, Restaurant, RestaurantDTO } from "../../types/restaurant";
 import transformRestaurantToFormValues from "../../util/transformRestaurantToFormValues";
 
 export default function Details() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [images, setImages] = useState<string[]>([]);
-
   const browserLocation = useLocation();
-  const currentRestaurant = browserLocation.state as Restaurant;
-  const { name, description, location, tags, rating, docId, thumbnailImage } = currentRestaurant;
+
+  const currentRestaurantDTO = browserLocation.state as RestaurantDTO;
+  console.log("CURRENTRDTO", currentRestaurantDTO.restaurant);
+  const {
+    restaurant: { name, description, location, tags, rating, thumbnailImage },
+    documentId,
+  } = currentRestaurantDTO;
+
   let history = useHistory();
 
   useEffect(() => {
@@ -24,13 +29,7 @@ export default function Details() {
   }, []);
 
   const fetchImages = async () => {
-    if (!docId) {
-      // This check is needed because docId is optional on Restaurant and
-      // we have to ensure getImagesByDocID doesn't get passed in undefined
-      return;
-    }
-
-    const imgs = await getImagesByDocId(docId);
+    const imgs = await getImagesByDocId(documentId);
 
     setImages(imgs);
   };
@@ -39,7 +38,7 @@ export default function Details() {
     const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
     if (shouldDelete) {
-      deleteRestaurant(docId as string);
+      deleteRestaurant(documentId);
       history.replace("/restaurants");
     }
   };
@@ -73,7 +72,7 @@ export default function Details() {
   };
 
   if (showEditForm) {
-    const formValues = transformRestaurantToFormValues(currentRestaurant);
+    const formValues = transformRestaurantToFormValues(currentRestaurantDTO.restaurant);
 
     return (
       <Form

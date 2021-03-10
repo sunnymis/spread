@@ -4,36 +4,41 @@ import styles from "./restaurants.module.scss";
 import Badge from "../../components/Badge";
 import Rating from "../../components/Rating";
 import LazyImage from "../../components/LazyImage";
+import { RestaurantDTO } from "../../types/restaurant";
 
 interface Props {
-  restaurants: Restaurant[];
+  restaurants: RestaurantDTO[];
 }
 
 export default function List({ restaurants }: Props) {
   return (
     <div>
       <h1>{`Count: ${restaurants.length}`}</h1>
-      {restaurants.map((restaurant) => (
-        <Link
-          className={styles.link}
-          to={{
-            pathname: `/restaurants/${restaurant.docId}`,
-            state: restaurant,
-          }}
-        >
-          <div className={styles.row} key={restaurant.name}>
-            <div className={styles.content}>
-              <p className={styles.name}>{restaurant.name}</p>
-              <Rating rating={restaurant.rating} />
-              <div>{restaurant.tags && restaurant.tags.map((tag) => <Badge text={tag} />)}</div>
+      {restaurants.map((restaurantDTO) => {
+        const {
+          restaurant: { name, rating, tags, thumbnailImage },
+          documentId,
+        } = restaurantDTO;
+
+        return (
+          <Link
+            className={styles.link}
+            to={{
+              pathname: `/restaurants/${documentId}`,
+              state: restaurantDTO,
+            }}
+          >
+            <div className={styles.row} key={name}>
+              <div className={styles.content}>
+                <p className={styles.name}>{name}</p>
+                <Rating rating={rating} />
+                <div>{tags && tags.map((tag) => <Badge text={tag} />)}</div>
+              </div>
+              <LazyImage className={styles.image} path={thumbnailImage ? thumbnailImage : null} />
             </div>
-            <LazyImage
-              className={styles.image}
-              path={restaurant.thumbnailImage ? restaurant.thumbnailImage : null}
-            />
-          </div>
-        </Link>
-      ))}
+          </Link>
+        );
+      })}
     </div>
   );
 }
