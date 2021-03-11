@@ -45,29 +45,15 @@ export default function Details() {
     }
   };
 
-  const handleOnEdit = (values: FormValues) => {
+  const handleOnEdit = async (values: FormValues) => {
     console.log("values", values);
     const restaurant = transformFormValuesToRestaurant(values);
 
-    // let newTags = values.tags;
-    // if (typeof values.tags === "string") {
-    //   newTags = values.tags.split(" ");
-    // } // todo figure out how to not cast. the current type is string | string[]
-
-    // const restaurant = {
-    //   ...values,
-    //   docId: docId,
-    //   tags: newTags,
-    //   thumbnailImage,
-    //   // TODO add images to upload here as well
-    // };
-
-    updateRestaurant(restaurant, documentId);
+    await updateRestaurant(restaurant, documentId);
     setShowEditForm(false);
-    // todo history replace is a hack to reload the page to get
-    // the latest data (values). probably best to create an action
-    // to getRestaurantByDocId and retrieve the updated restaurant on render
-    history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
+
+    fetchImages();
+    // history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
   };
 
   const reset = () => {
@@ -97,11 +83,13 @@ export default function Details() {
       {tags && typeof tags !== "string" && tags.map((tag, idx) => <Badge key={idx} text={tag} />)}
       <h3>Description</h3>
       <p>{description}</p>
-      {images.map((img) => (
-        <img className={styles.uploadedImage} src={img} alt="" />
+      {images.map((img, idx) => (
+        <img key={idx} className={styles.uploadedImage} src={img} alt="" />
       ))}
-      <button onClick={handleOnDelete}>Delete</button>
-      <button onClick={() => setShowEditForm(true)}>Edit</button>
+      <div>
+        <button onClick={handleOnDelete}>Delete</button>
+        <button onClick={() => setShowEditForm(true)}>Edit</button>
+      </div>
     </div>
   );
 }

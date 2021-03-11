@@ -79,8 +79,8 @@ const RestaurantForm = (props: Props) => {
               <Button type="submit" text={buttonText} />
             </div>
             <FileUpload onDrop={handleOnDrop} />
-            {images.map((img) => (
-              <img alt="" className={styles.uploadedImageThumbnail} src={img.data} />
+            {images.map((img, idx) => (
+              <img key={idx} alt="" className={styles.uploadedImageThumbnail} src={img.data} />
             ))}
           </Form>
         )}

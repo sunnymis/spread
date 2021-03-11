@@ -1,7 +1,12 @@
 import firebase from "../firebase";
 import { Restaurant } from "../types/restaurant";
 
-export default function (restaurant: Restaurant, documentId: string) {
+export default async function (restaurant: Restaurant, documentId: string) {
+  await uploadImages(restaurant, documentId);
+  await updateRestaurant(restaurant, documentId);
+}
+
+const updateRestaurant = async (restaurant: Restaurant, documentId: string) => {
   let restaurantWithoutImages = { ...restaurant, images: [] };
 
   firebase
@@ -14,15 +19,14 @@ export default function (restaurant: Restaurant, documentId: string) {
     .then((result) => {
       console.log("result?", result);
     });
+};
 
-  console.log("restaurt images", restaurant.images);
-
-  restaurant.images?.forEach((img: any) => {
-    console.log("img", img);
-    firebase
+const uploadImages = async (restaurant: Restaurant, documentId: string) => {
+  restaurant.images?.forEach((img) => {
+    return firebase
       .storage()
       .ref()
       .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${documentId}/${img.name}`)
       .put(img);
   });
-}
+};
