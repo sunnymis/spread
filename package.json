@@ -1,13 +1,10 @@
 {
-  "name": "trello",
+  "name": "spread",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "@types/classnames": "^2.2.10",
-    "@types/jest": "^24.0.0",
+    "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -32,8 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "jest"
   },
   "browserslist": {
     "production": [
@@ -48,6 +44,18 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-typescript": "^7.13.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.8.3",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "jest-environment-jsdom": "^26.6.2",
+    "jest-environment-jsdom-global": "^2.0.4",
+    "prettier": "2.0.5",
+    "ts-jest": "^26.5.3",
+    "ts-node": "^9.1.1"
   }
 }

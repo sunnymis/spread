@@ -1,113 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
-import isEmpty from "lodash/isEmpty";
-import { AppState } from "../../store";
-import deleteRestaurant from "../../firebase/deleteRestaurant";
-import updateRestaurant from "../../firebase/updateRestaurant";
-import Form, { FormValues } from "./Form";
+import Form from "./Form";
 import styles from "./restaurants.module.scss";
 import Rating from "../../components/Rating";
 import Badge from "../../components/Badge";
 
-import firebase from "../../firebase";
+import getImagesByDocId from "../../firebase/getImagesByDocId";
+import deleteRestaurant from "../../firebase/deleteRestaurant";
+import { FormValues, RestaurantDTO } from "../../types/restaurant";
+import transformRestaurantToFormValues from "../../util/transformRestaurantToFormValues";
+import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
+import updateRestaurant from "../../firebase/updateRestaurant";
 
-interface Props {
-  deleteRestaurant(id: string): void;
-  updateRestaurant(restaurant: Restaurant): void;
-}
-
-// todo move this this is used twice
-interface Image {
-  name: string;
-  data: string;
-}
-
-function Details(props: Props) {
-  let browserLocation = useLocation();
-  let history = useHistory();
-  const [showForm, setShowForm] = useState(false);
+export default function Details() {
+  const [showEditForm, setShowEditForm] = useState(false);
   const [images, setImages] = useState<string[]>([]);
-  let data = browserLocation.state as Restaurant;
+  const browserLocation = useLocation();
 
-  const { deleteRestaurant, updateRestaurant } = props;
+  const currentRestaurantDTO = browserLocation.state as RestaurantDTO;
+  console.log("CURRENTRDTO", currentRestaurantDTO.restaurant);
+  const {
+    restaurant: { name, description, location, tags, rating },
+    documentId,
+  } = currentRestaurantDTO;
 
-  const { name, description, location, tags, rating, docId, thumbnailImage } = data;
+  let history = useHistory();
 
   useEffect(() => {
-    const ref = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${docId}`;
-
-    firebase
-      .storage()
-      .ref()
-      .child(ref)
-      .listAll()
-      .then(function (result: any) {
-        if (!isEmpty(result.items)) {
-          result.items.map((item: any) => {
-            let path = item.location.path;
-
-            return firebase
-              .storage()
-              .ref()
-              .child(path)
-              .getDownloadURL()
-              .then((url) => {
-                setImages((imgUrls) => [...imgUrls, url]);
-              });
-          });
-          // const path = result.items[0].location.path;
-        }
-      });
+    fetchImages();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fetchImages = async () => {
+    const imgs = await getImagesByDocId(documentId);
+
+    setImages(imgs);
+  };
 
   const handleOnDelete = () => {
     const shouldDelete = window.confirm("Are you sure you want to delete this?");
 
     if (shouldDelete) {
-      deleteRestaurant(docId as string);
+      deleteRestaurant(documentId);
       history.replace("/restaurants");
     }
   };
 
-  const handleOnEdit = (values: FormValues) => {
+  const handleOnEdit = async (values: FormValues) => {
     console.log("values", values);
+    const restaurant = transformFormValuesToRestaurant(values);
 
-    let newTags = values.tags;
-    if (typeof values.tags === "string") {
-      newTags = values.tags.split(" ");
-    } // todo figure out how to not cast. the current type is string | string[]
+    await updateRestaurant(restaurant, documentId);
+    setShowEditForm(false);
 
-    const restaurant = {
-      ...values,
-      docId: docId,
-      tags: newTags,
-      thumbnailImage,
-      // TODO add images to upload here as well
-    };
-
-    updateRestaurant(restaurant);
-    setShowForm(false);
-    // todo history replace is a hack to reload the page to get
-    // the latest data (values). probably best to create an action
-    // to getRestaurantByDocId and retrieve the updated restaurant on render
-    history.replace(`/restaurants/${docId}`, { ...restaurant });
+    fetchImages();
+    // history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
   };
 
   const reset = () => {
-    setShowForm(false);
+    setShowEditForm(false);
   };
 
-  const formValues = {
-    name,
-    location,
-    rating,
-    description,
-    tags,
-  };
+  if (showEditForm) {
+    const formValues = transformRestaurantToFormValues(currentRestaurantDTO.restaurant);
 
-  if (showForm) {
     return (
       <Form
         editingRestaurant={true}
@@ -125,25 +80,16 @@ function Details(props: Props) {
         <i className="material-icons">place</i>
         {location}
       </h3>
-      {tags && typeof tags !== "string" && tags.map((tag) => <Badge text={tag} />)}
+      {tags && typeof tags !== "string" && tags.map((tag, idx) => <Badge key={idx} text={tag} />)}
       <h3>Description</h3>
       <p>{description}</p>
-      {images.map((img) => (
-        <img className={styles.uploadedImage} src={img} alt="" />
+      {images.map((img, idx) => (
+        <img key={idx} className={styles.uploadedImage} src={img} alt="" />
       ))}
-      <button onClick={handleOnDelete}>Delete</button>
-      <button onClick={() => setShowForm(true)}>Edit</button>
+      <div>
+        <button onClick={handleOnDelete}>Delete</button>
+        <button onClick={() => setShowEditForm(true)}>Edit</button>
+      </div>
     </div>
   );
 }
-
-export const mapStateToProps = (state: AppState) => {};
-
-export const mapDispatchToProps = (dispatch: any) => {
-  return {
-    deleteRestaurant: (id: string) => dispatch(deleteRestaurant(id)),
-    updateRestaurant: (restaurant: Restaurant) => dispatch(updateRestaurant(restaurant)),
-  };
-};
-
-export default compose(connect(mapStateToProps, mapDispatchToProps))(Details);

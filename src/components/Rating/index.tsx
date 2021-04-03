@@ -16,7 +16,11 @@ function Rating(props: Props) {
     for (let i = 0; i < 5; i++) {
       const style = i < rating ? styles.filled : styles.unfilled;
 
-      stars.push(<i className={cx(...classes, style)}>star</i>);
+      stars.push(
+        <i key={i} className={cx(...classes, style)}>
+          star
+        </i>
+      );
     }
 
     return stars;

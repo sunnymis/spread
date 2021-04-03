@@ -1,31 +1,13 @@
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../store";
 import firebase from "../firebase";
-import {
-  fetchRestaurants,
-  receivedRestaurants,
-  Action,
-} from "../store/actions";
+import { Restaurant, RestaurantDTO } from "../types/restaurant";
 
-export default function (id: string) {
-  return (dispatch: ThunkDispatch<AppState, undefined, Action>) => {
-    dispatch(fetchRestaurants(id));
+export default async function (userId: string): Promise<RestaurantDTO[]> {
+  const restaruants = await firebase.firestore().collection(`restaurants/users/${userId}`).get();
 
-    firebase
-      .firestore()
-      .collection(`restaurants/users/${id}`)
-      .get()
-      .then((snapshot) => {
-        const allRestaurants = snapshot.docs.map((r) => {
-          const data = r.data() as Restaurant;
-
-          return {
-            ...data,
-            docId: r.id,
-          };
-        });
-
-        dispatch(receivedRestaurants(allRestaurants));
-      });
-  };
+  return restaruants.docs.map((restaurantDocument) => {
+    return {
+      restaurant: restaurantDocument.data() as Restaurant,
+      documentId: restaurantDocument.id,
+    };
+  });
 }

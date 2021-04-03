@@ -5,21 +5,12 @@ import TextArea from "../../components/Input/TextArea";
 import Button from "../../components/Button";
 import FileUpload from "../../components/FileUpload";
 import styles from "./restaurants.module.scss";
-
-export interface FormValues {
-  name: string;
-  location: string;
-  rating: number;
-  description: string;
-  tags: string | string[];
-  images?: File[];
-  thumbnailImage?: string;
-}
+import { FormValues } from "../../types/restaurant";
 
 interface Props {
   formValues: FormValues;
   editingRestaurant?: boolean;
-  onSubmit(restaurant: Restaurant): void;
+  onSubmit(formValues: FormValues): void;
   onCancel(): void;
 }
 
@@ -46,6 +37,7 @@ const RestaurantForm = (props: Props) => {
     // }
 
     console.log("imagesToUpload", imagesToUpload);
+
     onSubmit({ ...values, images: imagesToUpload });
   };
 
@@ -87,8 +79,8 @@ const RestaurantForm = (props: Props) => {
               <Button type="submit" text={buttonText} />
             </div>
             <FileUpload onDrop={handleOnDrop} />
-            {images.map((img) => (
-              <img alt="" className={styles.uploadedImageThumbnail} src={img.data} />
+            {images.map((img, idx) => (
+              <img key={idx} alt="" className={styles.uploadedImageThumbnail} src={img.data} />
             ))}
           </Form>
         )}
