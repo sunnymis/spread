@@ -29,12 +29,14 @@ export default function List({ restaurants }: Props) {
             }}
           >
             <div className={styles.row} key={name}>
-              <div className={styles.content}>
-                <p className={styles.name}>{name}</p>
-                <Rating rating={rating} />
-                <div>{tags && tags.map((tag) => <Badge text={tag} />)}</div>
+              <div className={styles.rowDetails}>
+                <div className={styles.content}>
+                  <p className={styles.name}>{name}</p>
+                  <Rating rating={rating} />
+                </div>
+                <LazyImage className={styles.image} path={thumbnailImage ? thumbnailImage : null} />
               </div>
-              <LazyImage className={styles.image} path={thumbnailImage ? thumbnailImage : null} />
+              <div>{tags && tags.map((tag) => <Badge text={tag} />)}</div>
             </div>
           </Link>
         );
