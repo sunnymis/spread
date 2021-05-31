@@ -45,10 +45,10 @@ class Restaurants extends React.Component<{}, State> {
     if (this.state.showAddNewForm) {
       const initialValues: FormValues = {
         name: "",
-        location: "location",
-        rating: 3,
-        description: "some description",
-        tags: "some tags",
+        location: "",
+        rating: 0,
+        description: "",
+        tags: "",
       };
 
       return (
