@@ -53,7 +53,7 @@ export default function Details() {
     setShowEditForm(false);
 
     fetchImages();
-    // history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
+    history.replace(`/restaurants/${documentId}`, { restaurant, documentId });
   };
 
   const reset = () => {
