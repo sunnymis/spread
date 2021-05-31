@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Button from "../../components/Button";
 import signOut from "../../firebase/signout";
+import styles from "./home.module.scss";
 
 export default function Home() {
   let history = useHistory();
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <>
       <Link to="/restaurants">Restaurants</Link>
-      <div>
+      <div className={styles.logout}>
         <Button text="Log out" onClick={logout} />
       </div>
     </>
