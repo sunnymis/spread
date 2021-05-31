@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Button from "../../components/Button";
 import signOut from "../../firebase/signout";
 
-const Home: React.FC = () => {
+export default function Home() {
+  let history = useHistory();
+
   const logout = async () => {
     try {
-      const response = await signOut();
-      console.log(response);
+      await signOut();
 
       localStorage.removeItem("spreadUserId");
+      history.push("/login");
     } catch (error) {
       console.log("error signing out");
     }
@@ -23,6 +26,4 @@ const Home: React.FC = () => {
       </div>
     </>
   );
-};
-
-export default Home;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, ErrorMessage } from "formik";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import styles from "./login.module.scss";
