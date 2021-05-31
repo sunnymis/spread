@@ -13,7 +13,7 @@ interface Props {
 export default function List({ restaurants }: Props) {
   return (
     <div>
-      <h1>{`Count: ${restaurants.length}`}</h1>
+      <h1>Restaurants</h1>
       {restaurants.map((restaurantDTO) => {
         const {
           restaurant: { name, rating, tags, thumbnailImage },
