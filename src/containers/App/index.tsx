@@ -4,12 +4,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Restaurants from "../Restaurants";
 import Home from "../Home";
 import RestaurantDetails from "../Restaurants/Details";
+import LogIn from "../Login";
 
 const App: React.FC = () => {
   return (
     <div>
       <Router>
         <Switch>
+          <Route exact path="/login">
+            <LogIn />
+          </Route>
           <Route exact path="/">
             <Home />
           </Route>

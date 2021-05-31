@@ -1,0 +1,46 @@
+.container {
+  padding: 24px;
+}
+
+.app-name {
+  font-size: 64px;
+  text-align: center;
+  font-family: "Roboto";
+  font-weight: 300;
+}
+
+.header {
+  font-size: 36px;
+  font-family: "Roboto";
+  font-weight: bold;
+}
+
+.footer {
+  &-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    bottom: 18px;
+  }
+
+  &-text {
+    font-weight: bold;
+    padding-left: 4px;
+    color: "#04aeff";
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+}
+
+.footerContainer {
+  text-align: center;
+  margin-top: 36px;
+}
