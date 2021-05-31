@@ -23,7 +23,7 @@ export default function SignUpForm(props: any) {
 
       console.log("Response", response);
       if (response.user) {
-        localStorage.setItem("currentUser", response.user.uid);
+        localStorage.setItem("spreadUserId", response.user.uid);
         history.push("/");
       }
     } catch (error) {
