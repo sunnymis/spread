@@ -21,7 +21,9 @@ export default function Home() {
 
   return (
     <>
-      <Link to="/restaurants">Restaurants</Link>
+      <Link className={styles.restaurant} to="/restaurants">
+        Restaurants
+      </Link>
       <div className={styles.logout}>
         <Button text="Log out" onClick={logout} />
       </div>
