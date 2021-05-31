@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button";
-import firebase from "../../firebase";
+import signOut from "../../firebase/signout";
 
 const Home: React.FC = () => {
   const logout = async () => {
     try {
-      const response = firebase.auth().signOut();
+      const response = await signOut();
       console.log(response);
 
       localStorage.removeItem("spreadUserId");
