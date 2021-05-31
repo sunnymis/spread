@@ -1,5 +1,6 @@
 import firebase from "../firebase";
 import { Restaurant } from "../types/restaurant";
+import getCurrentUser from "../util/getCurrentUser";
 
 export default async function (restaurant: Restaurant, documentId: string) {
   await uploadImages(restaurant, documentId);
@@ -11,7 +12,7 @@ const updateRestaurant = async (restaurant: Restaurant, documentId: string) => {
 
   firebase
     .firestore()
-    .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`)
+    .collection(`restaurants/users/${getCurrentUser()}`)
     .doc(documentId)
     .update({
       ...restaurantWithoutImages,
@@ -26,7 +27,7 @@ const uploadImages = async (restaurant: Restaurant, documentId: string) => {
     return firebase
       .storage()
       .ref()
-      .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${documentId}/${img.name}`)
+      .child(`images/users/${getCurrentUser()}/${documentId}/${img.name}`)
       .put(img);
   });
 };

@@ -3,6 +3,7 @@ import omit from "lodash/omit";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import { Restaurant } from "../types/restaurant";
+import getCurrentUser from "../util/getCurrentUser";
 
 export default async function (restaurant: Restaurant) {
   await addToFirebase(restaurant);
@@ -15,12 +16,12 @@ const addToFirebase = async (restaurant: Restaurant) => {
 
   if (!isEmpty(restaurant.images) && !isUndefined(restaurant.images)) {
     let name = restaurant.images[0].name;
-    thumbnailImage = `images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${name}`;
+    thumbnailImage = `images/users/${getCurrentUser()}/${name}`;
   }
 
   firebase
     .firestore()
-    .collection(`restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43`)
+    .collection(`restaurants/users/${getCurrentUser()}`)
     .add({
       ...restaurantsToUpload,
       thumbnailImage,
@@ -38,10 +39,6 @@ const addToFirebase = async (restaurant: Restaurant) => {
     });
 
   restaurant.images?.forEach((img: any) => {
-    firebase
-      .storage()
-      .ref()
-      .child(`images/users/n23qMAUSzDR5GcPgQmlarnK0Ok43/${img.name}`)
-      .put(img);
+    firebase.storage().ref().child(`images/users/${getCurrentUser()}/${img.name}`).put(img);
   });
 };

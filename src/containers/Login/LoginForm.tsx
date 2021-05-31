@@ -22,7 +22,7 @@ export default function LogInForm(props: any) {
       console.log("Response", response);
       if (response.user) {
         localStorage.setItem("spreadUserId", response.user.uid);
-        history.push("/");
+        history.push("/restaurants");
       }
     } catch (error) {
       console.log("Error", error);

@@ -1,9 +1,10 @@
 import firebase from "../firebase";
+import getCurrentUser from "../util/getCurrentUser";
 
 export default function (docId: string) {
   firebase
     .firestore()
-    .collection("restaurants/users/n23qMAUSzDR5GcPgQmlarnK0Ok43")
+    .collection(`restaurants/users/${getCurrentUser()}`)
     .doc(docId)
     .delete()
     .then(() => {

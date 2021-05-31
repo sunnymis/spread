@@ -6,6 +6,7 @@ import List from "./List";
 import styles from "./restaurants.module.scss";
 import { FormValues, RestaurantDTO } from "../../types/restaurant";
 import transformFormValuesToRestaurant from "../../util/transformFormValuesToRestaurant";
+import getCurrentUser from "../../util/getCurrentUser";
 
 interface State {
   restaurants: RestaurantDTO[];
@@ -27,7 +28,7 @@ class Restaurants extends React.Component<{}, State> {
   }
 
   async fetchRestaurants() {
-    const restaurants = await getRestaurantsByUserId("n23qMAUSzDR5GcPgQmlarnK0Ok43");
+    const restaurants = await getRestaurantsByUserId(getCurrentUser());
     this.setState({ restaurants });
   }
 
